@@ -1,0 +1,56 @@
+.right {
+  margin-left: 17.5rem;
+  padding: 0 2rem;
+  min-height: 100vh;
+  background-color: #fff;
+  -webkit-transition: 0.4s all ease-in;
+  -o-transition: 0.4s all ease-in;
+  transition: 0.4s all ease-in;
+  .full-width {
+    margin-left: 5rem !important;
+  }
+}
+
+.banner {
+  background-size: cover;
+  background-position: center center;
+  height: 20rem;
+  margin: 0 -2rem;
+  position: relative;
+  z-index: 1;
+}
+.banner::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(34, 38, 41, 0.3);
+}
+
+.banner::after {
+  position: absolute !important;
+  content: "";
+  display: block;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 10rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(52, 58, 64, 0) 0,
+    #343a40 78%,
+    #343a40 100%
+  );
+}
+.bg-home {
+  background-image: url(../../../Assets/image/banner.jpg);
+}
+.main-container {
+  position: relative;
+  z-index: 2;
+  margin-top: -6rem;
+  min-height: calc(100vh / 3.26);
+}

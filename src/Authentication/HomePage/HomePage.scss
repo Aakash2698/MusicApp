@@ -1,0 +1,357 @@
+.home-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.ps-1 {
+  display: block;
+  width: inherit;
+  height: inherit;
+  max-width: inherit;
+  max-height: inherit;
+  overflow: hidden !important;
+  overflow-anchor: none;
+  -ms-overflow-style: none;
+  touch-action: auto;
+}
+.ps-content {
+  height: 100%;
+}
+
+.landing-banner {
+  height: 40rem !important;
+  position: relative !important;
+}
+.bg-landing {
+  background-image: url(../../Assets/HomePageLogos/home-header.jpg);
+}
+.home-banner {
+  background-size: cover;
+  background-position: center center;
+  height: 20rem;
+  margin: 0 -2rem;
+  position: relative;
+  z-index: 1;
+}
+.home-banner:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.home-banner:after,
+.home-banner:before {
+  content: "";
+  display: block;
+}
+
+#homepage-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+header {
+  display: block;
+}
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.pb-3,
+.py-3 {
+  padding-bottom: 1rem !important;
+}
+
+.pt-3,
+.py-3 {
+  padding-top: 1rem !important;
+}
+
+.brand {
+  display: block;
+  font-weight: 600;
+  flex-wrap: wrap;
+  width: 6.25rem;
+  background-color: transparent;
+  text-decoration: none;
+  color: #495057;
+  transition: 0.4s all ease-in;
+  cursor: pointer;
+}
+.header-logo {
+  vertical-align: middle;
+  border-style: none;
+  max-width: 100%;
+}
+.header-auto-options {
+  list-style: none;
+}
+.ml-auto,
+.mx-auto {
+  margin-left: auto !important;
+}
+.sign-in {
+  background-color: transparent;
+  text-decoration: none;
+  transition: 0.4s all ease-in;
+  cursor: pointer;
+  color: inherit;
+}
+
+#homepage-header .header-auto-options li + li {
+  margin-left: 1.5rem;
+}
+.landing-banner .banner-content {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+.common-h {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 0;
+  font-size: 2.5rem;
+  -webkit-font-smoothing: initial;
+  font-family: "Roboto Slab", serif;
+}
+.font-lg {
+  font-size: 1.5rem !important;
+}
+.home-banner:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 10rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0,
+    #fff 78%,
+    #fff 100%
+  );
+}
+.home-banner:after,
+.home-banner:before {
+  content: "";
+  display: block;
+}
+
+.landing-section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.font-md {
+  font-size: 1rem !important;
+  -webkit-font-smoothing: initial;
+}
+.f-size {
+  font-size: 1.75rem;
+}
+@media (min-width: 992px) {
+  .col-lg-3 {
+    -ms-flex: 0 0 25% !important;
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+  }
+}
+@media (min-width: 576px) {
+  .col-sm-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+.third-header {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  -webkit-font-smoothing: initial;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+}
+.light-section {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.back-img3 {
+  background-image: url(../../Assets/image/Genres/cc.jpg);
+}
+// @media (min-width: 992px)
+// {
+//   .col-lg-6 {
+//     -webkit-box-align: 0;
+//     flex: 0 0 50%;
+//     max-width: 50%;
+//   }
+// }
+@media (min-width: 1200px) {
+  .col-xl-4 {
+    -ms-flex: 0 0 33.333333% !important;
+    flex: 0 0 33.333333% !important;
+    max-width: 33.333333% !important;
+  }
+}
+#homepage-footer {
+  margin: 0 -2rem;
+  padding: 2rem 2rem 8rem;
+  text-align: center;
+  background-image: url(../../Assets/HomePageLogos/home-footer.jpg);
+  position: relative;
+}
+
+#homepage-footer:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#homepage-footer:after,
+#homepage-footer:before {
+  content: "";
+  display: block;
+  z-index: 0;
+}
+
+#homepage-footer:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 15rem;
+  background: linear-gradient(to bottom, #fff 0, rgba(255, 255, 255, 0) 100%);
+}
+
+#homepage-footer:after,
+#homepage-footer:before {
+  content: "";
+  display: block;
+  z-index: 0;
+}
+.color {
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.4s all ease-in;
+  cursor: pointer;
+  -webkit-font-smoothing: initial;
+}
+
+.close {
+  float: right;
+  font-size: 1.3125rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+.modal-header .close {
+  padding: 1rem;
+  margin: -1rem -1rem -1rem auto;
+  outline: none;
+}
+.home-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0 solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  outline: 0;
+}
+
+.sign-title {
+  line-height: 1.45;
+  font-family: "Roboto Slab", serif;
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.btn-info {
+  color: #fff !important;
+  background-color: #105dd0 !important;
+  border-color: #0f58c4 !important;
+  outline: none;
+}
+.btn:hover {
+  color: #222629;
+  text-decoration: none;
+}
+.btn-info.btn-air,
+.btn-outline-info.btn-air {
+  box-shadow: 0 2px 6px 2px rgba(25, 110, 237, 0.35);
+}
+.MuiPaper-elevation24 {
+  box-shadow: initial !important;
+}
+
+.modal-dialog {
+  transform: none;
+}
+
+.modal-dialog {
+  transition: transform 0.3s ease-out;
+}
+// .modal-dialog.theme-dialog {
+//   min-width: 25rem;
+// }
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 0 solid #dee2e6;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.pd-both {
+  min-width: 25rem;
+  padding: 0 25px 0 0px;
+}
+// .MuiDialog-paperWidthSm {
+//   max-width: initial !important;
+// }
+
+@media (max-width: 480px) {
+  .pd-both {
+    min-width: initial !important;
+    padding: 0 20px 0 20px;
+  }
+}
+.alert {
+  position: relative;
+  padding: 0.4rem 1rem !important;
+  margin: 0 0 0 4% !important;
+  width: 100%;
+  text-align: center;
+}
+
+.mg-40 {
+  margin-left: 43px;
+}

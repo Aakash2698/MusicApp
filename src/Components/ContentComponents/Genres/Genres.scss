@@ -1,0 +1,23 @@
+.row-main {
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.image-radi {
+  text-decoration: none;
+  transition: 0.4s all ease-in;
+}
+.custom-card .custom-card--img {
+  position: relative;
+}
+
+.card-img--radius-md {
+  border-radius: 1rem;
+}
+.genres-heading {
+  color: #adb5bd;
+  margin-bottom: 2rem;
+}

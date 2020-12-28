@@ -1,0 +1,22 @@
+.align-items-end {
+  -webkit-box-align: end !important;
+  align-items: flex-end !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+  color: #adb5bd;
+  -webkit-font-smoothing: initial;
+}
+.col-6 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.web-bold {
+  -webkit-font-smoothing: initial;
+}
+.custom-list .custom-list--item + .custom-list--item {
+  margin-top: 0.75rem;
+}
