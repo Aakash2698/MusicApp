@@ -7,6 +7,7 @@ import profile from "../../../Assets/image/profile.jpg";
 import { Dialog } from "@material-ui/core";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../Actions/index";
+import { NavLink } from "react-router-dom";
 class Header extends Component {
   state = {
     openProfile: false,
@@ -182,14 +183,16 @@ class Header extends Component {
                   transform: "translate3d(-44px, 18px, 0px)",
                 }}
               >
-                <span className="dropdown-item">
-                  <i
-                    className="iconify dropdown-icon"
-                    data-icon="ion-md-contact"
-                    data-inline="false"
-                  ></i>
-                  <span>Profile</span>
-                </span>
+                <NavLink to={"/profile"}>
+                  <span className="dropdown-item">
+                    <i
+                      className="iconify dropdown-icon"
+                      data-icon="ion-md-contact"
+                      data-inline="false"
+                    ></i>
+                    <span>Profile</span>
+                  </span>
+                </NavLink>
                 <span className="dropdown-item">
                   <span
                     className="iconify dropdown-icon"

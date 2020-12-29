@@ -9,6 +9,8 @@ import Music from "../../ContentComponents/Music";
 import "./Content.scss";
 import Footer from "../Footer/Footer";
 import ArtistDetails from "../../ContentComponents/ArtistDetails";
+import FullPageLoader from "../../ReusableComponents/FullPageLoader";
+import Profile from "../../ContentComponents/Profile";
 
 class Content extends Component {
   render() {
@@ -23,8 +25,10 @@ class Content extends Component {
             <Route path="/stations" component={Station} />
             <Route path="/music" component={Music} />
             <Route path="/:type/:musics" component={ArtistDetails} />
+            <Route path="/profile" component={Profile} />
           </Switch>
         </div>
+
         <Footer />
         {/* <Audio fullWidth={this.props.fullWidth} /> */}
       </div>

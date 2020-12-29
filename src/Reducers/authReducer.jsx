@@ -1,4 +1,9 @@
-import { SET_CURRENT_USER, USER_LOADING } from "../ActionTypes/ActionTypes";
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  SHOW_LOADER,
+  HIDE_LOADER,
+} from "../ActionTypes/ActionTypes";
 
 const isEmpty = require("is-empty");
 
@@ -7,6 +12,7 @@ const initialState = {
   user: {},
   loading: false,
   success: false,
+  isLoading: false,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +27,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case SHOW_LOADER:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case HIDE_LOADER:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;

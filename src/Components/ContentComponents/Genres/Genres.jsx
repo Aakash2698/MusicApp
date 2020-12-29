@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { genres } from "../../../Actions";
+import { genres, showLoader } from "../../../Actions";
 import { connect } from "react-redux";
 import "./Genres.scss";
 import { NavLink } from "react-router-dom";
 class Genres extends Component {
   componentDidMount() {
+    this.props.showLoader();
     this.genres();
   }
   genres = () => {
@@ -58,4 +59,5 @@ const MapStateToProps = (state) => ({
 
 export default connect(MapStateToProps, {
   genres,
+  showLoader,
 })(Genres);

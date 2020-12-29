@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./Music.scss";
 import { connect } from "react-redux";
-import { AllSongs, setMusicData } from "../../../Actions";
+import { AllSongs, setMusicData, showLoader } from "../../../Actions";
 class Music extends Component {
   componentDidMount() {
+    this.props.showLoader();
     this.AllSongs();
   }
   AllSongs = () => {
@@ -86,4 +87,5 @@ const MapStateToProps = (state) => ({
 export default connect(MapStateToProps, {
   AllSongs,
   setMusicData,
+  showLoader,
 })(Music);

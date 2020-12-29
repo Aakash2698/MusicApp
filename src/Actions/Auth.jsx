@@ -6,6 +6,8 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
   GET_ERRORS,
+  SHOW_LOADER,
+  HIDE_LOADER,
 } from "../ActionTypes/ActionTypes.jsx";
 
 // export const registerUser = (userData, history) => {
@@ -141,4 +143,21 @@ export const logoutSuccess = () => {
   return {
     type: LOGOUT,
   };
+};
+
+export const showLoader = () => (dispatch) => {
+  dispatch({
+    type: SHOW_LOADER,
+  });
+  window.setTimeout(() => {
+    dispatch({
+      type: HIDE_LOADER,
+    });
+  }, 500);
+};
+
+export const hideLoader = () => (dispatch) => {
+  dispatch({
+    type: HIDE_LOADER,
+  });
 };

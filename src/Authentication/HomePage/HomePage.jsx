@@ -17,6 +17,7 @@ import HomepageCarousel from "../../Components/ReusableComponents/HomepageCarous
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import { connect } from "react-redux";
+
 class HomePage extends Component {
   state = {
     trendingArtist: [
@@ -63,6 +64,7 @@ class HomePage extends Component {
 
   handleCloseSignIn = () => {
     this.setState({
+      loading: false,
       openSignIn: false,
     });
   };
@@ -75,6 +77,7 @@ class HomePage extends Component {
 
   handleCloseSignUp = () => {
     this.setState({
+      loading: false,
       openSignUp: false,
     });
   };

@@ -13,10 +13,12 @@ class SignUp extends Component {
     showPasswordValidation: false,
     showSignInValidation: false,
     errors: {},
+    loading: false,
   };
 
   handleChange = (event) => {
     this.setState({
+      loading: false,
       showPasswordValidation: false,
       showSignInValidation: false,
       [event.target.name]: event.target.value,
@@ -30,6 +32,7 @@ class SignUp extends Component {
   };
 
   handleFormSubmit = (event) => {
+    this.showLoader();
     event.preventDefault();
     const {
       firstName,
@@ -42,6 +45,7 @@ class SignUp extends Component {
 
     if (password !== confirmPassword) {
       this.setState({
+        loading: false,
         showPasswordValidation: true,
       });
     } else {
@@ -57,8 +61,10 @@ class SignUp extends Component {
         if (res.response.status === 200) {
           this.props.handleCloseSignUp();
           this.props.handleOpenSignIn();
+          this.hideLoader();
         } else {
           this.setState({
+            loading: false,
             showSignInValidation: true,
             errors: res.responseData.Error,
           });
@@ -69,6 +75,7 @@ class SignUp extends Component {
   handleCloseSignUp = () => {
     this.props.handleCloseSignUp();
     this.setState({
+      loading: false,
       firstName: "",
       lastName: "",
       gender: "",
@@ -78,6 +85,19 @@ class SignUp extends Component {
       showPasswordValidation: false,
       showSignInValidation: false,
     });
+  };
+
+  showLoader = () => {
+    this.setState({
+      loading: true,
+    });
+  };
+  hideLoader = () => {
+    if (this.state.loading !== false) {
+      this.setState({
+        loading: false,
+      });
+    }
   };
   render() {
     const {
@@ -89,6 +109,7 @@ class SignUp extends Component {
       confirmPassword,
       showPasswordValidation,
       showSignInValidation,
+      loading,
       errors,
     } = this.state;
     return (
@@ -165,7 +186,6 @@ class SignUp extends Component {
                     value="Male"
                     checked={gender === "Male"}
                     onChange={(e) => this.onRadioHandler(e)}
-                    required
                   />
                   <label className="form-check-label" htmlFor="inlineRadio1">
                     Male
@@ -231,6 +251,9 @@ class SignUp extends Component {
                   type="submit"
                 >
                   Sign up
+                  {loading && (
+                    <i className="fas fa-circle-notch fa-spin custom-loader"></i>
+                  )}
                 </button>
               </form>
             </div>

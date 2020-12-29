@@ -9,6 +9,7 @@ import {
   genresMusic,
   genres,
   retroClassic,
+  hideLoader,
 } from "../../../Actions";
 import { connect } from "react-redux";
 class ArtistDetails extends Component {
@@ -17,8 +18,6 @@ class ArtistDetails extends Component {
     activeMusic: false,
   };
   componentDidMount() {
-    console.log(this.props.match.params.musics);
-    console.log(this.props.match.params.type);
     if (this.props.match.params.type === "chartsData") {
       this.getChartDetails();
     }
@@ -209,4 +208,5 @@ export default connect(MapStateToProps, {
   getChartDetails,
   genresMusic,
   retroClassic,
+  hideLoader,
 })(ArtistDetails);

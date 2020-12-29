@@ -7,7 +7,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import ImagePopover from "../ImagePopover/ImagePopover";
 import Audio from "../../../Components/WrapperComponents/Audio/Audio";
 import { connect } from "react-redux";
-import { setMusicData } from "../../../Actions";
+import { setMusicData, showLoader } from "../../../Actions";
 import history from "../../../history";
 
 class Carousel extends Component {
@@ -77,6 +77,7 @@ class Carousel extends Component {
                   data.genresImage ||
                   data.hitsArtistImage ? (
                     <NavLink
+                      onClick={(e) => this.props.showLoader()}
                       to={
                         (data.artistName && `/artistData/${data.artistName}`) ||
                         (data.chartName && `/chartsData/${data.chartName}`) ||
@@ -157,4 +158,7 @@ class Carousel extends Component {
     );
   }
 }
-export default withRouter(connect(null, { setMusicData })(Carousel));
+
+export default withRouter(
+  connect(null, { setMusicData, showLoader })(Carousel)
+);

@@ -3,28 +3,44 @@ import { Dialog } from "@material-ui/core";
 import { loginUser } from "../../Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import FullPageLoader from "../../Components/ReusableComponents/FullPageLoader";
+
 class SignIn extends Component {
   state = {
     email: "",
     password: "",
     errors: {},
     showLoginValidation: false,
+    loading: false,
+  };
+
+  showLoader = () => {
+    this.setState({
+      loading: true,
+    });
+  };
+  hideLoader = () => {
+    if (this.state.loading !== false) {
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   handleChange = (event) => {
     this.setState({
+      loading: false,
       showLoginValidation: false,
       [event.target.name]: event.target.value,
     });
   };
 
   handleFormSubmit = (event) => {
+    this.showLoader();
     event.preventDefault();
-    // this.setState({
-    //   email: "",
-    //   password: "",
-    // });
-    this.loginUser();
+    window.setTimeout(() => {
+      this.loginUser();
+    }, 500);
   };
 
   loginUser = () => {
@@ -35,23 +51,32 @@ class SignIn extends Component {
         this.props.history.push("/home");
       } else {
         this.setState({
+          loading: false,
           showLoginValidation: true,
           errors: res.responseData.Error,
         });
       }
     });
+    this.hideLoader();
   };
   handleCloseSignIn = () => {
     this.props.handleCloseSignIn();
     this.setState({
       showLoginValidation: false,
+      loading: false,
       email: "",
       password: "",
     });
   };
 
   render() {
-    const { email, password, showLoginValidation, errors } = this.state;
+    const {
+      email,
+      password,
+      showLoginValidation,
+      errors,
+      loading,
+    } = this.state;
     return (
       <Dialog open={this.props.openSignIn} className="signin-page">
         <div className="modal-dialog theme-dialog">
@@ -109,8 +134,12 @@ class SignIn extends Component {
                 <button
                   className="btn btn-block btn-bold btn-air btn-info load-page"
                   type="submit"
+                  disabled={loading}
                 >
                   Sign in
+                  {loading && (
+                    <i className="fas fa-circle-notch fa-spin custom-loader"></i>
+                  )}
                 </button>
               </form>
             </div>

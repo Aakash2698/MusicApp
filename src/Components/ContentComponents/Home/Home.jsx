@@ -11,21 +11,10 @@ import {
   genres,
   getSongsType,
   setMusicData,
+  showLoader,
+  hideLoader,
 } from "../../../Actions";
-import one from "../../../Assets/image/sliderImage/1.jpg";
-import two from "../../../Assets/image/sliderImage/2.jpg";
-import three from "../../../Assets/image/sliderImage/3.jpg";
-import four from "../../../Assets/image/sliderImage/4.jpg";
-import five from "../../../Assets/image/sliderImage/5.jpg";
-import six from "../../../Assets/image/sliderImage/6.jpg";
 import Carousel from "../../ReusableComponents/Carousel/CustomeCarousel";
-
-import remix from "../../../Assets/image/Genres/aa.jpg";
-import rock from "../../../Assets/image/Genres/bb.jpg";
-import sufi from "../../../Assets/image/Genres/cc.jpg";
-import romantic from "../../../Assets/image/Genres/dd.jpg";
-import sports from "../../../Assets/image/Genres/ee.jpg";
-import old from "../../../Assets/image/Genres/ff.jpg";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 
 class Home extends Component {
@@ -36,44 +25,44 @@ class Home extends Component {
       tabValue: "Recent",
       showPopover: false,
       currentIndex: 0,
-      topCharts: [
-        {
-          id: 1,
-          songName: "I Love You Mummy",
-          artist: "Arebica Luna",
-          songImage: one,
-        },
-        {
-          id: 2,
-          songName: "Shack your butty",
-          artist: "Gerrina Linda",
-          songImage: two,
-        },
-        {
-          id: 3,
-          songName: "Do it your way(Female)",
-          artist: "Zunira Willy & Nutty Nina",
-          songImage: three,
-        },
-        {
-          id: 4,
-          songName: "Say yes",
-          artist: "Johnny Marro",
-          songImage: four,
-        },
-        {
-          id: 5,
-          songName: "Where is your letter",
-          artist: "Jina Moore & Lenisa Gory",
-          songImage: five,
-        },
-        {
-          id: 6,
-          songName: "Hey not me",
-          artist: "Rasomi Pelina",
-          songImage: six,
-        },
-      ],
+      // topCharts: [
+      //   {
+      //     id: 1,
+      //     songName: "I Love You Mummy",
+      //     artist: "Arebica Luna",
+      //     songImage: one,
+      //   },
+      //   {
+      //     id: 2,
+      //     songName: "Shack your butty",
+      //     artist: "Gerrina Linda",
+      //     songImage: two,
+      //   },
+      //   {
+      //     id: 3,
+      //     songName: "Do it your way(Female)",
+      //     artist: "Zunira Willy & Nutty Nina",
+      //     songImage: three,
+      //   },
+      //   {
+      //     id: 4,
+      //     songName: "Say yes",
+      //     artist: "Johnny Marro",
+      //     songImage: four,
+      //   },
+      //   {
+      //     id: 5,
+      //     songName: "Where is your letter",
+      //     artist: "Jina Moore & Lenisa Gory",
+      //     songImage: five,
+      //   },
+      //   {
+      //     id: 6,
+      //     songName: "Hey not me",
+      //     artist: "Rasomi Pelina",
+      //     songImage: six,
+      //   },
+      // ],
       responsive1: {
         0: {
           items: 1,
@@ -134,6 +123,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    this.props.showLoader();
     this.topChartMusic();
     this.newReleaseMusic();
     this.retroClassicMusic();
@@ -714,5 +704,7 @@ export default connect(MapStateToProps, {
   featureArtists,
   genres,
   getSongsType,
+  showLoader,
+  hideLoader,
   setMusicData,
 })(Home);
