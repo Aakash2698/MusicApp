@@ -13,7 +13,6 @@ class Artists extends Component {
     this.props.featureArtists();
   };
   render() {
-    console.log(this.props.artistsData);
     return (
       <div>
         <h1 className="genres-heading">Artists</h1>

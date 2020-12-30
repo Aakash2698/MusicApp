@@ -8,21 +8,21 @@ import Api from "./service_api/index";
 // const composeEnhancers = composeWithDevTools({
 //     realtime: true
 // });
-console.log(Api);
+
 const middlewares = [thunk.withExtraArgument(Api)];
-if (process.env.NODE_ENV !== "production") {
-  middlewares.push(
-    createLogger({
-      colors: {
-        title: () => "inherit",
-        prevState: () => "red",
-        action: () => "#03A9F4",
-        nextState: () => "#4CAF50",
-        error: () => "#F20404",
-      },
-    })
-  );
-}
+// if (process.env.NODE_ENV !== "production") {
+//   middlewares.push(
+//     createLogger({
+//       colors: {
+//         title: () => "inherit",
+//         prevState: () => "red",
+//         action: () => "#03A9F4",
+//         nextState: () => "#4CAF50",
+//         error: () => "#F20404",
+//       },
+//     })
+//   );
+// }
 
 // const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
 // const store = createStore(reducer, applyMiddleware(...middlewares));

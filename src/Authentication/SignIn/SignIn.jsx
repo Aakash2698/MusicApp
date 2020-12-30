@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Dialog } from "@material-ui/core";
-import { loginUser } from "../../Actions";
+import { loginUser, setUserData } from "../../Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import FullPageLoader from "../../Components/ReusableComponents/FullPageLoader";
+import Profile from "../../Components/ContentComponents/Profile";
 
 class SignIn extends Component {
   state = {
@@ -47,7 +48,9 @@ class SignIn extends Component {
     const { email, password } = this.state;
     const userData = { email: email, password: password };
     this.props.loginUser(userData).then((res) => {
+      console.log(res);
       if (res.responseData.res === 200) {
+        this.props.setUserData(res.responseData.userData);
         this.props.history.push("/home");
       } else {
         this.setState({
@@ -157,4 +160,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser })(SignIn);
+export default connect(mapStateToProps, { loginUser, setUserData })(SignIn);

@@ -1,98 +1,96 @@
 import React, { Component } from "react";
 import "./Profile.scss";
 import profile from "../../../Assets/image/profile.jpg";
+import { connect } from "react-redux";
+// import { setUserData } from "../../../Actions";
 
-export default class Profile extends Component {
+class Profile extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="row section">
         <div className="col-xl-10 mx-auto">
           <div className="row">
-            <div className="col-xl-4 col-md-5">
-              <div className="card h-auto" style={{ background: "#343a40" }}>
-                <div className="card-body text-center">
-                  <div className="avatar avatar-xl avatar-circle mx-auto mb-4">
-                    <img src={profile} alt="user-image" />
-                  </div>
-                  <h6 className="mb-3" style={{ color: "#adb5bd" }}>
-                    Hallo Admin
-                  </h6>
-                  <button type="button" className="btn btn-danger btn-air">
-                    Change Image
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-8 col-md-7">
+            <div className="col-xl-12 col-md-12">
               <div className="card h-auto" style={{ background: "#343a40" }}>
                 <div className="card-body">
                   <form action="#" className="row">
-                    <div className="col-xl-6 form-group">
+                    <div className="col-12 form-group">
                       <label
                         htmlFor="firstName"
-                        className="form-label"
-                        style={{ color: "#adb5bd" }}
+                        className="form-label profile-title"
                       >
-                        First Name
+                        First Name :
                       </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="form-control bg-color"
-                        value="Halo"
-                      />
+                      <label
+                        htmlFor="Name"
+                        className="form-label"
+                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
+                      >
+                        {this.props.profileData.firstName}
+                      </label>
                     </div>
-                    <div className="col-xl-6 form-group">
+                    <div className="col-12 form-group">
+                      <label
+                        htmlFor="lastName"
+                        className="form-label profile-title"
+                      >
+                        Last Name :
+                      </label>
                       <label
                         htmlFor="lastName"
                         className="form-label"
-                        style={{ color: "#adb5bd" }}
+                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
                       >
-                        Last Name
+                        {this.props.profileData.lastName}
                       </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="form-control bg-color"
-                        value="admin"
-                      />
                     </div>
                     <div className="col-12 form-group">
                       <label
                         htmlFor="dispName"
-                        className="form-label"
-                        style={{ color: "#adb5bd" }}
+                        className="form-label profile-title"
                       >
-                        Display Name
+                        Display Name :
                       </label>
-                      <input
-                        type="text"
-                        id="dispName"
-                        className="form-control bg-color"
-                        value="hallo admin"
-                      />
-                    </div>
-                    <div className="col-12 form-group">
                       <label
                         htmlFor="dispName"
                         className="form-label"
-                        style={{ color: "#adb5bd" }}
+                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
                       >
-                        About
+                        {this.props.profileData.firstName +
+                          " " +
+                          this.props.profileData.lastName}
                       </label>
-                      <textarea
-                        className="form-control bg-color"
-                        id="about"
-                        cols="30"
-                        rows="5"
-                        name="about"
-                        value="hello guys"
-                      ></textarea>
                     </div>
-                    <div className="col-12">
-                      <button type="button" className="btn btn-primary btn-air">
-                        Save Changes
-                      </button>
+                    <div className="col-12 form-group">
+                      <label
+                        htmlFor="lastName"
+                        className="form-label profile-title"
+                      >
+                        Gender :
+                      </label>
+                      <label
+                        htmlFor="lastName"
+                        className="form-label"
+                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
+                      >
+                        {this.props.profileData.gender}
+                      </label>
+                    </div>
+                    <div className="col-12 form-group">
+                      <label
+                        htmlFor="lastName"
+                        className="form-label profile-title"
+                      >
+                        Email :
+                      </label>
+                      <label
+                        htmlFor="lastName"
+                        className="form-label"
+                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
+                      >
+                        {this.props.profileData.email}
+                      </label>
                     </div>
                   </form>
                 </div>
@@ -104,3 +102,9 @@ export default class Profile extends Component {
     );
   }
 }
+
+const MapStateToProps = (state) => ({
+  profileData: state.auth.userData,
+});
+
+export default connect(MapStateToProps)(Profile);

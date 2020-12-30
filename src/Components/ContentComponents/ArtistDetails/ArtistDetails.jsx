@@ -66,7 +66,6 @@ class ArtistDetails extends Component {
   };
 
   render() {
-    console.log(this.props.currentState);
     let artistData, songsData;
     if (this.props.currentState === "topCharts") {
       artistData = this.props.topCharts.artists;

@@ -3,6 +3,7 @@ import {
   USER_LOADING,
   SHOW_LOADER,
   HIDE_LOADER,
+  USER_DATA,
 } from "../ActionTypes/ActionTypes";
 
 const isEmpty = require("is-empty");
@@ -13,6 +14,7 @@ const initialState = {
   loading: false,
   success: false,
   isLoading: false,
+  userData: [],
 };
 
 export default function (state = initialState, action) {
@@ -37,6 +39,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+      };
+    case USER_DATA:
+      console.log("namsate");
+      return {
+        ...state,
+        userData: action.payload,
       };
     default:
       return state;

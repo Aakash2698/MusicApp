@@ -18,5 +18,7 @@ export const SONG_TYPE_DATA = "SONG_TYPE_DATA";
 export const SHOW_LOADER = "SHOW_LOADER";
 export const HIDE_LOADER = "HIDE_LOADER";
 
+export const USER_DATA = "USER_DATA";
+
 export const TOP_CHART = "TOP_CHART";
 export const SONG_DATA = "SONG_DATA";

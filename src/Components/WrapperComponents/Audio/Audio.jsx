@@ -16,6 +16,7 @@ class Audio extends Component {
   state = {
     dropdownExpand: false,
     volumeSlider: false,
+    closeAudioControl: false,
     onPlay: "http://localhost:4000/uploads/1608011825737.mp3",
     songName: "Ek Tarfa(Reprise)",
     songArtist: "Darshan Raval",
@@ -32,8 +33,24 @@ class Audio extends Component {
       volumeSlider: !this.state.volumeSlider,
     });
   };
+  componentWillMount() {
+    document.addEventListener("mousedown", this.popupActionClick, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.popupActionClick, false);
+  }
+  popupActionClick = (e) => {
+    if (this.node.contains(e.target)) {
+      this.setState({
+        closeAudioControl: true,
+      });
+      return true;
+    }
+    this.setState({
+      closeAudioControl: false,
+    });
+  };
   componentWillReceiveProps(nextProps) {
-    console.log(this.props);
     if (this.props.currentSongData !== nextProps.currentSongData) {
       nextProps.currentSongData.map((data, index) => {
         this.setState({
@@ -47,7 +64,6 @@ class Audio extends Component {
   }
 
   render() {
-    console.log(this.props.currentSongData);
     const {
       dropdownExpand,
       volumeSlider,
@@ -55,6 +71,7 @@ class Audio extends Component {
       songName,
       songArtist,
       songImage,
+      closeAudioControl,
     } = this.state;
     const fullWidth = this.props;
     let audioClass;
@@ -82,8 +99,9 @@ class Audio extends Component {
               showJumpControls={false}
               customProgressBarSection={[RHAP_UI.PROGRESS_BAR]}
               customVolumeControls={[
-                volumeSlider ? RHAP_UI.VOLUME : "",
+                closeAudioControl && volumeSlider ? RHAP_UI.VOLUME : "",
                 <button
+                  ref={(node) => (this.node = node)}
                   className="btn btn-icon-only"
                   onClick={this.openVolumeSlider}
                   style={{ position: "absolute", right: "105px" }}

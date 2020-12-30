@@ -6,12 +6,20 @@ import translate from "../../../Assets/Logos/translate.svg";
 import profile from "../../../Assets/image/profile.jpg";
 import { Dialog } from "@material-ui/core";
 import { connect } from "react-redux";
-import { logoutUser } from "../../../Actions/index";
+import {
+  logoutUser,
+  featureArtists,
+  newReleaseMusic,
+  setMusicData,
+} from "../../../Actions/index";
 import { NavLink } from "react-router-dom";
+import Profile from "../../ContentComponents/Profile";
 class Header extends Component {
   state = {
     openProfile: false,
     openDialogBox: false,
+    dropdownActionVisible: false,
+    suggestionBox: false,
     launguageData: [
       {
         launguageType: "Hindi",
@@ -82,6 +90,20 @@ class Header extends Component {
       },
     ],
   };
+
+  componentDidMount() {
+    this.featureArtist();
+    this.newReleaseMusic();
+  }
+
+  featureArtist = () => {
+    this.props.featureArtists();
+  };
+
+  newReleaseMusic = () => {
+    this.props.newReleaseMusic();
+  };
+
   logoutUser = () => {
     this.props.logoutUser();
     this.props.history.push("/home-page");
@@ -104,8 +126,55 @@ class Header extends Component {
       openProfile: !this.state.openProfile,
     });
   };
+  hidePopover = () => {
+    this.handleOpenProfile();
+  };
+  componentWillMount() {
+    document.addEventListener("mousedown", this.popupActionClick, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.popupActionClick, false);
+  }
+  popupActionClick = (e) => {
+    if (this.node.contains(e.target)) {
+      this.setState({
+        dropdownActionVisible: true,
+      });
+      return true;
+    }
+    this.setState({
+      dropdownActionVisible: false,
+    });
+  };
+  openSuggestionBox = () => {
+    this.setState({
+      suggestionBox: !this.state.suggestionBox,
+    });
+  };
+  getSongData = (songName, artist, songImage, songUrl) => {
+    const songData = [
+      {
+        songName: songName,
+        artist: artist,
+        songImage: songImage,
+        songUrl: songUrl,
+      },
+    ];
+    this.props.setMusicData(songData);
+  };
+
   render() {
-    const { openProfile, openDialogBox, launguageData } = this.state;
+    const filterArtist = this.props.featureArtist.slice(0, 6);
+    const filterTrack = this.props.newReleases.slice(0, 3);
+
+    const {
+      openProfile,
+      openDialogBox,
+      launguageData,
+      dropdownActionVisible,
+      suggestionBox,
+    } = this.state;
+    console.log(suggestionBox);
     const fullWidth = this.props.fullWidth;
     const scrollValue = this.props.scrollTop;
     let header;
@@ -146,7 +215,111 @@ class Header extends Component {
               placeholder="Search...."
               id="searchInput"
               className="form-control"
+              onClick={this.openSuggestionBox}
             />
+            <div
+              className={
+                suggestionBox
+                  ? "search-card ps ps--active-y open-search"
+                  : "search-card ps ps--active-y "
+              }
+            >
+              <div className="mb-3">
+                <div className="d-flex">
+                  <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
+                    Artists
+                  </span>
+                  <NavLink to="/artists" className="color-import">
+                    {" "}
+                    View All
+                  </NavLink>
+                </div>
+                <hr />
+                <div className="row">
+                  {filterArtist &&
+                    filterArtist.map((data, index) => {
+                      return (
+                        <div className="col-xl-2 col-md-4 ">
+                          <div className="custom-card mb-3">
+                            <NavLink
+                              to={
+                                data.artistName &&
+                                `/artistData/${data.artistName}`
+                              }
+                              onClick={this.openSuggestionBox}
+                            >
+                              <img
+                                src={data.artistImage}
+                                alt=""
+                                className="card-img--radius-md"
+                              />
+                              <p className="text-truncate mt-2 color-import ">
+                                {data.artistName}
+                              </p>
+                            </NavLink>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+              <div className="mb-3">
+                <div className="d-flex">
+                  <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
+                    Track
+                  </span>
+                  <NavLink to="/music" className="color-import">
+                    View All
+                  </NavLink>
+                </div>
+                <hr />
+                <div className="row">
+                  {filterTrack &&
+                    filterTrack.map((data, index) => {
+                      return (
+                        <div
+                          className="col-xl-4 col-md-6"
+                          onClick={
+                            data.songUrl
+                              ? (e) =>
+                                  this.getSongData(
+                                    data.songName,
+                                    data.artist,
+                                    data.songImage,
+                                    data.songUrl
+                                  )
+                              : ""
+                          }
+                        >
+                          <div
+                            className="custom-card mb-3"
+                            onClick={this.openSuggestionBox}
+                          >
+                            <div className="text-dark custom-card--inline">
+                              <div className="custom-card--inline-img">
+                                <img
+                                  src={data.songImage}
+                                  alt="song-image"
+                                  className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
+                                />
+                              </div>
+                              <div className="custom-card--inline-desc">
+                                <p className="text-truncate mb-0 song-color pd-11">
+                                  {data.songName}
+                                </p>
+                                <p className="text-truncate text-muted font-sm">
+                                  {data.artistName}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
           </form>
           <ul className="header-options d-flex align-items-center">
             <li style={{ listStyle: "none", display: "flex" }}>
@@ -156,7 +329,7 @@ class Header extends Component {
               <img src={translate} alt="translate" className="launguage-img" />
             </li>
 
-            <li className="dropdown fade-in">
+            <li className="dropdown fade-in" ref={(node) => (this.node = node)}>
               <span
                 className="d-flex align-items-center py-2"
                 onClick={this.handleOpenProfile}
@@ -167,58 +340,59 @@ class Header extends Component {
                 </div>
                 <span className="pl-2">Halo Admin</span>
               </span>
-
-              <div
-                className={
-                  !openProfile
-                    ? "dropdown-menu dropdown-menu-right dropdown-hide"
-                    : "dropdown-menu dropdown-menu-right"
-                }
-                x-placement="top-end"
-                style={{
-                  position: "absolute",
-                  willChange: "transform",
-                  top: "0px",
-                  left: "0px",
-                  transform: "translate3d(-44px, 18px, 0px)",
-                }}
-              >
-                <NavLink to={"/profile"}>
-                  <span className="dropdown-item">
-                    <i
-                      className="iconify dropdown-icon"
-                      data-icon="ion-md-contact"
-                      data-inline="false"
-                    ></i>
-                    <span>Profile</span>
-                  </span>
-                </NavLink>
-                <span className="dropdown-item">
-                  <span
-                    className="iconify dropdown-icon"
-                    data-icon="ion-md-radio-button-off"
-                    data-inline="false"
-                  ></span>
-                  <span>Your Plan</span>
-                </span>
-                <span className="dropdown-item">
-                  <span
-                    className="iconify dropdown-icon"
-                    data-icon="ion-md-settings"
-                    data-inline="false"
-                  ></span>
-                  <span>Settings</span>
-                </span>
-                <div className="dropdown-divider"> </div>
-                <div className="px-4 py-2">
-                  <span
-                    className="btn btn-sm btn-air btn-pill btn-danger"
-                    onClick={this.logoutUser}
-                  >
-                    Logout
-                  </span>
+              {dropdownActionVisible && (
+                <div
+                  className={
+                    !openProfile
+                      ? "dropdown-menu dropdown-menu-right dropdown-hide"
+                      : "dropdown-menu dropdown-menu-right"
+                  }
+                  x-placement="top-end"
+                  style={{
+                    position: "absolute",
+                    willChange: "transform",
+                    top: "0px",
+                    left: "0px",
+                    transform: "translate3d(-44px, 18px, 0px)",
+                  }}
+                >
+                  <NavLink to={"/profile"} onClick={this.hidePopover}>
+                    <span className="dropdown-item">
+                      <i
+                        className="iconify dropdown-icon"
+                        data-icon="ion-md-contact"
+                        data-inline="false"
+                      ></i>
+                      <span>Profile</span>
+                    </span>
+                  </NavLink>
+                  {/* <span className="dropdown-item">
+                            <span
+                              className="iconify dropdown-icon"
+                              data-icon="ion-md-radio-button-off"
+                              data-inline="false"
+                            ></span>
+                            <span>Your Plan</span>
+                          </span>
+                          <span className="dropdown-item">
+                            <span
+                              className="iconify dropdown-icon"
+                              data-icon="ion-md-settings"
+                              data-inline="false"
+                            ></span>
+                            <span>Settings</span>
+                          </span> */}
+                  <div className="dropdown-divider"> </div>
+                  <div className="px-4 py-2">
+                    <span
+                      className="btn btn-sm btn-air btn-pill btn-danger"
+                      onClick={this.logoutUser}
+                    >
+                      Logout
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
             </li>
           </ul>
         </div>
@@ -278,4 +452,29 @@ class Header extends Component {
     );
   }
 }
-export default connect(null, { logoutUser })(Header);
+
+// export default connect(null, { logoutUser })(Header);
+
+const MapStateToProps = (state) => ({
+  // topCharts: state.home.topChartsData,
+  newReleases: state.home.newReleases,
+  // retroClassic: state.home.retroClassic,
+  // radio: state.home.radioMusic,
+  featureArtist: state.home.featureArtists,
+  // genresData: state.home.genres,
+  // songsType: state.home.songsTypeData,
+});
+
+export default connect(MapStateToProps, {
+  logoutUser,
+  // topChartMusic,
+  newReleaseMusic,
+  // retroClassicMusic,
+  // radioMusic,
+  featureArtists,
+  // genres,
+  // getSongsType,
+  // showLoader,
+  // hideLoader,
+  setMusicData,
+})(Header);

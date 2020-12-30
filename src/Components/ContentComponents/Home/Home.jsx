@@ -148,7 +148,6 @@ class Home extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props);
     if (this.props.songsType !== nextProps.songsType) {
       this.setState({
         songData: nextProps.songsType.songs,
@@ -187,7 +186,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.props.internationalMusic);
     const {
       tabValue,
       songData,
@@ -360,6 +358,7 @@ class Home extends Component {
                                   src={data.songImage}
                                   alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">
@@ -419,6 +418,7 @@ class Home extends Component {
                                   src={data.songImage}
                                   alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">
@@ -483,6 +483,7 @@ class Home extends Component {
                                   src={data.songImage}
                                   alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">

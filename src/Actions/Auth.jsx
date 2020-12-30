@@ -8,6 +8,7 @@ import {
   GET_ERRORS,
   SHOW_LOADER,
   HIDE_LOADER,
+  USER_DATA,
 } from "../ActionTypes/ActionTypes.jsx";
 
 // export const registerUser = (userData, history) => {
@@ -99,10 +100,6 @@ export const loginUser = (payload) => (dispatch, getState, Api) => {
       SetAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
-      // history.push({
-      //   pathname: "/home",
-      // });
-      // dispatch(loginSuccess(res.responseData.response_data));
     }
     return res;
   });
@@ -159,5 +156,13 @@ export const showLoader = () => (dispatch) => {
 export const hideLoader = () => (dispatch) => {
   dispatch({
     type: HIDE_LOADER,
+  });
+};
+
+export const setUserData = (payload) => (dispatch) => {
+  console.log("hello", payload);
+  return dispatch({
+    type: USER_DATA,
+    payload: payload,
   });
 };

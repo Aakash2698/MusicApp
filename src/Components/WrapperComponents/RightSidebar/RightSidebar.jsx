@@ -55,7 +55,6 @@ class RightSidebar extends Component {
   };
   componentWillReceiveProps(nextProps) {
     if (this.props.currentPlay !== nextProps.currentPlay) {
-      console.log(nextProps.currentPlay);
     }
   }
 
@@ -75,8 +74,6 @@ class RightSidebar extends Component {
   };
 
   render() {
-    console.log(this.props.currentPlay, "41144144");
-    console.log("heyyy my props", this.props);
     const {
       openRightSidebar,
       topCharts,
@@ -124,6 +121,7 @@ class RightSidebar extends Component {
                           src={data.songImage}
                           alt="song-image"
                           className="card-img--radius-sm"
+                          style={{ height: "40px", width: "40px" }}
                         />
                       </div>
                       <div className="custom-card--inline-desc">

@@ -12,7 +12,6 @@ class Genres extends Component {
     this.props.genres();
   };
   render() {
-    console.log(this.props.genresData);
     return (
       <div>
         <h1 className="genres-heading">Genres</h1>
