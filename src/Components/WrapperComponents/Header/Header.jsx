@@ -11,6 +11,7 @@ import {
   featureArtists,
   newReleaseMusic,
   setMusicData,
+  getSearchAll,
 } from "../../../Actions/index";
 import { NavLink } from "react-router-dom";
 import Profile from "../../ContentComponents/Profile";
@@ -20,6 +21,7 @@ class Header extends Component {
     openDialogBox: false,
     dropdownActionVisible: false,
     suggestionBox: false,
+    searchText: "",
     launguageData: [
       {
         launguageType: "Hindi",
@@ -91,19 +93,6 @@ class Header extends Component {
     ],
   };
 
-  componentDidMount() {
-    this.featureArtist();
-    this.newReleaseMusic();
-  }
-
-  featureArtist = () => {
-    this.props.featureArtists();
-  };
-
-  newReleaseMusic = () => {
-    this.props.newReleaseMusic();
-  };
-
   logoutUser = () => {
     this.props.logoutUser();
     this.props.history.push("/home-page");
@@ -146,37 +135,52 @@ class Header extends Component {
       dropdownActionVisible: false,
     });
   };
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
+  };
+  setSearchData = (key) => {
+    this.setState(
+      {
+        searchText: key,
+        suggestionBox: true,
+      },
+      () => {
+        this.props.getSearchAll(this.state.searchText);
+        if (this.state.searchText === "") {
+          this.setState({
+            suggestionBox: false,
+          });
+        }
+      }
+    );
+  };
+
   openSuggestionBox = () => {
     this.setState({
-      suggestionBox: !this.state.suggestionBox,
+      suggestionBox: false,
+      searchText: "",
     });
   };
-  getSongData = (songName, artist, songImage, songUrl) => {
-    const songData = [
-      {
-        songName: songName,
-        artist: artist,
-        songImage: songImage,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
-  };
-
   render() {
-    const filterArtist = this.props.featureArtist.slice(0, 6);
-    const filterTrack = this.props.newReleases.slice(0, 3);
-
     const {
       openProfile,
       openDialogBox,
       launguageData,
       dropdownActionVisible,
       suggestionBox,
+      searchText,
     } = this.state;
-    console.log(suggestionBox);
+
+    console.log(this.props.searchArray.songData);
+    const filterArtist = this.props.searchArray.albumData;
+    const filterTrack = this.props.searchArray.songData;
+
+    console.log(filterArtist && filterArtist.length, "filterArtist");
+    console.log(filterTrack && filterTrack.length, "filterTrack");
+
     const fullWidth = this.props.fullWidth;
     const scrollValue = this.props.scrollTop;
+
     let header;
     let headerScroll;
     let headerLong;
@@ -215,111 +219,118 @@ class Header extends Component {
               placeholder="Search...."
               id="searchInput"
               className="form-control"
-              onClick={this.openSuggestionBox}
+              value={this.state.searchText}
+              onChange={(e) => this.setSearchData(e.target.value)}
             />
-            <div
-              className={
-                suggestionBox
-                  ? "search-card ps ps--active-y open-search"
-                  : "search-card ps ps--active-y "
-              }
-            >
-              <div className="mb-3">
-                <div className="d-flex">
-                  <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
-                    Artists
-                  </span>
-                  <NavLink to="/artists" className="color-import">
-                    {" "}
-                    View All
-                  </NavLink>
-                </div>
-                <hr />
-                <div className="row">
-                  {filterArtist &&
-                    filterArtist.map((data, index) => {
-                      return (
-                        <div className="col-xl-2 col-md-4 ">
-                          <div className="custom-card mb-3">
-                            <NavLink
-                              to={
-                                data.artistName &&
-                                `/artistData/${data.artistName}`
-                              }
-                              onClick={this.openSuggestionBox}
-                            >
-                              <img
-                                src={data.artistImage}
-                                alt=""
-                                className="card-img--radius-md"
-                              />
-                              <p className="text-truncate mt-2 color-import ">
-                                {data.artistName}
-                              </p>
-                            </NavLink>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
-              <div className="mb-3">
-                <div className="d-flex">
-                  <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
-                    Track
-                  </span>
-                  <NavLink to="/music" className="color-import">
-                    View All
-                  </NavLink>
-                </div>
-                <hr />
-                <div className="row">
-                  {filterTrack &&
-                    filterTrack.map((data, index) => {
-                      return (
-                        <div
-                          className="col-xl-4 col-md-6"
-                          onClick={
-                            data.songUrl
-                              ? (e) =>
-                                  this.getSongData(
-                                    data.songName,
-                                    data.artist,
-                                    data.songImage,
-                                    data.songUrl
-                                  )
-                              : ""
-                          }
-                        >
-                          <div
-                            className="custom-card mb-3"
-                            onClick={this.openSuggestionBox}
-                          >
-                            <div className="text-dark custom-card--inline">
-                              <div className="custom-card--inline-img">
-                                <img
-                                  src={data.songImage}
-                                  alt="song-image"
-                                  className="card-img--radius-sm"
-                                  style={{ height: "40px", width: "40px" }}
-                                />
+            {filterArtist &&
+              filterTrack &&
+              (filterArtist.length !== 0 || filterTrack.length !== 0) && (
+                <div
+                  className={
+                    suggestionBox
+                      ? "search-card ps ps--active-y open-search"
+                      : "search-card ps ps--active-y "
+                  }
+                >
+                  {filterArtist && filterArtist.length >= 1 ? (
+                    <div className="mb-3">
+                      <div className="d-flex">
+                        <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
+                          Artists
+                        </span>
+                        <NavLink to="/artists" className="color-import">
+                          View All
+                        </NavLink>
+                      </div>
+                      <hr />
+                      <div className="row">
+                        {filterArtist &&
+                          filterArtist.map((data, index) => {
+                            return (
+                              <div className="col-xl-2 col-md-4 ">
+                                <div className="custom-card mb-3">
+                                  <NavLink
+                                    to={
+                                      data.artistName &&
+                                      `/artistData/${data.artistName}`
+                                    }
+                                    onClick={this.openSuggestionBox}
+                                  >
+                                    <img
+                                      src={data.artistImage}
+                                      alt=""
+                                      className="card-img--radius-md"
+                                    />
+                                    <p className="text-truncate mt-2 color-import ">
+                                      {data.artistName}
+                                    </p>
+                                  </NavLink>
+                                </div>
                               </div>
-                              <div className="custom-card--inline-desc">
-                                <p className="text-truncate mb-0 song-color pd-11">
-                                  {data.songName}
-                                </p>
-                                <p className="text-truncate text-muted font-sm">
-                                  {data.artistName}
-                                </p>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {filterTrack && filterTrack.length >= 1 ? (
+                    <div className="mb-3">
+                      <div className="d-flex">
+                        <span className="text-uppercase mr-auto font-weight-bold text-dark color-import">
+                          Track
+                        </span>
+                        <NavLink to="/music" className="color-import">
+                          View All
+                        </NavLink>
+                      </div>
+                      <hr />
+                      <div className="row">
+                        {filterTrack &&
+                          filterTrack.map((data, index) => {
+                            return (
+                              <div
+                                className="col-xl-4 col-md-6"
+                                onClick={(e) =>
+                                  this.getData(filterTrack, index)
+                                }
+                              >
+                                <div
+                                  className="custom-card mb-3"
+                                  onClick={this.openSuggestionBox}
+                                >
+                                  <div className="text-dark custom-card--inline">
+                                    <div className="custom-card--inline-img">
+                                      <img
+                                        src={data.songImage}
+                                        alt="song-image"
+                                        className="card-img--radius-sm"
+                                        style={{
+                                          height: "40px",
+                                          width: "40px",
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="custom-card--inline-desc">
+                                      <p className="text-truncate mb-0 song-color pd-11">
+                                        {data.songName}
+                                      </p>
+                                      <p className="text-truncate text-muted font-sm">
+                                        {data.artistName}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                            );
+                          })}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              </div>
-            </div>
+              )}
           </form>
           <ul className="header-options d-flex align-items-center">
             <li style={{ listStyle: "none", display: "flex" }}>
@@ -453,28 +464,12 @@ class Header extends Component {
   }
 }
 
-// export default connect(null, { logoutUser })(Header);
-
 const MapStateToProps = (state) => ({
-  // topCharts: state.home.topChartsData,
-  newReleases: state.home.newReleases,
-  // retroClassic: state.home.retroClassic,
-  // radio: state.home.radioMusic,
-  featureArtist: state.home.featureArtists,
-  // genresData: state.home.genres,
-  // songsType: state.home.songsTypeData,
+  searchArray: state.home.searchData,
 });
 
 export default connect(MapStateToProps, {
   logoutUser,
-  // topChartMusic,
-  newReleaseMusic,
-  // retroClassicMusic,
-  // radioMusic,
-  featureArtists,
-  // genres,
-  // getSongsType,
-  // showLoader,
-  // hideLoader,
   setMusicData,
+  getSearchAll,
 })(Header);

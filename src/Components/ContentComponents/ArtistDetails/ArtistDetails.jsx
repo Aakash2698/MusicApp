@@ -48,21 +48,16 @@ class ArtistDetails extends Component {
     this.props.retroClassic(this.props.match.params.musics);
   };
 
-  getData = (songName, songImage, artistName, songUrl) => {
-    const songData = [
-      {
-        songName: songImage,
-        songImage: songName,
-        artist: artistName,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
   };
   handleTabChange = (tabName) => {
     this.setState({
       tabValue: tabName,
     });
+  };
+  playAll = (allSongData) => {
+    this.props.setMusicData(allSongData);
   };
 
   render() {
@@ -112,7 +107,10 @@ class ArtistDetails extends Component {
                             "Hits Of " + data.hitsArtistName}
                         </h5>
                         <div className="mt-4">
-                          <button className="btn btn-pill btn-air btn-bold btn-danger play-all">
+                          <button
+                            className="btn btn-pill btn-air btn-bold btn-danger play-all"
+                            onClick={() => this.playAll(songsData)}
+                          >
                             Play all
                           </button>
                         </div>
@@ -148,14 +146,7 @@ class ArtistDetails extends Component {
                       <li
                         key={index}
                         className={activeMusic ? "active-music" : "songs-row"}
-                        onClick={(e) =>
-                          this.getData(
-                            data.songImage,
-                            data.songName,
-                            data.artistName,
-                            data.songUrl
-                          )
-                        }
+                        onClick={(e) => this.getData(songsData, index)}
                       >
                         <ul className="a_l artworkload _cursor">
                           <li className="s_cnt p_cnt desktop">

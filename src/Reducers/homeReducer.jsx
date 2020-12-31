@@ -12,6 +12,7 @@ import {
   RETRO_CLASSIC_MUSIC,
   ALL_SONGS,
   SONG_TYPE_DATA,
+  SEARCH_DATA,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -29,6 +30,8 @@ const initialState = {
   retroClassicMusic: [],
   allSongs: [],
   songsTypeData: [],
+  searchData: [],
+  index: 0,
 };
 
 export default function (state = initialState, action) {
@@ -46,7 +49,8 @@ export default function (state = initialState, action) {
     case SONG_DATA:
       return {
         ...state,
-        songData: action.payload,
+        songData: action.payload.payload,
+        index: action.payload.index,
       };
     case RETRO_CLASSIC:
       return {
@@ -103,7 +107,11 @@ export default function (state = initialState, action) {
         ...state,
         songsTypeData: action.payload,
       };
-
+    case SEARCH_DATA:
+      return {
+        ...state,
+        searchData: action.payload,
+      };
     default:
       return state;
   }

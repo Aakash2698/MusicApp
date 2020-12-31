@@ -10,16 +10,8 @@ class Music extends Component {
   AllSongs = () => {
     this.props.AllSongs();
   };
-  getSongData = (songName, artist, songImage, songUrl) => {
-    const songData = [
-      {
-        songName: songName,
-        artist: artist,
-        songImage: songImage,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
   };
   render() {
     return (
@@ -40,14 +32,7 @@ class Music extends Component {
                 return (
                   <div
                     className="custom-list--item "
-                    onClick={(e) =>
-                      this.getSongData(
-                        data.songName,
-                        data.artist,
-                        data.songImage,
-                        data.songUrl
-                      )
-                    }
+                    onClick={(e) => this.getData(this.props.songsData, index)}
                   >
                     <div className="text-dark custom-card--inline">
                       <div className="custom-card--inline-img">

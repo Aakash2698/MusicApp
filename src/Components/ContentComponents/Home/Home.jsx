@@ -173,16 +173,8 @@ class Home extends Component {
   genres = () => {
     this.props.genres();
   };
-  getData = (songName, songImage, artistName, songUrl) => {
-    const songData = [
-      {
-        songName: songImage,
-        songImage: songName,
-        artist: artistName,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
   };
 
   render() {
@@ -343,14 +335,7 @@ class Home extends Component {
                           <div
                             className="custom-item"
                             key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
+                            onClick={(e) => this.getData(songData, index)}
                           >
                             <div className="text-dark custom-card--inline">
                               <div className="custom-card--inline-img">
@@ -403,14 +388,7 @@ class Home extends Component {
                           <div
                             className="custom-item"
                             key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
+                            onClick={(e) => this.getData(songData, index)}
                           >
                             <div className="text-dark custom-card--inline">
                               <div className="custom-card--inline-img">
@@ -468,14 +446,7 @@ class Home extends Component {
                           <div
                             className="custom-item"
                             key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
+                            onClick={(e) => this.getData(songData, index)}
                           >
                             <div className="text-dark custom-card--inline">
                               <div className="custom-card--inline-img">

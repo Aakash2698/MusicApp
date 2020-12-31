@@ -12,7 +12,7 @@ import {
   RETRO_CLASSIC_MUSIC,
   ALL_SONGS,
   SONG_TYPE_DATA,
-  USER_DATA,
+  SEARCH_DATA,
 } from "../ActionTypes/ActionTypes";
 
 export const topChartMusic = () => (dispatch, getState, Api) => {
@@ -39,10 +39,10 @@ export const newReleaseMusic = () => (dispatch, getState, Api) => {
   });
 };
 
-export const setMusicData = (payload) => (dispatch) => {
+export const setMusicData = (payload, index) => (dispatch) => {
   return dispatch({
     type: SONG_DATA,
-    payload: payload,
+    payload: { payload, index },
   });
 };
 
@@ -159,6 +159,18 @@ export const getSongsType = (songType) => (dispatch, getState, Api) => {
     if (response.response.status === 200) {
       dispatch({
         type: SONG_TYPE_DATA,
+        payload: response.responseData,
+      });
+    }
+    return response;
+  });
+};
+
+export const getSearchAll = (searchText) => (dispatch, getState, Api) => {
+  return Api.get(`songs/searchAll/${searchText}`).then((response) => {
+    if (response.response.status === 200) {
+      dispatch({
+        type: SEARCH_DATA,
         payload: response.responseData,
       });
     }

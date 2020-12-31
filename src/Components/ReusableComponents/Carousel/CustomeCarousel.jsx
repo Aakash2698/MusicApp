@@ -24,16 +24,8 @@ class Carousel extends Component {
     });
   };
 
-  getSongData = (songName, artist, songImage, songUrl) => {
-    const songData = [
-      {
-        songName: songName,
-        artist: artist,
-        songImage: songImage,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getSongData = (songData, index) => {
+    this.props.setMusicData(songData, index);
   };
   render() {
     const { openPopover } = this.state;
@@ -62,13 +54,7 @@ class Carousel extends Component {
                   className={this.props.imageSize}
                   onClick={
                     data.songUrl
-                      ? (e) =>
-                          this.getSongData(
-                            data.songName,
-                            data.artist,
-                            data.songImage,
-                            data.songUrl
-                          )
+                      ? (e) => this.getSongData(imagePath, index)
                       : ""
                   }
                 >
