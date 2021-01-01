@@ -13,6 +13,7 @@ import {
   ALL_SONGS,
   SONG_TYPE_DATA,
   SEARCH_DATA,
+  ACTIVE_INDEX,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
   songsTypeData: [],
   searchData: [],
   index: 0,
+  activeIndex: null,
 };
 
 export default function (state = initialState, action) {
@@ -111,6 +113,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         searchData: action.payload,
+      };
+    case ACTIVE_INDEX:
+      return {
+        ...state,
+        activeIndex: action.payload,
       };
     default:
       return state;

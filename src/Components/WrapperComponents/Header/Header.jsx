@@ -13,7 +13,7 @@ import {
   setMusicData,
   getSearchAll,
 } from "../../../Actions/index";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect, withRouter } from "react-router-dom";
 import Profile from "../../ContentComponents/Profile";
 class Header extends Component {
   state = {
@@ -22,6 +22,7 @@ class Header extends Component {
     dropdownActionVisible: false,
     suggestionBox: false,
     searchText: "",
+    redirectSerach: false,
     launguageData: [
       {
         launguageType: "Hindi",
@@ -118,23 +119,23 @@ class Header extends Component {
   hidePopover = () => {
     this.handleOpenProfile();
   };
-  componentWillMount() {
-    document.addEventListener("mousedown", this.popupActionClick, false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.popupActionClick, false);
-  }
-  popupActionClick = (e) => {
-    if (this.node.contains(e.target)) {
-      this.setState({
-        dropdownActionVisible: true,
-      });
-      return true;
-    }
-    this.setState({
-      dropdownActionVisible: false,
-    });
-  };
+  // componentWillMount() {
+  //   document.addEventListener("mousedown", this.popupActionClick, false);
+  // }
+  // componentWillUnmount() {
+  //   document.removeEventListener("mousedown", this.popupActionClick, false);
+  // }
+  // popupActionClick = (e) => {
+  //   if (this.node.contains(e.target)) {
+  //     this.setState({
+  //       dropdownActionVisible: true,
+  //     });
+  //     return true;
+  //   }
+  //   this.setState({
+  //     dropdownActionVisible: false,
+  //   });
+  // };
   getData = (songData, index) => {
     this.props.setMusicData(songData, index);
   };
@@ -161,6 +162,10 @@ class Header extends Component {
       searchText: "",
     });
   };
+
+  submitForm = () => {
+    this.props.history.push(`/${this.state.searchText}`);
+  };
   render() {
     const {
       openProfile,
@@ -169,6 +174,7 @@ class Header extends Component {
       dropdownActionVisible,
       suggestionBox,
       searchText,
+      redirectSerach,
     } = this.state;
 
     console.log(this.props.searchArray.songData);
@@ -210,7 +216,7 @@ class Header extends Component {
             <span></span>
             <span></span>
           </button>
-          <form action="#" id="searchForm">
+          <form action="#" id="searchForm" onSubmit={this.submitForm}>
             <button type="button" className="btn">
               <Icon icon={iosSearch} />
             </button>
@@ -332,6 +338,7 @@ class Header extends Component {
                 </div>
               )}
           </form>
+
           <ul className="header-options d-flex align-items-center">
             <li style={{ listStyle: "none", display: "flex" }}>
               <span className="header-launguage" onClick={this.handleClickOpen}>
@@ -468,8 +475,6 @@ const MapStateToProps = (state) => ({
   searchArray: state.home.searchData,
 });
 
-export default connect(MapStateToProps, {
-  logoutUser,
-  setMusicData,
-  getSearchAll,
-})(Header);
+export default withRouter(
+  connect(MapStateToProps, { logoutUser, setMusicData, getSearchAll })(Header)
+);

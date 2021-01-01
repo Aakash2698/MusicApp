@@ -12,6 +12,8 @@ import ArtistDetails from "../../ContentComponents/ArtistDetails";
 import FullPageLoader from "../../ReusableComponents/FullPageLoader";
 import Profile from "../../ContentComponents/Profile";
 import { connect } from "react-redux";
+import SearchPage from "../../ContentComponents/SearchPage";
+
 class Content extends Component {
   render() {
     let banner;
@@ -40,9 +42,9 @@ class Content extends Component {
             <Route path="/music" component={Music} />
             <Route path="/:type/:musics" component={ArtistDetails} />
             <Route path="/profile" component={Profile} />
+            <Route path="/:key" component={SearchPage} />
           </Switch>
         </div>
-
         <Footer />
         {/* <Audio fullWidth={this.props.fullWidth} /> */}
       </div>

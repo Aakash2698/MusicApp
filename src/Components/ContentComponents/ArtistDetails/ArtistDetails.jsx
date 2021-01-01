@@ -16,6 +16,7 @@ class ArtistDetails extends Component {
   state = {
     tabValue: "topSongs",
     activeMusic: false,
+    playIndex: null,
   };
   componentDidMount() {
     if (this.props.match.params.type === "chartsData") {
@@ -49,6 +50,7 @@ class ArtistDetails extends Component {
   };
 
   getData = (songData, index) => {
+    console.log(index, "777888999");
     this.props.setMusicData(songData, index);
   };
   handleTabChange = (tabName) => {
@@ -59,8 +61,16 @@ class ArtistDetails extends Component {
   playAll = (allSongData) => {
     this.props.setMusicData(allSongData);
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeSongIndex) {
+      this.setState({
+        playIndex: nextProps.activeSongIndex,
+      });
+    }
+  }
 
   render() {
+    console.log(this.props.activeSongIndex);
     let artistData, songsData;
     if (this.props.currentState === "topCharts") {
       artistData = this.props.topCharts.artists;
@@ -145,7 +155,11 @@ class ArtistDetails extends Component {
                     return (
                       <li
                         key={index}
-                        className={activeMusic ? "active-music" : "songs-row"}
+                        className={
+                          this.state.playIndex === index
+                            ? "active-music"
+                            : "songs-row"
+                        }
                         onClick={(e) => this.getData(songsData, index)}
                       >
                         <ul className="a_l artworkload _cursor">
@@ -190,6 +204,7 @@ const MapStateToProps = (state) => ({
   genres: state.home.genresMusic,
   currentState: state.home.currentData,
   retroClassics: state.home.retroClassicMusic,
+  activeSongIndex: state.home.activeIndex,
 });
 
 export default connect(MapStateToProps, {

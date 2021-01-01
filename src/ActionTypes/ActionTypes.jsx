@@ -21,5 +21,7 @@ export const HIDE_LOADER = "HIDE_LOADER";
 export const USER_DATA = "USER_DATA";
 export const SEARCH_DATA = "SEARCH_DATA";
 
+export const ACTIVE_INDEX = "ACTIVE_INDEX";
+
 export const TOP_CHART = "TOP_CHART";
 export const SONG_DATA = "SONG_DATA";

@@ -275,8 +275,10 @@ ul.a-list li div.card_layout_data {
 }
 
 .songs-row:hover {
-  background-color: #753fdc;
+  background-color: rgba(76, 36, 156, 0.267);
+  cursor: pointer;
 }
 .active-music {
-  background-color: red !important;
+  background-color: #222629 !important;
+  cursor: pointer;
 }

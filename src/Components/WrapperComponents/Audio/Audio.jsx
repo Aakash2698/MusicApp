@@ -13,6 +13,8 @@ import mdVolumeLow from "@iconify-icons/ion/md-volume-low";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
 import { normalizeUnits } from "moment";
+import { getActiveIndex } from "../../../Actions";
+
 class Audio extends Component {
   state = {
     dropdownExpand: false,
@@ -55,7 +57,6 @@ class Audio extends Component {
     });
   };
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps");
     if (nextProps.currentIndex) {
       this.setState(
         {
@@ -63,12 +64,18 @@ class Audio extends Component {
           index: nextProps.currentIndex,
         },
         () => {
-          this.setState({
-            onPlay: nextProps.currentSongData[this.state.index].songUrl,
-            songName: nextProps.currentSongData[this.state.index].songName,
-            songArtist: nextProps.currentSongData[this.state.index].artist,
-            songImage: nextProps.currentSongData[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: nextProps.currentSongData[this.state.index].songUrl,
+              songName: nextProps.currentSongData[this.state.index].songName,
+              songArtist:
+                nextProps.currentSongData[this.state.index].artistName,
+              songImage: nextProps.currentSongData[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     } else {
@@ -78,53 +85,37 @@ class Audio extends Component {
           index: 0,
         },
         () => {
-          this.setState({
-            onPlay: nextProps.currentSongData[this.state.index].songUrl,
-            songName: nextProps.currentSongData[this.state.index].songName,
-            songArtist: nextProps.currentSongData[this.state.index].artist,
-            songImage: nextProps.currentSongData[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: nextProps.currentSongData[this.state.index].songUrl,
+              songName: nextProps.currentSongData[this.state.index].songName,
+              songArtist:
+                nextProps.currentSongData[this.state.index].artistName,
+              songImage: nextProps.currentSongData[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     }
-    // if (this.props.currentSongData !== nextProps.currentSongData) {
-    //   console.log(nextProps.currentIndex, "1144444");
-    //   if (this.props.currentIndex)
-    //   {
-    //     this.setState({
-    //       playSongs: nextProps.currentSongData,
-    //       index: nextProps.currentIndex,
-    //     });
-    //   } else {
-    //     this.setState({
-    //       playSongs: nextProps.currentSongData,
-    //       onPlay: nextProps.currentSongData[this.state.index].songUrl,
-    //       songName: nextProps.currentSongData[this.state.index].songName,
-    //       songArtist: nextProps.currentSongData[this.state.index].artist,
-    //       songImage: nextProps.currentSongData[this.state.index].songImage,
-    //     });
-    //   }
-
-    //   // nextProps.currentSongData.map((data, index) => {
-    //   //   this.setState({
-    //   //     onPlay: data.songUrl,
-    //   //     songName: data.songName,
-    //   //     songArtist: data.artist,
-    //   //     songImage: data.songImage,
-    //   //   });
-    //   // });
-    // }
-    // if (this.props.currentIndex !== nextProps.currentIndex) {
-    //   this.setState({
-    //     playSongs: nextProps.currentSongData,
-    //     index: nextProps.currentIndex,
-    //   });
-    // }
   }
   startLoop = () => {
-    this.setState({
-      loopSong: !this.state.loopSong,
-    });
+    // this.setState(
+    //   {
+    //     loopSong: true,
+    //     index: this.state.index,
+    //   },
+    //   () => {
+    //     this.setState({
+    //       onPlay: this.state.playSongs[this.state.index].songUrl,
+    //       songName: this.state.playSongs[this.state.index].songName,
+    //       songArtist: this.state.playSongs[this.state.index].artist,
+    //       songImage: this.state.playSongs[this.state.index].songImage,
+    //     });
+    //   }
+    // );
   };
   nextSong = () => {
     if (this.state.index === this.state.playSongs.length - 1) {
@@ -133,12 +124,17 @@ class Audio extends Component {
           index: 0,
         },
         () => {
-          this.setState({
-            onPlay: this.state.playSongs[this.state.index].songUrl,
-            songName: this.state.playSongs[this.state.index].songName,
-            songArtist: this.state.playSongs[this.state.index].artist,
-            songImage: this.state.playSongs[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: this.state.playSongs[this.state.index].songUrl,
+              songName: this.state.playSongs[this.state.index].songName,
+              songArtist: this.state.playSongs[this.state.index].artistName,
+              songImage: this.state.playSongs[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     } else {
@@ -147,12 +143,17 @@ class Audio extends Component {
           index: this.state.index + 1,
         },
         () => {
-          this.setState({
-            onPlay: this.state.playSongs[this.state.index].songUrl,
-            songName: this.state.playSongs[this.state.index].songName,
-            songArtist: this.state.playSongs[this.state.index].artist,
-            songImage: this.state.playSongs[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: this.state.playSongs[this.state.index].songUrl,
+              songName: this.state.playSongs[this.state.index].songName,
+              songArtist: this.state.playSongs[this.state.index].artistName,
+              songImage: this.state.playSongs[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     }
@@ -165,12 +166,17 @@ class Audio extends Component {
           index: 0,
         },
         () => {
-          this.setState({
-            onPlay: this.state.playSongs[this.state.index].songUrl,
-            songName: this.state.playSongs[this.state.index].songName,
-            songArtist: this.state.playSongs[this.state.index].artist,
-            songImage: this.state.playSongs[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: this.state.playSongs[this.state.index].songUrl,
+              songName: this.state.playSongs[this.state.index].songName,
+              songArtist: this.state.playSongs[this.state.index].artistName,
+              songImage: this.state.playSongs[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     } else {
@@ -179,12 +185,17 @@ class Audio extends Component {
           index: this.state.index - 1,
         },
         () => {
-          this.setState({
-            onPlay: this.state.playSongs[this.state.index].songUrl,
-            songName: this.state.playSongs[this.state.index].songName,
-            songArtist: this.state.playSongs[this.state.index].artist,
-            songImage: this.state.playSongs[this.state.index].songImage,
-          });
+          this.setState(
+            {
+              onPlay: this.state.playSongs[this.state.index].songUrl,
+              songName: this.state.playSongs[this.state.index].songName,
+              songArtist: this.state.playSongs[this.state.index].artistName,
+              songImage: this.state.playSongs[this.state.index].songImage,
+            },
+            () => {
+              this.props.getActiveIndex(this.state.index);
+            }
+          );
         }
       );
     }
@@ -201,7 +212,9 @@ class Audio extends Component {
       closeAudioControl,
       loopSong,
     } = this.state;
-    console.log(loopSong);
+    console.log();
+    console.log(songName, songArtist);
+    console.log(this.state.playSongs);
     const fullWidth = this.props;
     let audioClass;
     if (fullWidth.fullWidth) {
@@ -228,7 +241,6 @@ class Audio extends Component {
               onClickPrevious={this.previousSong}
               autoPlay={true}
               showSkipControls={true}
-              loop={true}
               showJumpControls={false}
               customProgressBarSection={[RHAP_UI.PROGRESS_BAR]}
               customVolumeControls={[
@@ -250,12 +262,11 @@ class Audio extends Component {
                 <button className="btn btn-icon-only" onClick={this.startLoop}>
                   <span
                     className="audio-player-icon iconify"
-                    data-icon={
-                      loopSong ? "ion-md-sync" : "ic:baseline-sync-disabled"
-                    }
+                    data-icon="ion-md-sync"
                     data-inline="false"
                   ></span>
                 </button>,
+
                 RHAP_UI.MAIN_CONTROLS,
                 <button className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on">
                   <span
@@ -305,4 +316,4 @@ const mapStateToProps = (state) => ({
   currentIndex: state.home.index,
 });
 
-export default connect(mapStateToProps)(Audio);
+export default connect(mapStateToProps, { getActiveIndex })(Audio);

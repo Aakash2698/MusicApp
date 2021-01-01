@@ -13,6 +13,7 @@ import {
   ALL_SONGS,
   SONG_TYPE_DATA,
   SEARCH_DATA,
+  ACTIVE_INDEX,
 } from "../ActionTypes/ActionTypes";
 
 export const topChartMusic = () => (dispatch, getState, Api) => {
@@ -175,5 +176,12 @@ export const getSearchAll = (searchText) => (dispatch, getState, Api) => {
       });
     }
     return response;
+  });
+};
+
+export const getActiveIndex = (index) => (dispatch) => {
+  return dispatch({
+    type: ACTIVE_INDEX,
+    payload: index,
   });
 };
