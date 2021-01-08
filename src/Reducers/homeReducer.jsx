@@ -14,6 +14,7 @@ import {
   SONG_TYPE_DATA,
   SEARCH_DATA,
   ACTIVE_INDEX,
+  DOWNLOAD_SONG,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   searchData: [],
   index: 0,
   activeIndex: null,
+  downloadFile: [],
 };
 
 export default function (state = initialState, action) {
@@ -118,6 +120,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         activeIndex: action.payload,
+      };
+    case DOWNLOAD_SONG:
+      console.log(action.payload);
+      return {
+        ...state,
+        downloadFile: action.payload,
       };
     default:
       return state;

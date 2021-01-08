@@ -95,7 +95,6 @@ export const loginUser = (payload) => (dispatch, getState, Api) => {
   return Api.post("login", payload, "header").then((res) => {
     if (res.response.status === 201) {
       const token = res.responseData.token;
-      console.log(token);
       localStorage.setItem("jwtToken", token);
       SetAuthToken(token);
       const decoded = jwt_decode(token);
@@ -160,7 +159,6 @@ export const hideLoader = () => (dispatch) => {
 };
 
 export const setUserData = (payload) => (dispatch) => {
-  console.log("hello", payload);
   return dispatch({
     type: USER_DATA,
     payload: payload,

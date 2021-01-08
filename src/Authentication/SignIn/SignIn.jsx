@@ -48,7 +48,6 @@ class SignIn extends Component {
     const { email, password } = this.state;
     const userData = { email: email, password: password };
     this.props.loginUser(userData).then((res) => {
-      console.log(res);
       if (res.responseData.res === 200) {
         this.props.setUserData(res.responseData.userData);
         this.props.history.push("/home");

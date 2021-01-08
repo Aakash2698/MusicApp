@@ -89,12 +89,18 @@
   height: inherit;
 }
 .s_l .s_artist {
-  width: 30%;
+  width: 25%;
   float: left;
   height: inherit;
 }
 .s_l .s_duration {
-  width: 20%;
+  width: 15%;
+  position: relative;
+  float: left;
+  height: inherit;
+}
+.s_l .s_download-icon {
+  width: 10%;
   position: relative;
   float: left;
   height: inherit;
@@ -210,16 +216,23 @@
   display: inline;
 }
 .a_l .s_artist {
-  width: 30%;
+  width: 25%;
   float: left;
   height: inherit;
 }
 .a_l .s_duration {
-  width: 20%;
+  width: 15%;
   position: relative;
   float: left;
   height: inherit;
 }
+.a_l .s_download-icon {
+  width: 10%;
+  position: relative;
+  float: left;
+  height: inherit;
+}
+
 ul.a-list li {
   display: inline-block;
   vertical-align: top;
@@ -257,6 +270,10 @@ ul.a-list li div.card_layout_data {
   .s_duration {
     display: none;
   }
+  .s_download-icon {
+    display: none;
+  }
+
   .a_l .s_title {
     width: 50% !important;
   }

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 class Profile extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="row section">
         <div className="col-xl-10 mx-auto">

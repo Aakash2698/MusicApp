@@ -25,3 +25,5 @@ export const ACTIVE_INDEX = "ACTIVE_INDEX";
 
 export const TOP_CHART = "TOP_CHART";
 export const SONG_DATA = "SONG_DATA";
+
+export const DOWNLOAD_SONG = "DOWNLOAD_SONG";

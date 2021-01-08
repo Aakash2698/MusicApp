@@ -177,12 +177,8 @@ class Header extends Component {
       redirectSerach,
     } = this.state;
 
-    console.log(this.props.searchArray.songData);
     const filterArtist = this.props.searchArray.albumData;
     const filterTrack = this.props.searchArray.songData;
-
-    console.log(filterArtist && filterArtist.length, "filterArtist");
-    console.log(filterTrack && filterTrack.length, "filterTrack");
 
     const fullWidth = this.props.fullWidth;
     const scrollValue = this.props.scrollTop;

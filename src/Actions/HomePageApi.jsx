@@ -14,6 +14,7 @@ import {
   SONG_TYPE_DATA,
   SEARCH_DATA,
   ACTIVE_INDEX,
+  DOWNLOAD_SONG,
 } from "../ActionTypes/ActionTypes";
 
 export const topChartMusic = () => (dispatch, getState, Api) => {
@@ -183,5 +184,17 @@ export const getActiveIndex = (index) => (dispatch) => {
   return dispatch({
     type: ACTIVE_INDEX,
     payload: index,
+  });
+};
+
+export const downloadSong = (id) => (dispatch, getState, Api) => {
+  return Api.get(`songs/download/${id}`).then((response) => {
+    if (response.response.status === 200) {
+      dispatch({
+        type: DOWNLOAD_SONG,
+        payload: response.responseData,
+      });
+    }
+    return response;
   });
 };

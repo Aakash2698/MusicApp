@@ -13,7 +13,8 @@ import mdVolumeLow from "@iconify-icons/ion/md-volume-low";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
 import { normalizeUnits } from "moment";
-import { getActiveIndex } from "../../../Actions";
+import { getActiveIndex, downloadSong } from "../../../Actions";
+import logger from "redux-logger";
 
 class Audio extends Component {
   state = {
@@ -25,10 +26,12 @@ class Audio extends Component {
     songName: "Ek Tarfa(Reprise)",
     songArtist: "Darshan Raval",
     songImage: "http://localhost:4000/uploads/1608114760948.jpg",
-    loopSong: false,
+    songDownload: "5fe08ecd205bf820e2cf8f1f",
+    shuffle: false,
     playSongs: [],
+    prevIndex: [],
+    shuffleIndex: 1,
   };
-
   handleDropdownChange = () => {
     this.setState({
       dropdownExpand: !this.state.dropdownExpand,
@@ -71,6 +74,7 @@ class Audio extends Component {
               songArtist:
                 nextProps.currentSongData[this.state.index].artistName,
               songImage: nextProps.currentSongData[this.state.index].songImage,
+              songDownload: nextProps.currentSongData[this.state.index]._id,
             },
             () => {
               this.props.getActiveIndex(this.state.index);
@@ -92,6 +96,7 @@ class Audio extends Component {
               songArtist:
                 nextProps.currentSongData[this.state.index].artistName,
               songImage: nextProps.currentSongData[this.state.index].songImage,
+              songDownload: nextProps.currentSongData[this.state.index]._id,
             },
             () => {
               this.props.getActiveIndex(this.state.index);
@@ -101,69 +106,86 @@ class Audio extends Component {
       );
     }
   }
-  startLoop = () => {
-    // this.setState(
-    //   {
-    //     loopSong: true,
-    //     index: this.state.index,
-    //   },
-    //   () => {
-    //     this.setState({
-    //       onPlay: this.state.playSongs[this.state.index].songUrl,
-    //       songName: this.state.playSongs[this.state.index].songName,
-    //       songArtist: this.state.playSongs[this.state.index].artist,
-    //       songImage: this.state.playSongs[this.state.index].songImage,
-    //     });
-    //   }
-    // );
-  };
+
   nextSong = () => {
-    if (this.state.index === this.state.playSongs.length - 1) {
+    if (this.state.shuffle) {
+      const shuffleValue = Math.floor(
+        Math.random(0, this.state.playSongs.length) * 10
+      );
+
       this.setState(
         {
-          index: 0,
+          prevIndex: this.state.prevIndex.concat(this.state.index),
         },
         () => {
           this.setState(
             {
-              onPlay: this.state.playSongs[this.state.index].songUrl,
-              songName: this.state.playSongs[this.state.index].songName,
-              songArtist: this.state.playSongs[this.state.index].artistName,
-              songImage: this.state.playSongs[this.state.index].songImage,
+              index: shuffleValue,
             },
             () => {
-              this.props.getActiveIndex(this.state.index);
+              this.setState(
+                {
+                  onPlay: this.state.playSongs[this.state.index].songUrl,
+                  songName: this.state.playSongs[this.state.index].songName,
+                  songArtist: this.state.playSongs[this.state.index].artistName,
+                  songImage: this.state.playSongs[this.state.index].songImage,
+                },
+                () => {
+                  this.props.getActiveIndex(this.state.index);
+                }
+              );
             }
           );
         }
       );
     } else {
-      this.setState(
-        {
-          index: this.state.index + 1,
-        },
-        () => {
-          this.setState(
-            {
-              onPlay: this.state.playSongs[this.state.index].songUrl,
-              songName: this.state.playSongs[this.state.index].songName,
-              songArtist: this.state.playSongs[this.state.index].artistName,
-              songImage: this.state.playSongs[this.state.index].songImage,
-            },
-            () => {
-              this.props.getActiveIndex(this.state.index);
-            }
-          );
-        }
-      );
+      if (this.state.index === this.state.playSongs.length - 1) {
+        this.setState(
+          {
+            index: 0,
+          },
+          () => {
+            this.setState(
+              {
+                onPlay: this.state.playSongs[this.state.index].songUrl,
+                songName: this.state.playSongs[this.state.index].songName,
+                songArtist: this.state.playSongs[this.state.index].artistName,
+                songImage: this.state.playSongs[this.state.index].songImage,
+              },
+              () => {
+                this.props.getActiveIndex(this.state.index);
+              }
+            );
+          }
+        );
+      } else {
+        this.setState(
+          {
+            index: this.state.index + 1,
+          },
+          () => {
+            this.setState(
+              {
+                onPlay: this.state.playSongs[this.state.index].songUrl,
+                songName: this.state.playSongs[this.state.index].songName,
+                songArtist: this.state.playSongs[this.state.index].artistName,
+                songImage: this.state.playSongs[this.state.index].songImage,
+              },
+              () => {
+                this.props.getActiveIndex(this.state.index);
+              }
+            );
+          }
+        );
+      }
     }
   };
 
   previousSong = () => {
-    if (this.state.index === 0) {
+    if (this.state.shuffle) {
       this.setState(
         {
-          index: 0,
+          index: this.state.prevIndex.length--,
         },
         () => {
           this.setState(
@@ -180,27 +202,57 @@ class Audio extends Component {
         }
       );
     } else {
-      this.setState(
-        {
-          index: this.state.index - 1,
-        },
-        () => {
-          this.setState(
-            {
-              onPlay: this.state.playSongs[this.state.index].songUrl,
-              songName: this.state.playSongs[this.state.index].songName,
-              songArtist: this.state.playSongs[this.state.index].artistName,
-              songImage: this.state.playSongs[this.state.index].songImage,
-            },
-            () => {
-              this.props.getActiveIndex(this.state.index);
-            }
-          );
-        }
-      );
+      if (this.state.index === 0) {
+        this.setState(
+          {
+            index: 0,
+          },
+          () => {
+            this.setState(
+              {
+                onPlay: this.state.playSongs[this.state.index].songUrl,
+                songName: this.state.playSongs[this.state.index].songName,
+                songArtist: this.state.playSongs[this.state.index].artistName,
+                songImage: this.state.playSongs[this.state.index].songImage,
+              },
+              () => {
+                this.props.getActiveIndex(this.state.index);
+              }
+            );
+          }
+        );
+      } else {
+        this.setState(
+          {
+            index: this.state.index - 1,
+          },
+          () => {
+            this.setState(
+              {
+                onPlay: this.state.playSongs[this.state.index].songUrl,
+                songName: this.state.playSongs[this.state.index].songName,
+                songArtist: this.state.playSongs[this.state.index].artistName,
+                songImage: this.state.playSongs[this.state.index].songImage,
+              },
+              () => {
+                this.props.getActiveIndex(this.state.index);
+              }
+            );
+          }
+        );
+      }
     }
   };
 
+  shuffleStart = () => {
+    this.setState({
+      shuffle: !this.state.shuffle,
+    });
+  };
+
+  downloadSong = () => {
+    this.props.downloadSong(this.state.songDownload);
+  };
   render() {
     const {
       dropdownExpand,
@@ -211,11 +263,11 @@ class Audio extends Component {
       songImage,
       closeAudioControl,
       loopSong,
+      shuffle,
     } = this.state;
-    console.log();
-    console.log(songName, songArtist);
-    console.log(this.state.playSongs);
+    const loop = loopSong;
     const fullWidth = this.props;
+
     let audioClass;
     if (fullWidth.fullWidth) {
       audioClass = "audioPlayer long-player";
@@ -236,6 +288,7 @@ class Audio extends Component {
         <div className="audio-controls">
           <div className="audio-controls--left d-flex mr-auto">
             <AudioPlayer
+              loop={loop}
               src={onPlay}
               onClickNext={this.nextSong}
               onClickPrevious={this.previousSong}
@@ -259,22 +312,19 @@ class Audio extends Component {
                 </button>,
               ]}
               customControlsSection={[
-                <button className="btn btn-icon-only" onClick={this.startLoop}>
-                  <span
-                    className="audio-player-icon iconify"
-                    data-icon="ion-md-sync"
-                    data-inline="false"
-                  ></span>
-                </button>,
-
+                RHAP_UI.LOOP,
                 RHAP_UI.MAIN_CONTROLS,
-                <button className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on">
+                <button
+                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on"
+                  onClick={this.shuffleStart}
+                >
                   <span
-                    className="audio-player-icon iconify"
+                    className={"audio-player-icon iconify"}
                     data-icon="ion-md-shuffle"
                     data-inline="false"
                   ></span>
                 </button>,
+
                 RHAP_UI.CURRENT_TIME,
                 <div className="or-arrow"> / </div>,
                 RHAP_UI.DURATION,
@@ -285,7 +335,14 @@ class Audio extends Component {
         </div>
         <div className="audio-info">
           <div className="dropleft">
-            <button
+            <button className="btn btn-icon-only" onClick={this.downloadSong}>
+              <span
+                className="iconify audio-player-icon"
+                data-icon="bx:bxs-download"
+                data-inline="false"
+              ></span>
+            </button>
+            {/* <button
               className="btn btn-icon-only"
               onClick={this.handleDropdownChange}
             >
@@ -298,7 +355,7 @@ class Audio extends Component {
             <ActionPopover
               dropdownExpand={dropdownExpand}
               transform="translate3d(-162px, -143px, 0px)"
-            />
+            /> */}
           </div>
           <button
             className="btn btn-icon-only"
@@ -316,4 +373,6 @@ const mapStateToProps = (state) => ({
   currentIndex: state.home.index,
 });
 
-export default connect(mapStateToProps, { getActiveIndex })(Audio);
+export default connect(mapStateToProps, { getActiveIndex, downloadSong })(
+  Audio
+);

@@ -10,6 +10,7 @@ import {
   genres,
   retroClassic,
   hideLoader,
+  downloadSong,
 } from "../../../Actions";
 import { connect } from "react-redux";
 class ArtistDetails extends Component {
@@ -50,8 +51,9 @@ class ArtistDetails extends Component {
   };
 
   getData = (songData, index) => {
-    console.log(index, "777888999");
-    this.props.setMusicData(songData, index);
+    {
+      this.props.setMusicData(songData, index);
+    }
   };
   handleTabChange = (tabName) => {
     this.setState({
@@ -68,9 +70,14 @@ class ArtistDetails extends Component {
       });
     }
   }
+  downloadSong = (id) => {
+    console.log(id);
+    this.props.downloadSong(id).then((data) => {
+      console.log(data);
+    });
+  };
 
   render() {
-    console.log(this.props.activeSongIndex);
     let artistData, songsData;
     if (this.props.currentState === "topCharts") {
       artistData = this.props.topCharts.artists;
@@ -145,7 +152,14 @@ class ArtistDetails extends Component {
                 </li>
                 <li className="s_duration">
                   <span className="row-head">
-                    <i class="far fa-clock"></i>
+                    Duration
+                    {/* <i class="far fa-clock"></i> */}
+                  </span>
+                </li>
+                <li className="s_download-icon">
+                  <span className="row-head">
+                    Download
+                    {/* <i class="fas fa-download"></i> */}
                   </span>
                 </li>
               </ul>
@@ -156,17 +170,23 @@ class ArtistDetails extends Component {
                       <li
                         key={index}
                         className={
+                          this.state.playIndex === 0 ||
                           this.state.playIndex === index
                             ? "active-music"
                             : "songs-row"
                         }
-                        onClick={(e) => this.getData(songsData, index)}
                       >
                         <ul className="a_l artworkload _cursor">
-                          <li className="s_cnt p_cnt desktop">
+                          <li
+                            className="s_cnt p_cnt desktop"
+                            onClick={(e) => this.getData(songsData, index)}
+                          >
                             <span className="_c sng_c">{index + 1}</span>
                           </li>
-                          <li className="s_title p_title list loaded">
+                          <li
+                            className="s_title p_title list loaded"
+                            onClick={(e) => this.getData(songsData, index)}
+                          >
                             <div className="playlist-data">
                               <div className="playlist_thumb">
                                 <img src={data.songImage} alt="song_image" />
@@ -176,14 +196,40 @@ class ArtistDetails extends Component {
                               </div>
                             </div>
                           </li>
-                          <li className="s_artist p_artist desktop">
+                          <li
+                            className="s_artist p_artist desktop"
+                            onClick={(e) => this.getData(songsData, index)}
+                          >
                             <div>
                               <span className="sng_c">{data.artistName}</span>
                             </div>
                           </li>
-                          <li className="s_duration">
-                            <span className="desktop sng_c">
+                          <li
+                            className="s_duration"
+                            onClick={(e) => this.getData(songsData, index)}
+                          >
+                            <span
+                              className="desktop sng_c"
+                              style={{ width: "50%", textAlign: "center" }}
+                            >
                               {data.duration}
+                            </span>
+                          </li>
+                          <li
+                            className="s_download-icon"
+                            onClick={(e) => this.downloadSong(data._id)}
+                          >
+                            {/* <a href="/files/download-file.pdf" download>
+                                Download Link
+                              </a> */}
+                            <span
+                              className="sng_c"
+                              style={{ width: "90%", textAlign: "center" }}
+                            >
+                              <i
+                                class="fas fa-download"
+                                style={{ fontSize: "1.3rem" }}
+                              ></i>
                             </span>
                           </li>
                         </ul>
@@ -214,4 +260,5 @@ export default connect(MapStateToProps, {
   genresMusic,
   retroClassic,
   hideLoader,
+  downloadSong,
 })(ArtistDetails);
