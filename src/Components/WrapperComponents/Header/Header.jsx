@@ -119,23 +119,23 @@ class Header extends Component {
   hidePopover = () => {
     this.handleOpenProfile();
   };
-  // componentWillMount() {
-  //   document.addEventListener("mousedown", this.popupActionClick, false);
-  // }
-  // componentWillUnmount() {
-  //   document.removeEventListener("mousedown", this.popupActionClick, false);
-  // }
-  // popupActionClick = (e) => {
-  //   if (this.node.contains(e.target)) {
-  //     this.setState({
-  //       dropdownActionVisible: true,
-  //     });
-  //     return true;
-  //   }
-  //   this.setState({
-  //     dropdownActionVisible: false,
-  //   });
-  // };
+  componentWillMount() {
+    document.addEventListener("mousedown", this.popupActionClick, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.popupActionClick, false);
+  }
+  popupActionClick = (e) => {
+    if (this.node.contains(e.target)) {
+      this.setState({
+        dropdownActionVisible: true,
+      });
+      return true;
+    }
+    this.setState({
+      dropdownActionVisible: false,
+    });
+  };
   getData = (songData, index) => {
     this.props.setMusicData(songData, index);
   };
@@ -294,7 +294,7 @@ class Header extends Component {
                               <div
                                 className="col-xl-4 col-md-6"
                                 onClick={(e) =>
-                                  this.getData(filterTrack, index)
+                                  this.getData(filterTrack, data._id)
                                 }
                               >
                                 <div

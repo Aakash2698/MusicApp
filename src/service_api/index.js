@@ -181,20 +181,24 @@ export default {
   },
 
   get: (url, version) => {
-    // let header = noHeader && noHeader.noHeader ? {
-    //     method: 'GET',
-
-    // } : {
-    //         method: 'GET',
+    // let header =
+    //   noHeader && noHeader.noHeader
+    //     ? {
+    //         method: "GET",
+    //       }
+    //     : {
+    //         method: "GET",
     //         headers: {
-    //             'Authorization': global.getToken()
-    //         }
-    //     };
+    //           Authorization: global.getToken(),
+    //           "Content-Type": "audio/mpeg",
+    //         },
+    //       };
     let apiUrl = globalUrl + url;
     return fetch(apiUrl, {
       method: "GET",
       headers: {
         Authorization: global.getToken(),
+        "Content-Type": "audio/mpeg",
       },
     })
       .then((response) => {

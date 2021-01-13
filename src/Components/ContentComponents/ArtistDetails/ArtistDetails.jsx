@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { Component } from "react";
 import artistImage from "../../../Assets/image/sliderImage/1.jpg";
 import "./ArtistDetails.scss";
+import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import {
   artistsDetails,
   setMusicData,
@@ -13,11 +14,21 @@ import {
   downloadSong,
 } from "../../../Actions";
 import { connect } from "react-redux";
+import { NavLink, Link } from "react-router-dom";
+import { saveAs } from "file-saver";
+import download from "downloadjs";
+import { exact } from "prop-types";
+import axios from "axios";
+import fileDownload from "js-file-download";
 class ArtistDetails extends Component {
   state = {
     tabValue: "topSongs",
     activeMusic: false,
     playIndex: null,
+    rightSideAction: false,
+    positionIndex: 0,
+    songId: "",
+    songName: "",
   };
   componentDidMount() {
     if (this.props.match.params.type === "chartsData") {
@@ -50,9 +61,9 @@ class ArtistDetails extends Component {
     this.props.retroClassic(this.props.match.params.musics);
   };
 
-  getData = (songData, index) => {
+  getData = (songData, id) => {
     {
-      this.props.setMusicData(songData, index);
+      this.props.setMusicData(songData, id);
     }
   };
   handleTabChange = (tabName) => {
@@ -63,6 +74,7 @@ class ArtistDetails extends Component {
   playAll = (allSongData) => {
     this.props.setMusicData(allSongData);
   };
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.activeSongIndex) {
       this.setState({
@@ -70,14 +82,53 @@ class ArtistDetails extends Component {
       });
     }
   }
-  downloadSong = (id) => {
-    console.log(id);
-    this.props.downloadSong(id).then((data) => {
-      console.log(data);
+
+  downloadSong = () => {
+    const url = "http://localhost:4000/songs/download/" + this.state.songId;
+
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        let url = window.URL.createObjectURL(res.data);
+        let a = document.createElement("a");
+        a.href = res.config.url;
+        a.download = this.state.songName + ".mp3";
+        a.click();
+      });
+    this.setState({
+      rightSideAction: !this.state.rightSideAction,
+    });
+  };
+  handleDropdownChange = (index, songId, songName) => {
+    this.setState({
+      rightSideAction: !this.state.rightSideAction,
+      positionIndex: index,
+      songId: songId,
+      songName: songName,
     });
   };
 
   render() {
+    const { rightSideAction, positionIndex } = this.state;
+    let transform;
+    if (positionIndex === 0) {
+      transform = "translate3d(775px, 234px, 0px)";
+    } else if (positionIndex === 1) {
+      transform = "translate3d(775px, 288px, 0px)";
+    } else if (positionIndex === 2) {
+      transform = "translate3d(775px, 342px, 0px)";
+    } else if (positionIndex === 3) {
+      transform = "translate3d(775px, 396px, 0px)";
+    } else if (positionIndex === 4) {
+      transform = "translate3d(775px, 450px, 0px)";
+    }
+
     let artistData, songsData;
     if (this.props.currentState === "topCharts") {
       artistData = this.props.topCharts.artists;
@@ -126,7 +177,7 @@ class ArtistDetails extends Component {
                         <div className="mt-4">
                           <button
                             className="btn btn-pill btn-air btn-bold btn-danger play-all"
-                            onClick={() => this.playAll(songsData)}
+                            onClick={(e) => this.playAll(songsData)}
                           >
                             Play all
                           </button>
@@ -158,7 +209,6 @@ class ArtistDetails extends Component {
                 </li>
                 <li className="s_download-icon">
                   <span className="row-head">
-                    Download
                     {/* <i class="fas fa-download"></i> */}
                   </span>
                 </li>
@@ -170,8 +220,7 @@ class ArtistDetails extends Component {
                       <li
                         key={index}
                         className={
-                          this.state.playIndex === 0 ||
-                          this.state.playIndex === index
+                          this.state.playIndex === data._id
                             ? "active-music"
                             : "songs-row"
                         }
@@ -179,13 +228,13 @@ class ArtistDetails extends Component {
                         <ul className="a_l artworkload _cursor">
                           <li
                             className="s_cnt p_cnt desktop"
-                            onClick={(e) => this.getData(songsData, index)}
+                            onClick={(e) => this.getData(songsData, data._id)}
                           >
                             <span className="_c sng_c">{index + 1}</span>
                           </li>
                           <li
                             className="s_title p_title list loaded"
-                            onClick={(e) => this.getData(songsData, index)}
+                            onClick={(e) => this.getData(songsData, data._id)}
                           >
                             <div className="playlist-data">
                               <div className="playlist_thumb">
@@ -198,7 +247,7 @@ class ArtistDetails extends Component {
                           </li>
                           <li
                             className="s_artist p_artist desktop"
-                            onClick={(e) => this.getData(songsData, index)}
+                            onClick={(e) => this.getData(songsData, data._id)}
                           >
                             <div>
                               <span className="sng_c">{data.artistName}</span>
@@ -206,37 +255,58 @@ class ArtistDetails extends Component {
                           </li>
                           <li
                             className="s_duration"
-                            onClick={(e) => this.getData(songsData, index)}
+                            onClick={(e) => this.getData(songsData, data._id)}
                           >
                             <span
                               className="desktop sng_c"
-                              style={{ width: "50%", textAlign: "center" }}
+                              style={{ width: "40%", textAlign: "center" }}
                             >
                               {data.duration}
                             </span>
                           </li>
                           <li
                             className="s_download-icon"
-                            onClick={(e) => this.downloadSong(data._id)}
+                            onClick={(e) =>
+                              this.handleDropdownChange(
+                                index,
+                                data._id,
+                                data.songName
+                              )
+                            }
+                            // onClick={() =>
+                            //   this.downloadSong(data._id, data.songName)
+                            // }
                           >
-                            {/* <a href="/files/download-file.pdf" download>
-                                Download Link
-                              </a> */}
-                            <span
+                            <span className="sng_c">
+                              <i
+                                className="fas fa-ellipsis-h"
+                                style={{ fontSize: "1.3rem" }}
+                              ></i>
+                            </span>
+                            {/* <span
                               className="sng_c"
                               style={{ width: "90%", textAlign: "center" }}
                             >
                               <i
-                                class="fas fa-download"
+                                className="fas fa-download"
                                 style={{ fontSize: "1.3rem" }}
                               ></i>
-                            </span>
+                            </span> */}
                           </li>
                         </ul>
                       </li>
                     );
                   })}
               </ul>
+              <ActionPopover
+                dropdownExpand={rightSideAction}
+                transform={transform}
+                downloadSong={this.downloadSong}
+                // download={this.downloadSong(
+                //   this.state.songId,
+                //   this.state.songName
+                // )}
+              />
             </div>
           </div>
         </div>
@@ -251,6 +321,7 @@ const MapStateToProps = (state) => ({
   currentState: state.home.currentData,
   retroClassics: state.home.retroClassicMusic,
   activeSongIndex: state.home.activeIndex,
+  downloadUrl: state.home.downloadFile,
 });
 
 export default connect(MapStateToProps, {

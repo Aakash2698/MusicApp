@@ -133,7 +133,7 @@ class SearchPage extends Component {
                     return (
                       <div
                         className="col-xl-4 col-md-6"
-                        onClick={(e) => this.getData(filterTrack, index)}
+                        onClick={(e) => this.getData(filterTrack, data._id)}
                       >
                         <div className="custom-card mb-3">
                           <div className="text-dark custom-card--inline">

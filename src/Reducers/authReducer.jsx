@@ -41,7 +41,6 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
     case USER_DATA:
-      console.log("namsate");
       return {
         ...state,
         userData: action.payload,

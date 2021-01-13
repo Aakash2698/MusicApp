@@ -9,48 +9,49 @@ import five from "../../../Assets/image/sliderImage/5.jpg";
 import six from "../../../Assets/image/sliderImage/6.jpg";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
+import { setMusicData, clearQueue } from "../../../Actions";
 class RightSidebar extends Component {
   state = {
     openRightSidebar: false,
     rightSideAction: false,
     positionIndex: 0,
     topCharts: [
-      {
-        id: 1,
-        songName: "I Love You Mummy",
-        artist: "Arebica Luna",
-        songImage: one,
-      },
-      {
-        id: 2,
-        songName: "Shack your butty",
-        artist: "Gerrina Linda",
-        songImage: two,
-      },
-      {
-        id: 3,
-        songName: "Do it your way(Female)",
-        artist: "Zunira Willy & Nutty Nina",
-        songImage: three,
-      },
-      {
-        id: 4,
-        songName: "Say yes",
-        artist: "Johnny Marro",
-        songImage: four,
-      },
-      {
-        id: 5,
-        songName: "Where is your letter",
-        artist: "Jina Moore & Lenisa Gory",
-        songImage: five,
-      },
-      {
-        id: 6,
-        songName: "Hey not me",
-        artist: "Rasomi Pelina",
-        songImage: six,
-      },
+      // {
+      //   id: 1,
+      //   songName: "I Love You Mummy",
+      //   artist: "Arebica Luna",
+      //   songImage: one,
+      // },
+      // {
+      //   id: 2,
+      //   songName: "Shack your butty",
+      //   artist: "Gerrina Linda",
+      //   songImage: two,
+      // },
+      // {
+      //   id: 3,
+      //   songName: "Do it your way(Female)",
+      //   artist: "Zunira Willy & Nutty Nina",
+      //   songImage: three,
+      // },
+      // {
+      //   id: 4,
+      //   songName: "Say yes",
+      //   artist: "Johnny Marro",
+      //   songImage: four,
+      // },
+      // {
+      //   id: 5,
+      //   songName: "Where is your letter",
+      //   artist: "Jina Moore & Lenisa Gory",
+      //   songImage: five,
+      // },
+      // {
+      //   id: 6,
+      //   songName: "Hey not me",
+      //   artist: "Rasomi Pelina",
+      //   songImage: six,
+      // },
     ],
   };
   componentWillReceiveProps(nextProps) {
@@ -72,7 +73,16 @@ class RightSidebar extends Component {
       openRightSidebar: !openRightSidebar,
     });
   };
-
+  getData = (songData, index) => {
+    {
+      this.props.setMusicData(songData, index);
+    }
+  };
+  clearQueue = () => {
+    {
+      this.props.clearQueue();
+    }
+  };
   render() {
     const {
       openRightSidebar,
@@ -81,6 +91,8 @@ class RightSidebar extends Component {
       positionIndex,
     } = this.state;
     let transform;
+
+    const sliceSongsIndex = this.props.queue;
 
     if (positionIndex === 0) {
       transform = "translate3d(137px, 18px, 0px)";
@@ -99,7 +111,11 @@ class RightSidebar extends Component {
           !openRightSidebar ? "minimize-sidebar right-sidebar" : "right-sidebar"
         }
       >
-        <div className="right-sidebar-header">Listen Special</div>
+        <div className="right-sidebar-header top-title-sidebar ">
+          <div style={{ width: "85%" }}>Queue</div>
+          <div onClick={this.clearQueue}> Clear</div>
+        </div>
+
         <div
           className="right-sidebar-body ps ps--active-y"
           data-scrollable="true"
@@ -108,12 +124,17 @@ class RightSidebar extends Component {
             className="list-group list-group-flush"
             style={{ flexDirection: "column" }}
           >
-            {topCharts &&
-              topCharts.map((data, index) => {
+            {sliceSongsIndex &&
+              sliceSongsIndex.map((data, index) => {
                 return (
                   <li
-                    className="custom-list--item list-group-item d-flex"
+                    className={
+                      this.props.activeSongIndex === data._id
+                        ? "active-song custom-list--item list-group-item d-flex"
+                        : "custom-list--item list-group-item d-flex"
+                    }
                     key={index}
+                    onClick={(e) => this.getData(sliceSongsIndex, data._id)}
                   >
                     <div className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused">
                       <div className="custom-card--inline-img">
@@ -164,5 +185,9 @@ class RightSidebar extends Component {
 }
 const MapStateToProps = (state) => ({
   currentPlay: state.home.playSong,
+  queue: state.home.queueSongs,
+  activeSongIndex: state.home.activeIndex,
 });
-export default connect(MapStateToProps)(RightSidebar);
+export default connect(MapStateToProps, { setMusicData, clearQueue })(
+  RightSidebar
+);

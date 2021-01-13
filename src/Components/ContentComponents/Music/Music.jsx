@@ -32,7 +32,9 @@ class Music extends Component {
                 return (
                   <div
                     className="custom-list--item "
-                    onClick={(e) => this.getData(this.props.songsData, index)}
+                    onClick={(e) =>
+                      this.getData(this.props.songsData, data._id)
+                    }
                   >
                     <div className="text-dark custom-card--inline">
                       <div className="custom-card--inline-img">

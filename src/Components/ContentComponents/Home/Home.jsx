@@ -16,6 +16,7 @@ import {
 } from "../../../Actions";
 import Carousel from "../../ReusableComponents/Carousel/CustomeCarousel";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
+import axios from "axios";
 
 class Home extends Component {
   constructor(props) {
@@ -176,6 +177,27 @@ class Home extends Component {
   getData = (songData, index) => {
     this.props.setMusicData(songData, index);
   };
+  downloadSong = (id, filename) => {
+    const url = "http://localhost:4000/songs/download/" + id;
+
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        // fileDownload(res.data, filename);
+        let url = window.URL.createObjectURL(res.data);
+
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+      });
+  };
 
   render() {
     const {
@@ -332,12 +354,11 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) => this.getData(songData, index)}
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
@@ -356,16 +377,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      class="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -373,10 +408,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
               {tabValue === "Trending" && (
@@ -385,12 +420,11 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) => this.getData(songData, index)}
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
@@ -409,16 +443,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      class="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -426,10 +474,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
               {tabValue === "International" && (
@@ -443,12 +491,11 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) => this.getData(songData, index)}
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
@@ -467,16 +514,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      class="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -484,10 +545,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
             </div>

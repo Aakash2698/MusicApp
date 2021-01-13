@@ -15,6 +15,7 @@ import {
   SEARCH_DATA,
   ACTIVE_INDEX,
   DOWNLOAD_SONG,
+  CLEAR_QUEUE,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -35,7 +36,9 @@ const initialState = {
   searchData: [],
   index: 0,
   activeIndex: null,
-  downloadFile: [],
+  downloadFile: "",
+  queueSongs: [],
+  clear: false,
 };
 
 export default function (state = initialState, action) {
@@ -117,12 +120,21 @@ export default function (state = initialState, action) {
         searchData: action.payload,
       };
     case ACTIVE_INDEX:
+      let concatData = state.queueSongs.concat(action.queue);
+      let concatQueueData = concatData.filter(
+        ((s) => ({ _id }) => !s.has(_id) && s.add(_id))(new Set())
+      );
       return {
         ...state,
         activeIndex: action.payload,
+        queueSongs: concatQueueData,
+      };
+    case CLEAR_QUEUE:
+      return {
+        ...state,
+        queueSongs: action.payload,
       };
     case DOWNLOAD_SONG:
-      console.log(action.payload);
       return {
         ...state,
         downloadFile: action.payload,

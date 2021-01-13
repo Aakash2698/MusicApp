@@ -15,7 +15,11 @@ import {
   SEARCH_DATA,
   ACTIVE_INDEX,
   DOWNLOAD_SONG,
+  CLEAR_QUEUE,
 } from "../ActionTypes/ActionTypes";
+
+import fileDownload from "js-file-download";
+import download from "downloadjs";
 
 export const topChartMusic = () => (dispatch, getState, Api) => {
   return Api.get("topcharts/all-top-charts").then((response) => {
@@ -180,21 +184,29 @@ export const getSearchAll = (searchText) => (dispatch, getState, Api) => {
   });
 };
 
-export const getActiveIndex = (index) => (dispatch) => {
+export const getActiveIndex = (index, queueSongs) => (dispatch) => {
   return dispatch({
     type: ACTIVE_INDEX,
     payload: index,
+    queue: queueSongs,
+  });
+};
+
+export const clearQueue = () => (dispatch) => {
+  return dispatch({
+    type: CLEAR_QUEUE,
+    payload: [],
   });
 };
 
 export const downloadSong = (id) => (dispatch, getState, Api) => {
-  return Api.get(`songs/download/${id}`).then((response) => {
-    if (response.response.status === 200) {
-      dispatch({
-        type: DOWNLOAD_SONG,
-        payload: response.responseData,
-      });
-    }
-    return response;
-  });
+  // return Api.get(`songs/download/${id}`).then((response) => {
+  //   if (response.response.status === 200) {
+  //     dispatch({
+  //       type: DOWNLOAD_SONG,
+  //       payload: response.responseData,
+  //     });
+  //   }
+  //   return response;
+  // });
 };

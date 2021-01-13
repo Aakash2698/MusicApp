@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { normalizeUnits } from "moment";
 import { getActiveIndex, downloadSong } from "../../../Actions";
 import logger from "redux-logger";
+import axios from "axios";
 
 class Audio extends Component {
   state = {
@@ -26,12 +27,14 @@ class Audio extends Component {
     songName: "Ek Tarfa(Reprise)",
     songArtist: "Darshan Raval",
     songImage: "http://localhost:4000/uploads/1608114760948.jpg",
-    songDownload: "5fe08ecd205bf820e2cf8f1f",
+    songUrl: "5fe08ecd205bf820e2cf8f1f",
     shuffle: false,
     playSongs: [],
     prevIndex: [],
     shuffleIndex: 1,
+    incrementShuffle: 0,
   };
+
   handleDropdownChange = () => {
     this.setState({
       dropdownExpand: !this.state.dropdownExpand,
@@ -60,46 +63,58 @@ class Audio extends Component {
     });
   };
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps, "1010101");
     if (nextProps.currentIndex) {
+      console.log("INININININ");
       this.setState(
         {
           playSongs: nextProps.currentSongData,
           index: nextProps.currentIndex,
         },
         () => {
+          var target = nextProps.currentSongData.find(
+            (temp) => temp._id == this.state.index
+          );
+
           this.setState(
             {
-              onPlay: nextProps.currentSongData[this.state.index].songUrl,
-              songName: nextProps.currentSongData[this.state.index].songName,
-              songArtist:
-                nextProps.currentSongData[this.state.index].artistName,
-              songImage: nextProps.currentSongData[this.state.index].songImage,
-              songDownload: nextProps.currentSongData[this.state.index]._id,
+              onPlay: target.songUrl,
+              songName: target.songName,
+              songArtist: target.artistName,
+              songImage: target.songImage,
+              songUrl: target._id,
             },
             () => {
-              this.props.getActiveIndex(this.state.index);
+              this.props.getActiveIndex(this.state.index, this.state.playSongs);
             }
           );
         }
       );
     } else {
+      console.log("OUOUTOUTOUT");
+
+      console.log(this.state.playSongs);
       this.setState(
         {
           playSongs: nextProps.currentSongData,
-          index: 0,
+          index: nextProps.currentSongData[0]._id,
         },
         () => {
+          var target = nextProps.currentSongData.find(
+            (temp) => temp._id == this.state.index
+          );
+          console.log(target);
+
           this.setState(
             {
-              onPlay: nextProps.currentSongData[this.state.index].songUrl,
-              songName: nextProps.currentSongData[this.state.index].songName,
-              songArtist:
-                nextProps.currentSongData[this.state.index].artistName,
-              songImage: nextProps.currentSongData[this.state.index].songImage,
-              songDownload: nextProps.currentSongData[this.state.index]._id,
+              onPlay: target.songUrl,
+              songName: target.songName,
+              songArtist: target.artistName,
+              songImage: target.songImage,
+              songUrl: target._id,
             },
             () => {
-              this.props.getActiveIndex(this.state.index);
+              this.props.getActiveIndex(this.state.index, this.state.playSongs);
             }
           );
         }
@@ -112,67 +127,104 @@ class Audio extends Component {
       const shuffleValue = Math.floor(
         Math.random(0, this.state.playSongs.length) * 10
       );
-
-      this.setState(
-        {
-          prevIndex: this.state.prevIndex.concat(this.state.index),
-        },
-        () => {
-          this.setState(
-            {
-              index: shuffleValue,
-            },
-            () => {
-              this.setState(
-                {
-                  onPlay: this.state.playSongs[this.state.index].songUrl,
-                  songName: this.state.playSongs[this.state.index].songName,
-                  songArtist: this.state.playSongs[this.state.index].artistName,
-                  songImage: this.state.playSongs[this.state.index].songImage,
-                },
-                () => {
-                  this.props.getActiveIndex(this.state.index);
-                }
-              );
-            }
-          );
-        }
-      );
-    } else {
-      if (this.state.index === this.state.playSongs.length - 1) {
+      if (!this.state.prevIndex.includes(shuffleValue)) {
         this.setState(
           {
-            index: 0,
+            prevIndex: this.state.prevIndex.concat(shuffleValue),
           },
           () => {
             this.setState(
               {
-                onPlay: this.state.playSongs[this.state.index].songUrl,
-                songName: this.state.playSongs[this.state.index].songName,
-                songArtist: this.state.playSongs[this.state.index].artistName,
-                songImage: this.state.playSongs[this.state.index].songImage,
+                index: this.state.playSongs[shuffleValue]._id,
+              },
+
+              () => {
+                var target = this.state.playSongs.find(
+                  (temp) => temp._id == this.state.index
+                );
+
+                this.setState(
+                  {
+                    onPlay: target.songUrl,
+                    songName: target.songName,
+                    songArtist: target.artistName,
+                    songImage: target.songImage,
+                    songUrl: target._id,
+                  },
+                  () => {
+                    this.props.getActiveIndex(
+                      this.state.index,
+                      this.state.playSongs
+                    );
+                  }
+                );
+              }
+            );
+          }
+        );
+      }
+    } else {
+      const songIndex = this.state.playSongs.findIndex((element, index) => {
+        if (element._id === this.state.index) {
+          return true;
+        }
+      });
+      if (this.state.playSongs.length === songIndex + 1) {
+        this.setState(
+          {
+            index: this.state.playSongs[0]._id,
+          },
+          () => {
+            var target = this.state.playSongs.find(
+              (temp) => temp._id == this.state.index
+            );
+            this.setState(
+              {
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
               },
               () => {
-                this.props.getActiveIndex(this.state.index);
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
               }
             );
           }
         );
       } else {
+        let nextIndex;
+        const songIndex = this.state.playSongs.findIndex((element, index) => {
+          if (element._id === this.state.index) {
+            return true;
+          }
+        });
+        nextIndex = this.state.playSongs[songIndex + 1]._id;
+
         this.setState(
           {
-            index: this.state.index + 1,
+            index: nextIndex,
           },
           () => {
+            var target = this.state.playSongs.find(
+              (temp) => temp._id == this.state.index
+            );
             this.setState(
               {
-                onPlay: this.state.playSongs[this.state.index].songUrl,
-                songName: this.state.playSongs[this.state.index].songName,
-                songArtist: this.state.playSongs[this.state.index].artistName,
-                songImage: this.state.playSongs[this.state.index].songImage,
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
               },
               () => {
-                this.props.getActiveIndex(this.state.index);
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
               }
             );
           }
@@ -185,57 +237,100 @@ class Audio extends Component {
     if (this.state.shuffle) {
       this.setState(
         {
-          index: this.state.prevIndex.length--,
+          index: this.state.incrementShuffle,
         },
         () => {
           this.setState(
             {
-              onPlay: this.state.playSongs[this.state.index].songUrl,
-              songName: this.state.playSongs[this.state.index].songName,
-              songArtist: this.state.playSongs[this.state.index].artistName,
-              songImage: this.state.playSongs[this.state.index].songImage,
+              onPlay: this.state.playSongs[
+                this.state.prevIndex[this.state.index]
+              ].songUrl,
+              songName: this.state.playSongs[
+                this.state.prevIndex[this.state.index]
+              ].songName,
+              songArtist: this.state.playSongs[
+                this.state.prevIndex[this.state.index]
+              ].artistName,
+              songImage: this.state.playSongs[
+                this.state.prevIndex[this.state.index]
+              ].songImage,
+              songUrl: this.state.playSongs[
+                this.state.prevIndex[this.state.index]
+              ]._id,
             },
             () => {
-              this.props.getActiveIndex(this.state.index);
+              this.props.getActiveIndex(
+                this.state.prevIndex[this.state.index],
+                this.state.playSongs
+              );
+              if (
+                this.state.incrementShuffle <
+                this.state.prevIndex.length - 1
+              ) {
+                this.setState({
+                  incrementShuffle: this.state.incrementShuffle + 1,
+                });
+              }
             }
           );
         }
       );
     } else {
-      if (this.state.index === 0) {
+      if (this.state.index === this.state.playSongs[0]._id) {
         this.setState(
           {
-            index: 0,
+            index: this.state.playSongs[0]._id,
           },
           () => {
+            var target = this.state.playSongs.find(
+              (temp) => temp._id == this.state.index
+            );
             this.setState(
               {
-                onPlay: this.state.playSongs[this.state.index].songUrl,
-                songName: this.state.playSongs[this.state.index].songName,
-                songArtist: this.state.playSongs[this.state.index].artistName,
-                songImage: this.state.playSongs[this.state.index].songImage,
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
               },
               () => {
-                this.props.getActiveIndex(this.state.index);
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
               }
             );
           }
         );
       } else {
+        let nextIndex;
+        const songIndex = this.state.playSongs.findIndex((element, index) => {
+          if (element._id === this.state.index) {
+            return true;
+          }
+        });
+        nextIndex = this.state.playSongs[songIndex - 1]._id;
         this.setState(
           {
-            index: this.state.index - 1,
+            index: nextIndex,
           },
           () => {
+            var target = this.state.playSongs.find(
+              (temp) => temp._id == this.state.index
+            );
             this.setState(
               {
-                onPlay: this.state.playSongs[this.state.index].songUrl,
-                songName: this.state.playSongs[this.state.index].songName,
-                songArtist: this.state.playSongs[this.state.index].artistName,
-                songImage: this.state.playSongs[this.state.index].songImage,
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
               },
               () => {
-                this.props.getActiveIndex(this.state.index);
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
               }
             );
           }
@@ -251,9 +346,28 @@ class Audio extends Component {
   };
 
   downloadSong = () => {
-    this.props.downloadSong(this.state.songDownload);
+    const url = "http://localhost:4000/songs/download/" + this.state.songUrl;
+
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        // fileDownload(res.data, filename);
+        let url = window.URL.createObjectURL(res.data);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = this.state.songName + ".mp3";
+        a.click();
+      });
   };
+
   render() {
+    console.log(this.props.queuePlaylist);
     const {
       dropdownExpand,
       volumeSlider,
@@ -292,7 +406,7 @@ class Audio extends Component {
               src={onPlay}
               onClickNext={this.nextSong}
               onClickPrevious={this.previousSong}
-              autoPlay={true}
+              // autoPlay={true}
               showSkipControls={true}
               showJumpControls={false}
               customProgressBarSection={[RHAP_UI.PROGRESS_BAR]}
@@ -335,12 +449,18 @@ class Audio extends Component {
         </div>
         <div className="audio-info">
           <div className="dropleft">
-            <button className="btn btn-icon-only" onClick={this.downloadSong}>
-              <span
+            <button
+              className="btn btn-icon-only"
+              onClick={() => this.downloadSong()}
+            >
+              <span style={{ color: "white" }}>
+                <i class="fas fa-download" style={{ fontSize: "1.3rem" }}></i>
+              </span>
+              {/* <span
                 className="iconify audio-player-icon"
                 data-icon="bx:bxs-download"
                 data-inline="false"
-              ></span>
+              ></span> */}
             </button>
             {/* <button
               className="btn btn-icon-only"
@@ -368,9 +488,11 @@ class Audio extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   currentSongData: state.home.songData,
   currentIndex: state.home.index,
+  // queuePlaylist: state.home.queueSongs,
 });
 
 export default connect(mapStateToProps, { getActiveIndex, downloadSong })(

@@ -30,7 +30,10 @@
 .right-sidebar .right-sidebar-body {
   border-bottom-left-radius: 1rem;
   height: calc(100% - 3.25rem);
-  overflow: auto;
+  overflow-y: scroll !important;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 .ps {
   position: relative;
@@ -63,6 +66,10 @@
 }
 .list-group-item {
   background-color: #343a40 !important;
+  &:hover {
+    background-color: rgba(76, 36, 156, 0.267) !important;
+    cursor: pointer !important;
+  }
 }
 .list-group-flush:first-child .list-group-item:first-child {
   border-top: 0;
@@ -169,4 +176,13 @@ p:last-child {
   height: 1.25rem;
   font-size: 1.25rem;
   line-height: 1;
+}
+
+.active-song {
+  background-color: #222629 !important;
+  cursor: pointer;
+}
+
+.top-title-sidebar {
+  display: flex;
 }

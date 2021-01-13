@@ -89,7 +89,7 @@
   height: inherit;
 }
 .s_l .s_artist {
-  width: 25%;
+  width: 30%;
   float: left;
   height: inherit;
 }
@@ -100,7 +100,7 @@
   height: inherit;
 }
 .s_l .s_download-icon {
-  width: 10%;
+  width: 5%;
   position: relative;
   float: left;
   height: inherit;
@@ -216,7 +216,7 @@
   display: inline;
 }
 .a_l .s_artist {
-  width: 25%;
+  width: 30%;
   float: left;
   height: inherit;
 }
@@ -227,10 +227,7 @@
   height: inherit;
 }
 .a_l .s_download-icon {
-  width: 10%;
-  position: relative;
-  float: left;
-  height: inherit;
+  display: none;
 }
 
 ul.a-list li {
@@ -292,10 +289,27 @@ ul.a-list li div.card_layout_data {
 }
 
 .songs-row:hover {
-  background-color: rgba(76, 36, 156, 0.267);
-  cursor: pointer;
+  background-color: rgba(76, 36, 156, 0.267) !important;
+  cursor: pointer !important;
+  .a_l .s_download-icon {
+    display: initial;
+    width: 5%;
+    position: relative;
+    float: left;
+    height: inherit;
+  }
 }
 .active-music {
   background-color: #222629 !important;
   cursor: pointer;
+
+  &:hover {
+    .a_l .s_download-icon {
+      display: initial;
+      width: 5%;
+      position: relative;
+      float: left;
+      height: inherit;
+    }
+  }
 }
