@@ -63,62 +63,66 @@ class Audio extends Component {
     });
   };
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, "1010101");
-    if (nextProps.currentIndex) {
-      console.log("INININININ");
-      this.setState(
-        {
-          playSongs: nextProps.currentSongData,
-          index: nextProps.currentIndex,
-        },
-        () => {
-          var target = nextProps.currentSongData.find(
-            (temp) => temp._id == this.state.index
-          );
+    if (this.props !== nextProps) {
+      if (nextProps.currentIndex) {
+        this.setState(
+          {
+            playSongs: nextProps.currentSongData,
+            index: nextProps.currentIndex,
+          },
+          () => {
+            var target = nextProps.currentSongData.find(
+              (temp) => temp._id == this.state.index
+            );
+            this.setState(
+              {
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
+              },
+              () => {
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
+              }
+            );
+          }
+        );
+      } else {
+        console.log("OUOUTOUTOUT");
 
-          this.setState(
-            {
-              onPlay: target.songUrl,
-              songName: target.songName,
-              songArtist: target.artistName,
-              songImage: target.songImage,
-              songUrl: target._id,
-            },
-            () => {
-              this.props.getActiveIndex(this.state.index, this.state.playSongs);
-            }
-          );
-        }
-      );
-    } else {
-      console.log("OUOUTOUTOUT");
-
-      console.log(this.state.playSongs);
-      this.setState(
-        {
-          playSongs: nextProps.currentSongData,
-          index: nextProps.currentSongData[0]._id,
-        },
-        () => {
-          var target = nextProps.currentSongData.find(
-            (temp) => temp._id == this.state.index
-          );
-          console.log(target);
-
-          this.setState(
-            {
-              onPlay: target.songUrl,
-              songName: target.songName,
-              songArtist: target.artistName,
-              songImage: target.songImage,
-              songUrl: target._id,
-            },
-            () => {
-              this.props.getActiveIndex(this.state.index, this.state.playSongs);
-            }
-          );
-        }
-      );
+        console.log(this.state.playSongs);
+        this.setState(
+          {
+            playSongs: nextProps.currentSongData,
+            index: nextProps.currentSongData[0]._id,
+          },
+          () => {
+            var target = nextProps.currentSongData.find(
+              (temp) => temp._id == this.state.index
+            );
+            console.log(target);
+            this.setState(
+              {
+                onPlay: target.songUrl,
+                songName: target.songName,
+                songArtist: target.artistName,
+                songImage: target.songImage,
+                songUrl: target._id,
+              },
+              () => {
+                this.props.getActiveIndex(
+                  this.state.index,
+                  this.state.playSongs
+                );
+              }
+            );
+          }
+        );
+      }
     }
   }
 
@@ -367,7 +371,6 @@ class Audio extends Component {
   };
 
   render() {
-    console.log(this.props.queuePlaylist);
     const {
       dropdownExpand,
       volumeSlider,
@@ -479,7 +482,7 @@ class Audio extends Component {
           </div>
           <button
             className="btn btn-icon-only"
-            onClick={this.props.handleOpenSidebar}
+            onClick={this.props.handleOpenQueue}
           >
             <Icon className="music-icon" icon={musicalNote} />
           </button>
@@ -492,7 +495,7 @@ class Audio extends Component {
 const mapStateToProps = (state) => ({
   currentSongData: state.home.songData,
   currentIndex: state.home.index,
-  // queuePlaylist: state.home.queueSongs,
+  // queue: state.home.queueSongs,
 });
 
 export default connect(mapStateToProps, { getActiveIndex, downloadSong })(

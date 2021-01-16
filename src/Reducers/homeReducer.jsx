@@ -16,6 +16,7 @@ import {
   ACTIVE_INDEX,
   DOWNLOAD_SONG,
   CLEAR_QUEUE,
+  DELETE_QUEUE_SONG,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -114,6 +115,7 @@ export default function (state = initialState, action) {
         ...state,
         songsTypeData: action.payload,
       };
+
     case SEARCH_DATA:
       return {
         ...state,
@@ -129,11 +131,22 @@ export default function (state = initialState, action) {
         activeIndex: action.payload,
         queueSongs: concatQueueData,
       };
+
     case CLEAR_QUEUE:
       return {
         ...state,
         queueSongs: action.payload,
       };
+
+    case DELETE_QUEUE_SONG:
+      var lists = state.queueSongs.filter((x) => {
+        return x._id != action.payload;
+      });
+      return {
+        ...state,
+        queueSongs: lists,
+      };
+
     case DOWNLOAD_SONG:
       return {
         ...state,

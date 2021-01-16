@@ -117,6 +117,7 @@ class ArtistDetails extends Component {
   render() {
     const { rightSideAction, positionIndex } = this.state;
     let transform;
+
     if (positionIndex === 0) {
       transform = "translate3d(775px, 234px, 0px)";
     } else if (positionIndex === 1) {

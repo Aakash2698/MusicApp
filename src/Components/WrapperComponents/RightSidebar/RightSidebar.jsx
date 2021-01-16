@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import Audio from "../Audio/Audio";
 import "./RightSidebar.scss";
-import one from "../../../Assets/image/sliderImage/1.jpg";
-import two from "../../../Assets/image/sliderImage/2.jpg";
-import three from "../../../Assets/image/sliderImage/3.jpg";
-import four from "../../../Assets/image/sliderImage/4.jpg";
-import five from "../../../Assets/image/sliderImage/5.jpg";
-import six from "../../../Assets/image/sliderImage/6.jpg";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
-import { setMusicData, clearQueue } from "../../../Actions";
+import { setMusicData, clearQueue, deleteQueueSong } from "../../../Actions";
+import axios from "axios";
+
 class RightSidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.howItWorks = React.createRef();
+  }
   state = {
+    scrollTop: 0,
     openRightSidebar: false,
     rightSideAction: false,
     positionIndex: 0,
@@ -54,10 +55,15 @@ class RightSidebar extends Component {
       // },
     ],
   };
-  componentWillReceiveProps(nextProps) {
-    if (this.props.currentPlay !== nextProps.currentPlay) {
-    }
-  }
+
+  onScroll = () => {
+    // window.scrollTo(0, 30);
+    // console.log(this.myRef.current.scrollTop);
+    // const scrollTop = this.myRef.current.scrollTop;
+    // this.setState({
+    //   scrollTop: scrollTop,
+    // });
+  };
 
   handleDropdownChange = (index) => {
     this.setState({
@@ -66,33 +72,77 @@ class RightSidebar extends Component {
     });
   };
 
-  handleOpenSidebar = (e) => {
-    e.preventDefault();
-    const { openRightSidebar } = this.state;
+  handleOpenQueue = () => {
     this.setState({
-      openRightSidebar: !openRightSidebar,
+      openRightSidebar: !this.state.openRightSidebar,
     });
   };
+  handleCloseQueue = () => {
+    this.setState({
+      openRightSidebar: false,
+    });
+  };
+
   getData = (songData, index) => {
     {
       this.props.setMusicData(songData, index);
     }
   };
+
   clearQueue = () => {
     {
       this.props.clearQueue();
     }
   };
+
+  downloadSong = (id, songName) => {
+    const url = "http://localhost:4000/songs/download/" + id;
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        let url = window.URL.createObjectURL(res.data);
+        let a = document.createElement("a");
+        a.href = res.config.url;
+        a.download = songName + ".mp3";
+        a.click();
+      });
+    this.setState({
+      rightSideAction: !this.state.rightSideAction,
+    });
+  };
+
+  queueDelete = (id) => {
+    console.log("delete", this.props.queue);
+    this.props.deleteQueueSong(id);
+  };
+
+  getScrollLocations() {
+    let whatIDo = document.getElementById("active");
+    console.log(whatIDo);
+    whatIDo.scrollIntoView(true);
+  }
+
   render() {
     const {
       openRightSidebar,
       topCharts,
       rightSideAction,
       positionIndex,
+      scrollTop,
     } = this.state;
+
+    console.log(scrollTop);
+
     let transform;
 
-    const sliceSongsIndex = this.props.queue;
+    console.log(this.props.queue);
+    let sliceSongsIndex = this.props.queue;
 
     if (positionIndex === 0) {
       transform = "translate3d(137px, 18px, 0px)";
@@ -115,7 +165,6 @@ class RightSidebar extends Component {
           <div style={{ width: "85%" }}>Queue</div>
           <div onClick={this.clearQueue}> Clear</div>
         </div>
-
         <div
           className="right-sidebar-body ps ps--active-y"
           data-scrollable="true"
@@ -124,8 +173,8 @@ class RightSidebar extends Component {
             className="list-group list-group-flush"
             style={{ flexDirection: "column" }}
           >
-            {sliceSongsIndex &&
-              sliceSongsIndex.map((data, index) => {
+            {this.props.queue &&
+              this.props.queue.map((data, index) => {
                 return (
                   <li
                     className={
@@ -134,9 +183,12 @@ class RightSidebar extends Component {
                         : "custom-list--item list-group-item d-flex"
                     }
                     key={index}
-                    onClick={(e) => this.getData(sliceSongsIndex, data._id)}
+                    onClick={this.getScrollLocations}
                   >
-                    <div className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused">
+                    <div
+                      className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused"
+                      onClick={(e) => this.getData(sliceSongsIndex, data._id)}
+                    >
                       <div className="custom-card--inline-img">
                         <img
                           src={data.songImage}
@@ -148,36 +200,53 @@ class RightSidebar extends Component {
                       <div className="custom-card--inline-desc">
                         <p className="text-truncate mb-0">{data.songName}</p>
                         <p className="text-truncate text-muted font-sm">
-                          {data.artist}
+                          {data.artistName}
                         </p>
                       </div>
                     </div>
                     <ul className="custom-card--labels d-flex ml-auto">
+                      <li className="dropleft hide-remove">
+                        <button
+                          className="btn btn-icon-only"
+                          onClick={(e) => this.queueDelete(data._id)}
+                        >
+                          <span className="three-dot-action">
+                            <i
+                              className="fas fa-times-circle"
+                              style={{ color: "white" }}
+                            ></i>
+                          </span>
+                        </button>
+                      </li>
                       <li className="dropleft">
                         <button
                           className="btn btn-icon-only"
-                          onClick={(e) => this.handleDropdownChange(index)}
+                          onClick={(e) =>
+                            this.downloadSong(data._id, data.songName)
+                          }
                         >
-                          <span
-                            className="iconify three-dot-action"
-                            data-icon="fe-elipsis-h"
-                            data-inline="false"
-                          ></span>
+                          <span className="three-dot-action">
+                            <i
+                              className="fas fa-download"
+                              style={{ color: "white" }}
+                            ></i>
+                          </span>
                         </button>
                       </li>
                     </ul>
                   </li>
                 );
               })}
-            <ActionPopover
+            {/* <ActionPopover
               dropdownExpand={rightSideAction}
               transform={transform}
-            />
+            /> */}
           </ul>
         </div>
         <Audio
-          handleOpenSidebar={this.handleOpenSidebar}
+          handleOpenQueue={this.handleOpenQueue}
           fullWidth={this.props.fullWidth}
+          handleCloseQueue={this.handleCloseQueue}
         />
       </div>
     );
@@ -188,6 +257,8 @@ const MapStateToProps = (state) => ({
   queue: state.home.queueSongs,
   activeSongIndex: state.home.activeIndex,
 });
-export default connect(MapStateToProps, { setMusicData, clearQueue })(
-  RightSidebar
-);
+export default connect(MapStateToProps, {
+  setMusicData,
+  clearQueue,
+  deleteQueueSong,
+})(RightSidebar);

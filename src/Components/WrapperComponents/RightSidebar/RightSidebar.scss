@@ -69,6 +69,10 @@
   &:hover {
     background-color: rgba(76, 36, 156, 0.267) !important;
     cursor: pointer !important;
+
+    .hide-remove {
+      display: initial;
+    }
   }
 }
 .list-group-flush:first-child .list-group-item:first-child {
@@ -95,8 +99,8 @@
 
 .custom-list--item .custom-card--inline {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 78%;
-  flex: 0 0 78%;
+  -ms-flex: 0 0 74%;
+  flex: 0 0 74%;
   max-width: 78%;
   padding-right: 0.5rem;
 }
@@ -181,8 +185,18 @@ p:last-child {
 .active-song {
   background-color: #222629 !important;
   cursor: pointer;
+
+  &:hover {
+    background: #222629 !important;
+    .hide-remove {
+      display: none;
+    }
+  }
 }
 
 .top-title-sidebar {
   display: flex;
+}
+.hide-remove {
+  display: none;
 }

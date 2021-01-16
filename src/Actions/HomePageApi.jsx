@@ -16,6 +16,7 @@ import {
   ACTIVE_INDEX,
   DOWNLOAD_SONG,
   CLEAR_QUEUE,
+  DELETE_QUEUE_SONG,
 } from "../ActionTypes/ActionTypes";
 
 import fileDownload from "js-file-download";
@@ -196,6 +197,13 @@ export const clearQueue = () => (dispatch) => {
   return dispatch({
     type: CLEAR_QUEUE,
     payload: [],
+  });
+};
+
+export const deleteQueueSong = (id) => (dispatch) => {
+  return dispatch({
+    type: DELETE_QUEUE_SONG,
+    payload: id,
   });
 };
 
