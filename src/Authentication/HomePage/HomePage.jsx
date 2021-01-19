@@ -100,7 +100,10 @@ class HomePage extends Component {
                   </span>
                   <ul className="header-auto-options ml-auto d-flex align-items-center">
                     <li>
-                      <span className="sign-in" onClick={this.handleOpenSignIn}>
+                      <span
+                        className="sign-in"
+                        onClick={() => this.handleOpenSignIn()}
+                      >
                         Sign in
                       </span>
                     </li>
@@ -108,7 +111,7 @@ class HomePage extends Component {
                       <button
                         className="btn btn-pill btn-air btn-sm btn-danger"
                         type="button"
-                        onClick={this.handleOpenSignUp}
+                        onClick={() => this.handleOpenSignUp()}
                       >
                         Sign up
                       </button>

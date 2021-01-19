@@ -185,12 +185,19 @@ export const getSearchAll = (searchText) => (dispatch, getState, Api) => {
   });
 };
 
-export const getActiveIndex = (index, queueSongs) => (dispatch) => {
-  return dispatch({
-    type: ACTIVE_INDEX,
-    payload: index,
-    queue: queueSongs,
-  });
+export const getActiveIndex = (index, queueList) => (dispatch) => {
+  if (index !== null) {
+    return dispatch({
+      type: ACTIVE_INDEX,
+      payload: index,
+      queue: queueList,
+    });
+  } else {
+    return dispatch({
+      type: ACTIVE_INDEX,
+      queue: queueList,
+    });
+  }
 };
 
 export const clearQueue = () => (dispatch) => {

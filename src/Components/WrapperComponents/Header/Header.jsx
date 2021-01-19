@@ -206,7 +206,7 @@ class Header extends Component {
           <button
             type="button"
             className="btn toggle-menu mr-3 btn-top"
-            onClick={this.props.setSideBar}
+            onClick={() => this.props.setSideBar()}
           >
             <span></span>
             <span></span>
@@ -256,7 +256,7 @@ class Header extends Component {
                                       data.artistName &&
                                       `/artistData/${data.artistName}`
                                     }
-                                    onClick={this.openSuggestionBox}
+                                    onClick={() => this.openSuggestionBox()}
                                   >
                                     <img
                                       src={data.artistImage}
@@ -299,7 +299,7 @@ class Header extends Component {
                               >
                                 <div
                                   className="custom-card mb-3"
-                                  onClick={this.openSuggestionBox}
+                                  onClick={() => this.openSuggestionBox()}
                                 >
                                   <div className="text-dark custom-card--inline">
                                     <div className="custom-card--inline-img">
@@ -337,7 +337,10 @@ class Header extends Component {
 
           <ul className="header-options d-flex align-items-center">
             <li style={{ listStyle: "none", display: "flex" }}>
-              <span className="header-launguage" onClick={this.handleClickOpen}>
+              <span
+                className="header-launguage"
+                onClick={() => this.handleClickOpen()}
+              >
                 Language
               </span>
               <img src={translate} alt="translate" className="launguage-img" />
@@ -346,7 +349,7 @@ class Header extends Component {
             <li className="dropdown fade-in" ref={(node) => (this.node = node)}>
               <span
                 className="d-flex align-items-center py-2"
-                onClick={this.handleOpenProfile}
+                onClick={() => this.handleOpenProfile()}
                 style={{ cursor: "pointer" }}
               >
                 <div className="avatar avatar-sm avatar-circle">
@@ -370,7 +373,7 @@ class Header extends Component {
                     transform: "translate3d(-44px, 18px, 0px)",
                   }}
                 >
-                  <NavLink to={"/profile"} onClick={this.hidePopover}>
+                  <NavLink to={"/profile"} onClick={() => this.hidePopover()}>
                     <span className="dropdown-item">
                       <i
                         className="iconify dropdown-icon"
@@ -400,7 +403,7 @@ class Header extends Component {
                   <div className="px-4 py-2">
                     <span
                       className="btn btn-sm btn-air btn-pill btn-danger"
-                      onClick={this.logoutUser}
+                      onClick={() => this.logoutUser()}
                     >
                       Logout
                     </span>
@@ -423,7 +426,7 @@ class Header extends Component {
                 style={{ outline: "none" }}
                 type="button"
                 className="close"
-                onClick={this.handleClose}
+                onClick={() => this.handleClose()}
               >
                 <span>x</span>
               </button>

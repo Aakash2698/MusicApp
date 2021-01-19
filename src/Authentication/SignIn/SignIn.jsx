@@ -94,7 +94,7 @@ class SignIn extends Component {
               <button
                 className="close"
                 type="button"
-                onClick={this.handleCloseSignIn}
+                onClick={() => this.handleCloseSignIn()}
               >
                 x
               </button>

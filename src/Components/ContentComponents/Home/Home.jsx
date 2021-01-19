@@ -392,7 +392,7 @@ class Home extends Component {
                                 >
                                   <span style={{ color: "white" }}>
                                     <i
-                                      class="fas fa-download"
+                                      className="fas fa-download"
                                       style={{ fontSize: "1.3rem" }}
                                     ></i>
                                   </span>
@@ -458,7 +458,7 @@ class Home extends Component {
                                 >
                                   <span style={{ color: "white" }}>
                                     <i
-                                      class="fas fa-download"
+                                      className="fas fa-download"
                                       style={{ fontSize: "1.3rem" }}
                                     ></i>
                                   </span>
@@ -529,7 +529,7 @@ class Home extends Component {
                                 >
                                   <span style={{ color: "white" }}>
                                     <i
-                                      class="fas fa-download"
+                                      className="fas fa-download"
                                       style={{ fontSize: "1.3rem" }}
                                     ></i>
                                   </span>

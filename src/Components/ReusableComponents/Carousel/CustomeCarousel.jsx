@@ -52,7 +52,7 @@ class Carousel extends Component {
               return (
                 <div
                   className={this.props.imageSize}
-                  onClick={
+                  onClick={() =>
                     data.songUrl
                       ? (e) => this.getSongData(imagePath, data._id)
                       : ""

@@ -12,7 +12,9 @@ import {
   retroClassic,
   hideLoader,
   downloadSong,
+  getActiveIndex,
 } from "../../../Actions";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import { saveAs } from "file-saver";
@@ -29,6 +31,7 @@ class ArtistDetails extends Component {
     positionIndex: 0,
     songId: "",
     songName: "",
+    allSongs: [],
   };
   componentDidMount() {
     if (this.props.match.params.type === "chartsData") {
@@ -66,11 +69,13 @@ class ArtistDetails extends Component {
       this.props.setMusicData(songData, id);
     }
   };
+
   handleTabChange = (tabName) => {
     this.setState({
       tabValue: tabName,
     });
   };
+
   playAll = (allSongData) => {
     this.props.setMusicData(allSongData);
   };
@@ -81,11 +86,15 @@ class ArtistDetails extends Component {
         playIndex: nextProps.activeSongIndex,
       });
     }
+    if (nextProps.queueList.length === 0) {
+      this.setState({
+        playIndex: null,
+      });
+    }
   }
 
   downloadSong = () => {
     const url = "http://localhost:4000/songs/download/" + this.state.songId;
-
     axios
       .get(url, {
         responseType: "blob",
@@ -105,12 +114,26 @@ class ArtistDetails extends Component {
       rightSideAction: !this.state.rightSideAction,
     });
   };
-  handleDropdownChange = (index, songId, songName) => {
+
+  handleDropdownChange = (index, songId, songName, wholeSongData) => {
     this.setState({
       rightSideAction: !this.state.rightSideAction,
       positionIndex: index,
       songId: songId,
       songName: songName,
+      allSongs: wholeSongData,
+    });
+  };
+
+  addQueue = () => {
+    console.log(this.props.queueList.length, "ZZzzzzzzzzzzz");
+
+    if (this.props.queueList.length === 0) {
+      this.getData(this.state.allSongs, this.state.songId);
+    }
+    this.props.getActiveIndex(null, this.state.allSongs);
+    this.setState({
+      rightSideAction: !this.state.rightSideAction,
     });
   };
 
@@ -128,6 +151,12 @@ class ArtistDetails extends Component {
       transform = "translate3d(775px, 396px, 0px)";
     } else if (positionIndex === 4) {
       transform = "translate3d(775px, 450px, 0px)";
+    } else if (positionIndex === 5) {
+      transform = "translate3d(775px, 504px, 0px)";
+    } else if (positionIndex === 6) {
+      transform = "translate3d(775px, 558px, 0px)";
+    } else if (positionIndex === 7) {
+      transform = "translate3d(775px, 612px, 0px)";
     }
 
     let artistData, songsData;
@@ -153,7 +182,10 @@ class ArtistDetails extends Component {
           {artistData &&
             artistData.map((data, index) => {
               return (
-                <div className="row section text-centre text-md-left">
+                <div
+                  className="row section text-centre text-md-left"
+                  key={index}
+                >
                   <div className="col-xl-3 col-lg-4 col-sm-5 song-header-image">
                     <img
                       src={
@@ -271,7 +303,8 @@ class ArtistDetails extends Component {
                               this.handleDropdownChange(
                                 index,
                                 data._id,
-                                data.songName
+                                data.songName,
+                                [data]
                               )
                             }
                             // onClick={() =>
@@ -303,6 +336,7 @@ class ArtistDetails extends Component {
                 dropdownExpand={rightSideAction}
                 transform={transform}
                 downloadSong={this.downloadSong}
+                addQueue={this.addQueue}
                 // download={this.downloadSong(
                 //   this.state.songId,
                 //   this.state.songName
@@ -323,14 +357,18 @@ const MapStateToProps = (state) => ({
   retroClassics: state.home.retroClassicMusic,
   activeSongIndex: state.home.activeIndex,
   downloadUrl: state.home.downloadFile,
+  queueList: state.home.queueSongs,
 });
 
-export default connect(MapStateToProps, {
-  artistsDetails,
-  setMusicData,
-  getChartDetails,
-  genresMusic,
-  retroClassic,
-  hideLoader,
-  downloadSong,
-})(ArtistDetails);
+export default withRouter(
+  connect(MapStateToProps, {
+    artistsDetails,
+    setMusicData,
+    getChartDetails,
+    genresMusic,
+    retroClassic,
+    hideLoader,
+    downloadSong,
+    getActiveIndex,
+  })(ArtistDetails)
+);

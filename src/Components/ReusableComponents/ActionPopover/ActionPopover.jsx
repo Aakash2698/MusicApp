@@ -21,7 +21,7 @@ export default class ActionPopover extends Component {
             <i className="la la-heart-o dropdown-icon"></i>
             <span>Favorite</span>
           </li> */}
-          <li className="dropdown-item">
+          <li className="dropdown-item" onClick={() => this.props.addQueue()}>
             <i className="la la-plus dropdown-icon"></i>
             <span>Add to Queue</span>
           </li>

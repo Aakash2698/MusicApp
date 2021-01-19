@@ -40,6 +40,7 @@ const initialState = {
   downloadFile: "",
   queueSongs: [],
   clear: false,
+  queueData: [],
 };
 
 export default function (state = initialState, action) {
@@ -121,15 +122,17 @@ export default function (state = initialState, action) {
         ...state,
         searchData: action.payload,
       };
+
     case ACTIVE_INDEX:
-      let concatData = state.queueSongs.concat(action.queue);
-      let concatQueueData = concatData.filter(
-        ((s) => ({ _id }) => !s.has(_id) && s.add(_id))(new Set())
-      );
       return {
         ...state,
         activeIndex: action.payload,
-        queueSongs: concatQueueData,
+        queueSongs: Object.values(
+          state.queueSongs.concat(action.queue).reduce((r, o) => {
+            r[o._id] = o;
+            return r;
+          }, {})
+        ),
       };
 
     case CLEAR_QUEUE:

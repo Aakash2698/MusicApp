@@ -5,6 +5,7 @@ import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover"
 import { connect } from "react-redux";
 import { setMusicData, clearQueue, deleteQueueSong } from "../../../Actions";
 import axios from "axios";
+import ArtistDetails from "../../ContentComponents/ArtistDetails/ArtistDetails";
 
 class RightSidebar extends Component {
   constructor(props) {
@@ -16,53 +17,7 @@ class RightSidebar extends Component {
     openRightSidebar: false,
     rightSideAction: false,
     positionIndex: 0,
-    topCharts: [
-      // {
-      //   id: 1,
-      //   songName: "I Love You Mummy",
-      //   artist: "Arebica Luna",
-      //   songImage: one,
-      // },
-      // {
-      //   id: 2,
-      //   songName: "Shack your butty",
-      //   artist: "Gerrina Linda",
-      //   songImage: two,
-      // },
-      // {
-      //   id: 3,
-      //   songName: "Do it your way(Female)",
-      //   artist: "Zunira Willy & Nutty Nina",
-      //   songImage: three,
-      // },
-      // {
-      //   id: 4,
-      //   songName: "Say yes",
-      //   artist: "Johnny Marro",
-      //   songImage: four,
-      // },
-      // {
-      //   id: 5,
-      //   songName: "Where is your letter",
-      //   artist: "Jina Moore & Lenisa Gory",
-      //   songImage: five,
-      // },
-      // {
-      //   id: 6,
-      //   songName: "Hey not me",
-      //   artist: "Rasomi Pelina",
-      //   songImage: six,
-      // },
-    ],
-  };
-
-  onScroll = () => {
-    // window.scrollTo(0, 30);
-    // console.log(this.myRef.current.scrollTop);
-    // const scrollTop = this.myRef.current.scrollTop;
-    // this.setState({
-    //   scrollTop: scrollTop,
-    // });
+    scrollId: null,
   };
 
   handleDropdownChange = (index) => {
@@ -77,21 +32,36 @@ class RightSidebar extends Component {
       openRightSidebar: !this.state.openRightSidebar,
     });
   };
-  handleCloseQueue = () => {
-    this.setState({
-      openRightSidebar: false,
-    });
+  // handleCloseQueue = () => {
+  //   this.setState({
+  //     openRightSidebar: false,
+  //   });
+  // };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeSongIndex) {
+      this.setState(
+        {
+          scrollId: nextProps.activeSongIndex,
+        },
+        () => {
+          this.getScrollLocations(this.state.scrollId);
+        }
+      );
+    }
+  }
+
+  clearQueueData = () => {
+    this.props.clearQueue();
+    window.setTimeout(() => {
+      this.handleOpenQueue();
+    }, 500);
   };
 
   getData = (songData, index) => {
     {
+      this.getScrollLocations(index);
       this.props.setMusicData(songData, index);
-    }
-  };
-
-  clearQueue = () => {
-    {
-      this.props.clearQueue();
     }
   };
 
@@ -118,15 +88,19 @@ class RightSidebar extends Component {
   };
 
   queueDelete = (id) => {
-    console.log("delete", this.props.queue);
+    console.log(id);
     this.props.deleteQueueSong(id);
   };
 
-  getScrollLocations() {
-    let whatIDo = document.getElementById("active");
-    console.log(whatIDo);
-    whatIDo.scrollIntoView(true);
-  }
+  getScrollLocations = (id) => {
+    let whatIDo = document.getElementById(id);
+    whatIDo &&
+      whatIDo.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "end",
+      });
+  };
 
   render() {
     const {
@@ -137,11 +111,8 @@ class RightSidebar extends Component {
       scrollTop,
     } = this.state;
 
-    console.log(scrollTop);
-
     let transform;
 
-    console.log(this.props.queue);
     let sliceSongsIndex = this.props.queue;
 
     if (positionIndex === 0) {
@@ -163,7 +134,7 @@ class RightSidebar extends Component {
       >
         <div className="right-sidebar-header top-title-sidebar ">
           <div style={{ width: "85%" }}>Queue</div>
-          <div onClick={this.clearQueue}> Clear</div>
+          <div onClick={() => this.clearQueueData()}> Clear</div>
         </div>
         <div
           className="right-sidebar-body ps ps--active-y"
@@ -183,11 +154,12 @@ class RightSidebar extends Component {
                         : "custom-list--item list-group-item d-flex"
                     }
                     key={index}
-                    onClick={this.getScrollLocations}
+                    id={data._id}
+                    // onClick={(e) => this.getScrollLocations(data._id)}
                   >
                     <div
                       className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused"
-                      onClick={(e) => this.getData(sliceSongsIndex, data._id)}
+                      onClick={() => this.getData(sliceSongsIndex, data._id)}
                     >
                       <div className="custom-card--inline-img">
                         <img
@@ -208,7 +180,7 @@ class RightSidebar extends Component {
                       <li className="dropleft hide-remove">
                         <button
                           className="btn btn-icon-only"
-                          onClick={(e) => this.queueDelete(data._id)}
+                          onClick={() => this.queueDelete(data._id)}
                         >
                           <span className="three-dot-action">
                             <i
@@ -221,7 +193,7 @@ class RightSidebar extends Component {
                       <li className="dropleft">
                         <button
                           className="btn btn-icon-only"
-                          onClick={(e) =>
+                          onClick={() =>
                             this.downloadSong(data._id, data.songName)
                           }
                         >

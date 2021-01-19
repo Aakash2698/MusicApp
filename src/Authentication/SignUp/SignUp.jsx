@@ -135,7 +135,7 @@ class SignUp extends Component {
               <button
                 className="close"
                 type="button"
-                onClick={this.handleCloseSignUp}
+                onClick={() => this.handleCloseSignUp()}
               >
                 x
               </button>
