@@ -21,8 +21,9 @@ if (auth_token) {
   store.dispatch(setCurrentUser(decoded));
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
+    console.log("loglogggg");
     store.dispatch(logoutUser());
-    window.location.href = "/home-page";
+    window.location.href = "home";
   }
 }
 

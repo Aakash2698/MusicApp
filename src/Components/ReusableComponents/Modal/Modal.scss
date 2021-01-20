@@ -1,0 +1,57 @@
+@keyframes modalFade {
+    from {
+        // transform: translateY(-50%);
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        // transform: translateY(0);
+        transform: scale(100%);
+        opacity: 1;
+    }
+}
+
+.modal {
+    animation-name: modalFade;
+    animation-duration: .1s;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 5px;
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
+.close-btn {
+    border:none;
+    background: none;
+    &:focus {
+        outline: none;
+    }
+}
+
+.modal-dialog-centered {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: calc(100% - (.5rem * 2));
+}
+
+@media (min-width: 576px) {
+    .modal-dialog-centered {
+        min-height: calc(100% - (1.75rem * 2));
+    }
+}
+.header{
+    width:100%;
+}

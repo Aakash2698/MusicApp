@@ -167,6 +167,7 @@ class Header extends Component {
     this.props.history.push(`/${this.state.searchText}`);
   };
   render() {
+    console.log(this.props.userData);
     const {
       openProfile,
       openDialogBox,
@@ -355,7 +356,7 @@ class Header extends Component {
                 <div className="avatar avatar-sm avatar-circle">
                   <img src={profile} alt="profile" />
                 </div>
-                <span className="pl-2">Halo Admin</span>
+                <span className="pl-2">{this.propsuserName}</span>
               </span>
               {dropdownActionVisible && (
                 <div
@@ -472,6 +473,7 @@ class Header extends Component {
 
 const MapStateToProps = (state) => ({
   searchArray: state.home.searchData,
+  userName: state.auth.userData.firstName,
 });
 
 export default withRouter(

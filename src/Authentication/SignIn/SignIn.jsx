@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Dialog } from "@material-ui/core";
-import { loginUser, setUserData } from "../../Actions";
+import { loginUser, setUserData, googleLogin } from "../../Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import FullPageLoader from "../../Components/ReusableComponents/FullPageLoader";
 import Profile from "../../Components/ContentComponents/Profile";
+import GoogleLogin from "react-google-login";
 
 class SignIn extends Component {
   state = {
@@ -13,6 +14,7 @@ class SignIn extends Component {
     errors: {},
     showLoginValidation: false,
     loading: false,
+    token: "",
   };
 
   showLoader = () => {
@@ -48,6 +50,7 @@ class SignIn extends Component {
     const { email, password } = this.state;
     const userData = { email: email, password: password };
     this.props.loginUser(userData).then((res) => {
+      console.log(res, "SIMPLE LOGIN");
       if (res.responseData.res === 200) {
         this.props.setUserData(res.responseData.userData);
         this.props.history.push("/home");
@@ -68,6 +71,28 @@ class SignIn extends Component {
       loading: false,
       email: "",
       password: "",
+    });
+  };
+  responseGoogle = (response) => {
+    const Token = response.tokenId;
+    this.setState({
+      token: Token,
+    });
+    let payload = {
+      idToken: Token,
+    };
+    this.props.googleLogin(payload).then((res) => {
+      console.log("asasas", res);
+      if (res.response.status === 200) {
+        this.props.setUserData(res.responseData.user);
+        this.props.history.push("/home");
+      } else {
+        this.setState({
+          loading: false,
+          showLoginValidation: true,
+          errors: res.responseData.Error,
+        });
+      }
     });
   };
 
@@ -104,7 +129,8 @@ class SignIn extends Component {
             </h6>
             <div className="modal-body">
               <form
-                className="mx-4 pb-5 ng-untouched ng-pristine ng-valid"
+                className="mx-4 ng-untouched ng-pristine ng-valid"
+                style={{ paddingBottom: "1.5rem" }}
                 onSubmit={this.handleFormSubmit}
               >
                 <div className="form-group">
@@ -143,6 +169,32 @@ class SignIn extends Component {
                     <i className="fas fa-circle-notch fa-spin custom-loader"></i>
                   )}
                 </button>
+                <div className="gglbtn">
+                  <GoogleLogin
+                    clientId="342148260884-dfd3n8vics5h243jgmac95lmjj63btpk.apps.googleusercontent.com"
+                    render={(renderProps) => (
+                      <div className="google-btn">
+                        <div className="google-icon-wrapper">
+                          <img
+                            className="google-icon"
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                          />
+                        </div>
+                        <p
+                          onClick={renderProps.onClick}
+                          disabled={renderProps.disabled}
+                          className="btn-text"
+                        >
+                          <b className="sign-text">Sign in with google</b>
+                        </p>
+                      </div>
+                    )}
+                    buttonText="SignIn Via Google"
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.responseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </div>
               </form>
             </div>
           </div>
@@ -159,4 +211,8 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser, setUserData })(SignIn);
+export default connect(mapStateToProps, {
+  loginUser,
+  setUserData,
+  googleLogin,
+})(SignIn);
