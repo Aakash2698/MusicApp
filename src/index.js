@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import store from "./configStore";
 import SetAuthToken from "./Utils/SetAuthToken";
 import jwt_decode from "jwt-decode";
-import { setCurrentUser } from "./Actions/index";
+import { setCurrentUser, logoutUser } from "./Actions/index";
 
 let auth_token = localStorage.getItem("jwtToken");
 if (auth_token) {

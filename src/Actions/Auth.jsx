@@ -132,13 +132,3 @@ export const logoutUser = () => (dispatch) => {
   SetAuthToken(false);
   dispatch(setCurrentUser({}));
 };
-
-export const logoutSuccess = () => {
-  // global.check_Auth(history);
-  localStorage.clear();
-  history.push("/login");
-  // logoutFirebase();
-  return {
-    type: LOGOUT,
-  };
-};
