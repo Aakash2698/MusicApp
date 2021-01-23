@@ -35,10 +35,9 @@ export default class HomepageCarousel extends Component {
           {imagePath &&
             imagePath.map((data, index) => {
               return (
-                <div>
+                <div key={index}>
                   <img
                     src={data.songImage}
-                    alt="avatar"
                     className="avatar avatar-xl avatar-circle mx-auto width-initial"
                     key={index}
                   />

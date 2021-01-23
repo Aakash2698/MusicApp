@@ -30,7 +30,10 @@
 .right-sidebar .right-sidebar-body {
   border-bottom-left-radius: 1rem;
   height: calc(100% - 3.25rem);
-  overflow: auto;
+  overflow-y: scroll !important;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 .ps {
   position: relative;
@@ -63,6 +66,14 @@
 }
 .list-group-item {
   background-color: #343a40 !important;
+  &:hover {
+    background-color: rgba(76, 36, 156, 0.267) !important;
+    cursor: pointer !important;
+
+    .hide-remove {
+      display: initial;
+    }
+  }
 }
 .list-group-flush:first-child .list-group-item:first-child {
   border-top: 0;
@@ -88,8 +99,8 @@
 
 .custom-list--item .custom-card--inline {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 78%;
-  flex: 0 0 78%;
+  -ms-flex: 0 0 74%;
+  flex: 0 0 74%;
   max-width: 78%;
   padding-right: 0.5rem;
 }
@@ -169,4 +180,23 @@ p:last-child {
   height: 1.25rem;
   font-size: 1.25rem;
   line-height: 1;
+}
+
+.active-song {
+  background-color: #222629 !important;
+  cursor: pointer;
+
+  &:hover {
+    background: #222629 !important;
+    .hide-remove {
+      display: none;
+    }
+  }
+}
+
+.top-title-sidebar {
+  display: flex;
+}
+.hide-remove {
+  display: none;
 }

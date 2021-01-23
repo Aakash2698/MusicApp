@@ -11,15 +11,12 @@ import {
   genres,
   getSongsType,
   setMusicData,
+  showLoader,
+  hideLoader,
 } from "../../../Actions";
-import one from "../../../Assets/image/sliderImage/1.jpg";
-import two from "../../../Assets/image/sliderImage/2.jpg";
-import three from "../../../Assets/image/sliderImage/3.jpg";
-import four from "../../../Assets/image/sliderImage/4.jpg";
-import five from "../../../Assets/image/sliderImage/5.jpg";
-import six from "../../../Assets/image/sliderImage/6.jpg";
 import Carousel from "../../ReusableComponents/Carousel/CustomeCarousel";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
+import axios from "axios";
 
 class Home extends Component {
   constructor(props) {
@@ -29,44 +26,44 @@ class Home extends Component {
       tabValue: "Recent",
       showPopover: false,
       currentIndex: 0,
-      topCharts: [
-        {
-          id: 1,
-          songName: "I Love You Mummy",
-          artist: "Arebica Luna",
-          songImage: one,
-        },
-        {
-          id: 2,
-          songName: "Shack your butty",
-          artist: "Gerrina Linda",
-          songImage: two,
-        },
-        {
-          id: 3,
-          songName: "Do it your way(Female)",
-          artist: "Zunira Willy & Nutty Nina",
-          songImage: three,
-        },
-        {
-          id: 4,
-          songName: "Say yes",
-          artist: "Johnny Marro",
-          songImage: four,
-        },
-        {
-          id: 5,
-          songName: "Where is your letter",
-          artist: "Jina Moore & Lenisa Gory",
-          songImage: five,
-        },
-        {
-          id: 6,
-          songName: "Hey not me",
-          artist: "Rasomi Pelina",
-          songImage: six,
-        },
-      ],
+      // topCharts: [
+      //   {
+      //     id: 1,
+      //     songName: "I Love You Mummy",
+      //     artist: "Arebica Luna",
+      //     songImage: one,
+      //   },
+      //   {
+      //     id: 2,
+      //     songName: "Shack your butty",
+      //     artist: "Gerrina Linda",
+      //     songImage: two,
+      //   },
+      //   {
+      //     id: 3,
+      //     songName: "Do it your way(Female)",
+      //     artist: "Zunira Willy & Nutty Nina",
+      //     songImage: three,
+      //   },
+      //   {
+      //     id: 4,
+      //     songName: "Say yes",
+      //     artist: "Johnny Marro",
+      //     songImage: four,
+      //   },
+      //   {
+      //     id: 5,
+      //     songName: "Where is your letter",
+      //     artist: "Jina Moore & Lenisa Gory",
+      //     songImage: five,
+      //   },
+      //   {
+      //     id: 6,
+      //     songName: "Hey not me",
+      //     artist: "Rasomi Pelina",
+      //     songImage: six,
+      //   },
+      // ],
       responsive1: {
         0: {
           items: 1,
@@ -127,6 +124,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    this.props.showLoader();
     this.topChartMusic();
     this.newReleaseMusic();
     this.retroClassicMusic();
@@ -151,7 +149,6 @@ class Home extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props);
     if (this.props.songsType !== nextProps.songsType) {
       this.setState({
         songData: nextProps.songsType.songs,
@@ -177,21 +174,41 @@ class Home extends Component {
   genres = () => {
     this.props.genres();
   };
-  getData = (songName, songImage, artistName, songUrl) => {
-    const songData = [
-      {
-        songName: songImage,
-        songImage: songName,
-        artist: artistName,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
+  };
+  downloadSong = (id, filename) => {
+    const url = "http://localhost:4000/songs/download/" + id;
+
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        // fileDownload(res.data, filename);
+        let url = window.URL.createObjectURL(res.data);
+
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+      });
   };
 
   render() {
-    console.log(this.props.internationalMusic);
-    const { tabValue, songData, showPopover, currentIndex } = this.state;
+    const {
+      tabValue,
+      songData,
+      topCharts,
+      showPopover,
+      currentIndex,
+      topChartsMusic,
+      newReleasesMusic,
+    } = this.state;
     let transform;
     if (currentIndex === 0) {
       transform = "translate3d(210px, 70px, 0px)";
@@ -277,7 +294,6 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Recent")}
               >
                 <a
-                  href="#"
                   className="nav-link link-color"
                   id="recent-tab"
                   data-toggle="tab"
@@ -292,7 +308,6 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Trending")}
               >
                 <a
-                  href="#"
                   className="nav-link link-color"
                   id="trending-tab"
                   data-toggle="tab"
@@ -307,7 +322,6 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("International")}
               >
                 <a
-                  href="#"
                   className="nav-link link-color"
                   id="international-tab"
                   data-toggle="tab"
@@ -340,24 +354,17 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-profile"
+                                  alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">
@@ -370,16 +377,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      className="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -387,10 +408,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
               {tabValue === "Trending" && (
@@ -399,24 +420,17 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-profile"
+                                  alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">
@@ -429,16 +443,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      className="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -446,10 +474,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
               {tabValue === "International" && (
@@ -463,24 +491,17 @@ class Home extends Component {
                     {songData &&
                       songData.map((data, index) => {
                         return (
-                          <div
-                            className="custom-item"
-                            key={index}
-                            onClick={(e) =>
-                              this.getData(
-                                data.songImage,
-                                data.songName,
-                                data.artistName,
-                                data.songUrl
-                              )
-                            }
-                          >
-                            <div className="text-dark custom-card--inline">
+                          <div className="custom-item" key={index}>
+                            <div
+                              className="text-dark custom-card--inline"
+                              onClick={(e) => this.getData(songData, data._id)}
+                            >
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-profile"
+                                  alt="song-image"
                                   className="card-img--radius-sm"
+                                  style={{ height: "40px", width: "40px" }}
                                 />
                               </div>
                               <div className="custom-card--inline-desc">
@@ -493,16 +514,30 @@ class Home extends Component {
                               </div>
                             </div>
                             <ul className="custom-card--labels d-flex ml-auto">
-                              <li className="dropleft">
+                              <li
+                                className="dropleft"
+                                onClick={() =>
+                                  this.downloadSong(
+                                    data._id,
+                                    data.songName + ".mp3"
+                                  )
+                                }
+                              >
                                 <button
                                   className="btn btn-icon-only"
-                                  onClick={(e) => this.handleShowPopOver(index)}
+                                  // onClick={(e) => this.handleShowPopOver(index)}
                                 >
-                                  <span
+                                  <span style={{ color: "white" }}>
+                                    <i
+                                      className="fas fa-download"
+                                      style={{ fontSize: "1.3rem" }}
+                                    ></i>
+                                  </span>
+                                  {/* <span
                                     className="iconify three-dot-action"
                                     data-icon="fe-elipsis-h"
                                     data-inline="false"
-                                  ></span>
+                                  ></span> */}
                                 </button>
                               </li>
                             </ul>
@@ -510,10 +545,10 @@ class Home extends Component {
                         );
                       })}
                   </div>
-                  <ActionPopover
+                  {/* <ActionPopover
                     dropdownExpand={showPopover}
                     transform={transform}
-                  />
+                  /> */}
                 </div>
               )}
             </div>
@@ -702,5 +737,7 @@ export default connect(MapStateToProps, {
   featureArtists,
   genres,
   getSongsType,
+  showLoader,
+  hideLoader,
   setMusicData,
 })(Home);

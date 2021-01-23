@@ -1,7 +1,8 @@
 import global from "../global";
 // import { Base64 } from 'js-base64';
-// import store from "../configStore";
+import store from "../configStore";
 // import history from '../history';
+import { logoutSuccess } from "../Actions";
 
 const globalUrl = global.config.apiUrl;
 
@@ -34,7 +35,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -80,7 +81,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -115,7 +116,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -161,7 +162,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -180,20 +181,24 @@ export default {
   },
 
   get: (url, version) => {
-    // let header = noHeader && noHeader.noHeader ? {
-    //     method: 'GET',
-
-    // } : {
-    //         method: 'GET',
+    // let header =
+    //   noHeader && noHeader.noHeader
+    //     ? {
+    //         method: "GET",
+    //       }
+    //     : {
+    //         method: "GET",
     //         headers: {
-    //             'Authorization': global.getToken()
-    //         }
-    //     };
+    //           Authorization: global.getToken(),
+    //           "Content-Type": "audio/mpeg",
+    //         },
+    //       };
     let apiUrl = globalUrl + url;
     return fetch(apiUrl, {
       method: "GET",
       headers: {
         Authorization: global.getToken(),
+        "Content-Type": "audio/mpeg",
       },
     })
       .then((response) => {
@@ -204,7 +209,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -238,7 +243,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              // store.dispatch(logoutSuccess());
+              store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -269,7 +274,7 @@ export default {
           if (response.status === 401) {
             // localStorage.clear();
             // history.push("/login");
-            // store.dispatch(logoutSuccess());
+            store.dispatch(logoutSuccess());
           }
           return Promise.resolve({
             responseData: json,
@@ -303,7 +308,7 @@ export default {
           if (response.status === 401) {
             // localStorage.clear();
             // history.push("/login");
-            // store.dispatch(logoutSuccess());
+            store.dispatch(logoutSuccess());
           }
           return Promise.resolve({
             responseData: json,

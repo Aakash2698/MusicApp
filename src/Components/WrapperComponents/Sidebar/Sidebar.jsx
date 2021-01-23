@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 import logo from "../../../Assets/Logos/logo.svg";
 import { withRouter } from "react-router-dom";
+import Header from "../Header/Header";
 
 class Sidebar extends Component {
   state = {

@@ -12,6 +12,12 @@ import {
   RETRO_CLASSIC_MUSIC,
   ALL_SONGS,
   SONG_TYPE_DATA,
+  SEARCH_DATA,
+  ACTIVE_INDEX,
+  DOWNLOAD_SONG,
+  CLEAR_QUEUE,
+  DELETE_QUEUE_SONG,
+  LOGIN_DATA,
 } from "../ActionTypes/ActionTypes";
 
 export const topChartMusic = () => (dispatch, getState, Api) => {
@@ -38,10 +44,10 @@ export const newReleaseMusic = () => (dispatch, getState, Api) => {
   });
 };
 
-export const setMusicData = (payload) => (dispatch) => {
+export const setMusicData = (payload, index) => (dispatch) => {
   return dispatch({
     type: SONG_DATA,
-    payload: payload,
+    payload: { payload, index },
   });
 };
 
@@ -161,6 +167,90 @@ export const getSongsType = (songType) => (dispatch, getState, Api) => {
         payload: response.responseData,
       });
     }
+    return response;
+  });
+};
+
+export const getSearchAll = (searchText) => (dispatch, getState, Api) => {
+  return Api.get(`songs/searchAll/${searchText}`).then((response) => {
+    if (response.response.status === 200) {
+      dispatch({
+        type: SEARCH_DATA,
+        payload: response.responseData,
+      });
+    }
+    return response;
+  });
+};
+
+export const getActiveIndex = (index, queueList) => (dispatch) => {
+  if (index !== null) {
+    return dispatch({
+      type: ACTIVE_INDEX,
+      payload: index,
+      queue: queueList,
+    });
+  } else {
+    return dispatch({
+      type: ACTIVE_INDEX,
+      queue: queueList,
+    });
+  }
+};
+
+export const clearQueue = () => (dispatch) => {
+  return dispatch({
+    type: CLEAR_QUEUE,
+    payload: [],
+  });
+};
+
+export const deleteQueueSong = (id) => (dispatch) => {
+  return dispatch({
+    type: DELETE_QUEUE_SONG,
+    payload: id,
+  });
+};
+
+export const downloadSong = (id) => (dispatch, getState, Api) => {
+  // return Api.get(`songs/download/${id}`).then((response) => {
+  //   if (response.response.status === 200) {
+  //     dispatch({
+  //       type: DOWNLOAD_SONG,
+  //       payload: response.responseData,
+  //     });
+  //   }
+  //   return response;
+  // });
+};
+
+export const uploadFileToServer = (formData) => (dispatch, getState, Api) => {
+  console.log("upload", formData);
+  return Api.postForm("upload", formData).then((response) => {
+    return response;
+  });
+};
+
+export const getUserDetails = (id) => (dispatch, getState, Api) => {
+  return Api.get(`user-details/${id}`).then((response) => {
+    if (response.response.status === 200) {
+      dispatch({
+        type: LOGIN_DATA,
+        payload: response.responseData,
+      });
+    }
+    return response;
+  });
+};
+
+export const updateProfileDetails = (id, payload) => (
+  dispatch,
+  getState,
+  Api
+) => {
+  console.log("hshhsshh");
+  console.log(id);
+  return Api.put(`update/${id}`, payload).then((response) => {
     return response;
   });
 };

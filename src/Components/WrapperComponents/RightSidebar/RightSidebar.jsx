@@ -1,63 +1,24 @@
 import React, { Component } from "react";
 import Audio from "../Audio/Audio";
 import "./RightSidebar.scss";
-import one from "../../../Assets/image/sliderImage/1.jpg";
-import two from "../../../Assets/image/sliderImage/2.jpg";
-import three from "../../../Assets/image/sliderImage/3.jpg";
-import four from "../../../Assets/image/sliderImage/4.jpg";
-import five from "../../../Assets/image/sliderImage/5.jpg";
-import six from "../../../Assets/image/sliderImage/6.jpg";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
+import { setMusicData, clearQueue, deleteQueueSong } from "../../../Actions";
+import axios from "axios";
+import ArtistDetails from "../../ContentComponents/ArtistDetails/ArtistDetails";
+
 class RightSidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.howItWorks = React.createRef();
+  }
   state = {
+    scrollTop: 0,
     openRightSidebar: false,
     rightSideAction: false,
     positionIndex: 0,
-    topCharts: [
-      {
-        id: 1,
-        songName: "I Love You Mummy",
-        artist: "Arebica Luna",
-        songImage: one,
-      },
-      {
-        id: 2,
-        songName: "Shack your butty",
-        artist: "Gerrina Linda",
-        songImage: two,
-      },
-      {
-        id: 3,
-        songName: "Do it your way(Female)",
-        artist: "Zunira Willy & Nutty Nina",
-        songImage: three,
-      },
-      {
-        id: 4,
-        songName: "Say yes",
-        artist: "Johnny Marro",
-        songImage: four,
-      },
-      {
-        id: 5,
-        songName: "Where is your letter",
-        artist: "Jina Moore & Lenisa Gory",
-        songImage: five,
-      },
-      {
-        id: 6,
-        songName: "Hey not me",
-        artist: "Rasomi Pelina",
-        songImage: six,
-      },
-    ],
+    scrollId: null,
   };
-  componentWillReceiveProps(nextProps) {
-    if (this.props.currentPlay !== nextProps.currentPlay) {
-      console.log(nextProps.currentPlay);
-    }
-  }
 
   handleDropdownChange = (index) => {
     this.setState({
@@ -66,24 +27,93 @@ class RightSidebar extends Component {
     });
   };
 
-  handleOpenSidebar = (e) => {
-    e.preventDefault();
-    const { openRightSidebar } = this.state;
+  handleOpenQueue = () => {
     this.setState({
-      openRightSidebar: !openRightSidebar,
+      openRightSidebar: !this.state.openRightSidebar,
+    });
+  };
+  // handleCloseQueue = () => {
+  //   this.setState({
+  //     openRightSidebar: false,
+  //   });
+  // };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeSongIndex) {
+      this.setState(
+        {
+          scrollId: nextProps.activeSongIndex,
+        },
+        () => {
+          this.getScrollLocations(this.state.scrollId);
+        }
+      );
+    }
+  }
+
+  clearQueueData = () => {
+    this.props.clearQueue();
+    window.setTimeout(() => {
+      this.handleOpenQueue();
+    }, 500);
+  };
+
+  getData = (songData, index) => {
+    {
+      this.getScrollLocations(index);
+      this.props.setMusicData(songData, index);
+    }
+  };
+
+  downloadSong = (id, songName) => {
+    const url = "http://localhost:4000/songs/download/" + id;
+    axios
+      .get(url, {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "audio/mpeg",
+        },
+      })
+      .then((res) => {
+        let url = window.URL.createObjectURL(res.data);
+        let a = document.createElement("a");
+        a.href = res.config.url;
+        a.download = songName + ".mp3";
+        a.click();
+      });
+    this.setState({
+      rightSideAction: !this.state.rightSideAction,
     });
   };
 
+  queueDelete = (id) => {
+    console.log(id);
+    this.props.deleteQueueSong(id);
+  };
+
+  getScrollLocations = (id) => {
+    let whatIDo = document.getElementById(id);
+    whatIDo &&
+      whatIDo.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "end",
+      });
+  };
+
   render() {
-    console.log(this.props.currentPlay, "41144144");
-    console.log("heyyy my props", this.props);
     const {
       openRightSidebar,
       topCharts,
       rightSideAction,
       positionIndex,
+      scrollTop,
     } = this.state;
+
     let transform;
+
+    let sliceSongsIndex = this.props.queue;
 
     if (positionIndex === 0) {
       transform = "translate3d(137px, 18px, 0px)";
@@ -102,7 +132,10 @@ class RightSidebar extends Component {
           !openRightSidebar ? "minimize-sidebar right-sidebar" : "right-sidebar"
         }
       >
-        <div className="right-sidebar-header">Listen Special</div>
+        <div className="right-sidebar-header top-title-sidebar ">
+          <div style={{ width: "85%" }}>Queue</div>
+          <div onClick={() => this.clearQueueData()}> Clear</div>
+        </div>
         <div
           className="right-sidebar-body ps ps--active-y"
           data-scrollable="true"
@@ -111,54 +144,81 @@ class RightSidebar extends Component {
             className="list-group list-group-flush"
             style={{ flexDirection: "column" }}
           >
-            {topCharts &&
-              topCharts.map((data, index) => {
+            {this.props.queue &&
+              this.props.queue.map((data, index) => {
                 return (
                   <li
-                    className="custom-list--item list-group-item d-flex"
+                    className={
+                      this.props.activeSongIndex === data._id
+                        ? "active-song custom-list--item list-group-item d-flex"
+                        : "custom-list--item list-group-item d-flex"
+                    }
                     key={index}
+                    id={data._id}
+                    // onClick={(e) => this.getScrollLocations(data._id)}
                   >
-                    <div className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused">
+                    <div
+                      className="text-dark custom-card--inline amplitude-song-container amplitude-play-pause amplitude-paused"
+                      onClick={() => this.getData(sliceSongsIndex, data._id)}
+                    >
                       <div className="custom-card--inline-img">
                         <img
                           src={data.songImage}
-                          alt="song-profile"
+                          alt="song-image"
                           className="card-img--radius-sm"
+                          style={{ height: "40px", width: "40px" }}
                         />
                       </div>
                       <div className="custom-card--inline-desc">
                         <p className="text-truncate mb-0">{data.songName}</p>
                         <p className="text-truncate text-muted font-sm">
-                          {data.artist}
+                          {data.artistName}
                         </p>
                       </div>
                     </div>
                     <ul className="custom-card--labels d-flex ml-auto">
+                      <li className="dropleft hide-remove">
+                        <button
+                          className="btn btn-icon-only"
+                          onClick={() => this.queueDelete(data._id)}
+                        >
+                          <span className="three-dot-action">
+                            <i
+                              className="fas fa-times-circle"
+                              style={{ color: "white" }}
+                            ></i>
+                          </span>
+                        </button>
+                      </li>
                       <li className="dropleft">
                         <button
                           className="btn btn-icon-only"
-                          onClick={(e) => this.handleDropdownChange(index)}
+                          onClick={() =>
+                            this.downloadSong(data._id, data.songName)
+                          }
                         >
-                          <span
-                            className="iconify three-dot-action"
-                            data-icon="fe-elipsis-h"
-                            data-inline="false"
-                          ></span>
+                          <span className="three-dot-action">
+                            <i
+                              className="fas fa-download"
+                              style={{ color: "white" }}
+                            ></i>
+                          </span>
                         </button>
                       </li>
                     </ul>
                   </li>
                 );
               })}
-            <ActionPopover
+            {/* <ActionPopover
               dropdownExpand={rightSideAction}
               transform={transform}
-            />
+            /> */}
           </ul>
         </div>
         <Audio
-          handleOpenSidebar={this.handleOpenSidebar}
+          handleOpenQueue={this.handleOpenQueue}
           fullWidth={this.props.fullWidth}
+          handleCloseQueue={this.handleCloseQueue}
         />
       </div>
     );
@@ -166,5 +226,11 @@ class RightSidebar extends Component {
 }
 const MapStateToProps = (state) => ({
   currentPlay: state.home.playSong,
+  queue: state.home.queueSongs,
+  activeSongIndex: state.home.activeIndex,
 });
-export default connect(MapStateToProps)(RightSidebar);
+export default connect(MapStateToProps, {
+  setMusicData,
+  clearQueue,
+  deleteQueueSong,
+})(RightSidebar);

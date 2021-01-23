@@ -1,24 +1,17 @@
 import React, { Component } from "react";
 import "./Music.scss";
 import { connect } from "react-redux";
-import { AllSongs, setMusicData } from "../../../Actions";
+import { AllSongs, setMusicData, showLoader } from "../../../Actions";
 class Music extends Component {
   componentDidMount() {
+    this.props.showLoader();
     this.AllSongs();
   }
   AllSongs = () => {
     this.props.AllSongs();
   };
-  getSongData = (songName, artist, songImage, songUrl) => {
-    const songData = [
-      {
-        songName: songName,
-        artist: artist,
-        songImage: songImage,
-        songUrl: songUrl,
-      },
-    ];
-    this.props.setMusicData(songData);
+  getData = (songData, index) => {
+    this.props.setMusicData(songData, index);
   };
   render() {
     return (
@@ -40,19 +33,14 @@ class Music extends Component {
                   <div
                     className="custom-list--item "
                     onClick={(e) =>
-                      this.getSongData(
-                        data.songName,
-                        data.artist,
-                        data.songImage,
-                        data.songUrl
-                      )
+                      this.getData(this.props.songsData, data._id)
                     }
                   >
                     <div className="text-dark custom-card--inline">
                       <div className="custom-card--inline-img">
                         <img
                           src={data.songImage}
-                          alt="song-profile"
+                          alt="song-image"
                           className="card-img--radius-sm"
                           height="40px"
                           width="40px"
@@ -86,4 +74,5 @@ const MapStateToProps = (state) => ({
 export default connect(MapStateToProps, {
   AllSongs,
   setMusicData,
+  showLoader,
 })(Music);

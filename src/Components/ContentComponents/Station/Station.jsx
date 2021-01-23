@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "./Station.scss";
 import { connect } from "react-redux";
-import { radioMusic } from "../../../Actions";
+import { radioMusic, showLoader } from "../../../Actions";
 
 class Station extends Component {
   componentDidMount() {
+    this.props.showLoader();
     this.radioMusic();
   }
   radioMusic = () => {
@@ -55,4 +56,5 @@ const MapStateToProps = (state) => ({
 
 export default connect(MapStateToProps, {
   radioMusic,
+  showLoader,
 })(Station);

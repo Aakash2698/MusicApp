@@ -46,7 +46,19 @@
   );
 }
 .bg-home {
-  background-image: url(../../../Assets/image/banner.jpg);
+  background-image: url(../../../Assets/image/bannerImages/banner.jpg);
+}
+.bg-genres {
+  background-image: url(../../../Assets/image/bannerImages/genres.jpg);
+}
+.bg-music {
+  background-image: url(../../../Assets/image/bannerImages/song.jpg);
+}
+.bg-artists {
+  background-image: url(../../../Assets/image/bannerImages/artists.jpg);
+}
+.bg-stations {
+  background-image: url(../../../Assets/image/bannerImages/radio.jpg);
 }
 .main-container {
   position: relative;

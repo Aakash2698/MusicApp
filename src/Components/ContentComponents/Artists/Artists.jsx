@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import "./Artists.scss";
 import { connect } from "react-redux";
-import { featureArtists } from "../../../Actions";
+import { featureArtists, showLoader } from "../../../Actions";
 import { NavLink } from "react-router-dom";
 
 class Artists extends Component {
   componentDidMount() {
+    this.props.showLoader();
     this.featureArtists();
   }
   featureArtists = () => {
     this.props.featureArtists();
   };
   render() {
-    console.log(this.props.artistsData);
     return (
       <div>
         <h1 className="genres-heading">Artists</h1>
@@ -59,4 +59,5 @@ const MapStateToProps = (state) => ({
 
 export default connect(MapStateToProps, {
   featureArtists,
+  showLoader,
 })(Artists);

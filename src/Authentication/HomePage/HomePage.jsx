@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { NavLink } from "react-bootstrap";
 import "./HomePage.scss";
 import headerLogo from "../../Assets/Logos/logo.svg";
 import musicSvg from "../../Assets/HomePageLogos/Svg/music.svg";
 import eventSvg from "../../Assets/HomePageLogos/Svg/event.svg";
 import commentSvg from "../../Assets/HomePageLogos/Svg/comment.svg";
 import otherSvg from "../../Assets/HomePageLogos/Svg/other.svg";
+import { Dialog } from "@material-ui/core";
 import one from "../../Assets/image/sliderImage/1.jpg";
 import two from "../../Assets/image/sliderImage/2.jpg";
 import three from "../../Assets/image/sliderImage/3.jpg";
@@ -15,6 +17,7 @@ import HomepageCarousel from "../../Components/ReusableComponents/HomepageCarous
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import { connect } from "react-redux";
+
 class HomePage extends Component {
   state = {
     trendingArtist: [
@@ -61,6 +64,7 @@ class HomePage extends Component {
 
   handleCloseSignIn = () => {
     this.setState({
+      loading: false,
       openSignIn: false,
     });
   };
@@ -73,6 +77,7 @@ class HomePage extends Component {
 
   handleCloseSignUp = () => {
     this.setState({
+      loading: false,
       openSignUp: false,
     });
   };
@@ -95,7 +100,10 @@ class HomePage extends Component {
                   </span>
                   <ul className="header-auto-options ml-auto d-flex align-items-center">
                     <li>
-                      <span className="sign-in" onClick={this.handleOpenSignIn}>
+                      <span
+                        className="sign-in"
+                        onClick={() => this.handleOpenSignIn()}
+                      >
                         Sign in
                       </span>
                     </li>
@@ -103,7 +111,7 @@ class HomePage extends Component {
                       <button
                         className="btn btn-pill btn-air btn-sm btn-danger"
                         type="button"
-                        onClick={this.handleOpenSignUp}
+                        onClick={() => this.handleOpenSignUp()}
                       >
                         Sign up
                       </button>

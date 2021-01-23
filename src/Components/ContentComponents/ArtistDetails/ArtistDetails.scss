@@ -94,7 +94,13 @@
   height: inherit;
 }
 .s_l .s_duration {
-  width: 20%;
+  width: 15%;
+  position: relative;
+  float: left;
+  height: inherit;
+}
+.s_l .s_download-icon {
+  width: 5%;
   position: relative;
   float: left;
   height: inherit;
@@ -215,11 +221,15 @@
   height: inherit;
 }
 .a_l .s_duration {
-  width: 20%;
+  width: 15%;
   position: relative;
   float: left;
   height: inherit;
 }
+.a_l .s_download-icon {
+  display: none;
+}
+
 ul.a-list li {
   display: inline-block;
   vertical-align: top;
@@ -257,6 +267,10 @@ ul.a-list li div.card_layout_data {
   .s_duration {
     display: none;
   }
+  .s_download-icon {
+    display: none;
+  }
+
   .a_l .s_title {
     width: 50% !important;
   }
@@ -275,8 +289,27 @@ ul.a-list li div.card_layout_data {
 }
 
 .songs-row:hover {
-  background-color: #753fdc;
+  background-color: rgba(76, 36, 156, 0.267) !important;
+  cursor: pointer !important;
+  .a_l .s_download-icon {
+    display: initial;
+    width: 5%;
+    position: relative;
+    float: left;
+    height: inherit;
+  }
 }
 .active-music {
-  background-color: red !important;
+  background-color: #222629 !important;
+  cursor: pointer;
+
+  &:hover {
+    .a_l .s_download-icon {
+      display: initial;
+      width: 5%;
+      position: relative;
+      float: left;
+      height: inherit;
+    }
+  }
 }

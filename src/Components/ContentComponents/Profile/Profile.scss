@@ -1,0 +1,80 @@
+.card {
+  border: none;
+  height: calc(100% - 30px);
+  margin-bottom: 30px;
+  -webkit-box-shadow: 0 1px 12px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 12px 2px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.bg-color {
+  background-color: #343a40 !important;
+  border-color: #6c757d !important;
+  color: #adb5bd !important;
+}
+
+.profile-title {
+  color: rgb(173, 181, 189);
+  font-weight: bold;
+  -webkit-font-smoothing: initial;
+}
+
+.right-button {
+  padding-right: 30px !important;
+  padding-left: 80px !important;
+}
+
+.pd-bottom {
+  padding-bottom: 20px !important;
+}
+
+.bg-main {
+  background-color: #343a40 !important;
+  border-color: #6c757d !important;
+  color: #adb5bd !important;
+}
+.action-flex {
+  display: flex;
+}
+.radio-group {
+  display: flex;
+  color: #adb5bd;
+  // font-weight: bold;
+  -webkit-font-smoothing: initial;
+}
+
+.radio-commom {
+  margin: 0 20px 0 0;
+
+  &__input {
+    opacity: 0;
+    position: absolute;
+  }
+}
+
+.dropzone {
+  min-height: 150px;
+  border: 2px solid #adb5bd !important ;
+  background-color: transparent !important;
+  /* background: white; */
+  padding: initial !important;
+}
+.dropzone-image {
+  max-height: 200px !important;
+  width: 100%;
+  // margin-top: 20px;
+  // margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.loader-show {
+  display: flex !important;
+  text-align: center !important;
+  width: 110px !important;
+  height: 36px !important;
+  align-items: center !important;
+}
+
+.Toastify__toast-container--top-right {
+  top: 4.5em !important;
+}

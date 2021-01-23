@@ -12,6 +12,11 @@ import {
   RETRO_CLASSIC_MUSIC,
   ALL_SONGS,
   SONG_TYPE_DATA,
+  SEARCH_DATA,
+  ACTIVE_INDEX,
+  DOWNLOAD_SONG,
+  CLEAR_QUEUE,
+  DELETE_QUEUE_SONG,
 } from "../ActionTypes/ActionTypes";
 
 const initialState = {
@@ -29,9 +34,16 @@ const initialState = {
   retroClassicMusic: [],
   allSongs: [],
   songsTypeData: [],
+  searchData: [],
+  index: 0,
+  activeIndex: null,
+  downloadFile: "",
+  queueSongs: [],
+  clear: false,
+  queueData: [],
 };
 
-export default function home(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case TOP_CHART_MUSIC:
       return {
@@ -46,7 +58,8 @@ export default function home(state = initialState, action) {
     case SONG_DATA:
       return {
         ...state,
-        songData: action.payload,
+        songData: action.payload.payload,
+        index: action.payload.index,
       };
     case RETRO_CLASSIC:
       return {
@@ -104,6 +117,44 @@ export default function home(state = initialState, action) {
         songsTypeData: action.payload,
       };
 
+    case SEARCH_DATA:
+      return {
+        ...state,
+        searchData: action.payload,
+      };
+
+    case ACTIVE_INDEX:
+      return {
+        ...state,
+        activeIndex: action.payload,
+        queueSongs: Object.values(
+          state.queueSongs.concat(action.queue).reduce((r, o) => {
+            r[o._id] = o;
+            return r;
+          }, {})
+        ),
+      };
+
+    case CLEAR_QUEUE:
+      return {
+        ...state,
+        queueSongs: action.payload,
+      };
+
+    case DELETE_QUEUE_SONG:
+      var lists = state.queueSongs.filter((x) => {
+        return x._id != action.payload;
+      });
+      return {
+        ...state,
+        queueSongs: lists,
+      };
+
+    case DOWNLOAD_SONG:
+      return {
+        ...state,
+        downloadFile: action.payload,
+      };
     default:
       return state;
   }

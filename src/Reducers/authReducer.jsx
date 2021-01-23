@@ -1,4 +1,11 @@
-import { SET_CURRENT_USER, USER_LOADING } from "../ActionTypes/ActionTypes";
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  USER_DATA,
+  LOGIN_DATA,
+} from "../ActionTypes/ActionTypes";
 
 const isEmpty = require("is-empty");
 
@@ -7,9 +14,12 @@ const initialState = {
   user: {},
   loading: false,
   success: false,
+  isLoading: false,
+  userData: [],
+  loginData: [],
 };
 
-export default function auth(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
@@ -21,6 +31,28 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case SHOW_LOADER:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case HIDE_LOADER:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case USER_DATA:
+      console.log(action.payload);
+      return {
+        ...state,
+        userData: action.payload,
+      };
+
+    case LOGIN_DATA:
+      return {
+        ...state,
+        loginData: action.payload,
       };
     default:
       return state;
