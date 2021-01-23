@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-bootstrap';
-import './Footer.scss';
+import React, { Component } from "react";
+import "./Footer.scss";
 
 export default class Footer extends Component {
   render() {

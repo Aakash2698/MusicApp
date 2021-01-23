@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { NavLink } from "react-bootstrap";
 import "./HomePage.scss";
 import headerLogo from "../../Assets/Logos/logo.svg";
 import musicSvg from "../../Assets/HomePageLogos/Svg/music.svg";
