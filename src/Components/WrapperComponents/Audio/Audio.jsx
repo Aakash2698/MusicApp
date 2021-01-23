@@ -36,6 +36,7 @@ class Audio extends Component {
           songArtist: data.artist,
           songImage: data.songImage,
         });
+        return null;
       });
     }
   }
@@ -61,7 +62,7 @@ class Audio extends Component {
       <div className={audioClass}>
         <div className="audio">
           <div className="song-image">
-            <img src={songImage} alt="song-image" className="song-img" />
+            <img src={songImage} alt="song-profile" className="song-img" />
           </div>
           <div className="song-info pl-3">
             <span className="song-title">{songName}</span>

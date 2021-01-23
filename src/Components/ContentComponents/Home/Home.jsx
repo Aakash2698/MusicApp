@@ -191,15 +191,7 @@ class Home extends Component {
 
   render() {
     console.log(this.props.internationalMusic);
-    const {
-      tabValue,
-      songData,
-      topCharts,
-      showPopover,
-      currentIndex,
-      topChartsMusic,
-      newReleasesMusic,
-    } = this.state;
+    const { tabValue, songData, showPopover, currentIndex } = this.state;
     let transform;
     if (currentIndex === 0) {
       transform = "translate3d(210px, 70px, 0px)";
@@ -285,6 +277,7 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Recent")}
               >
                 <a
+                  href="#"
                   className="nav-link link-color"
                   id="recent-tab"
                   data-toggle="tab"
@@ -299,6 +292,7 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Trending")}
               >
                 <a
+                  href="#"
                   className="nav-link link-color"
                   id="trending-tab"
                   data-toggle="tab"
@@ -313,6 +307,7 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("International")}
               >
                 <a
+                  href="#"
                   className="nav-link link-color"
                   id="international-tab"
                   data-toggle="tab"
@@ -361,7 +356,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                 />
                               </div>
@@ -420,7 +415,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                 />
                               </div>
@@ -484,7 +479,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                 />
                               </div>

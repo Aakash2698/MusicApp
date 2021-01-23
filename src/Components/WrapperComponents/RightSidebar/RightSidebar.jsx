@@ -122,7 +122,7 @@ class RightSidebar extends Component {
                       <div className="custom-card--inline-img">
                         <img
                           src={data.songImage}
-                          alt="song-image"
+                          alt="song-profile"
                           className="card-img--radius-sm"
                         />
                       </div>

@@ -108,7 +108,7 @@ class Header extends Component {
     const fullWidth = this.props.fullWidth;
     const scrollValue = this.props.scrollTop;
     let header;
-    let headerScroll;
+    // let headerScroll;
     let headerLong;
     if (fullWidth) {
       if (scrollValue > 120) {

@@ -1,13 +1,11 @@
-import Axios from "axios";
 import React, { Component } from "react";
-import artistImage from "../../../Assets/image/sliderImage/1.jpg";
+
 import "./ArtistDetails.scss";
 import {
   artistsDetails,
   setMusicData,
   getChartDetails,
   genresMusic,
-  genres,
   retroClassic,
 } from "../../../Actions";
 import { connect } from "react-redux";
@@ -100,7 +98,7 @@ class ArtistDetails extends Component {
                         data.genresImage ||
                         data.hitsArtistImage
                       }
-                      alt="artist-image"
+                      alt="artist-profile"
                       className="card-img--radius-lg"
                     />
                   </div>
