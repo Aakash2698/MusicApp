@@ -34,7 +34,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -80,7 +80,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -115,7 +115,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -161,7 +161,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -204,7 +204,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -238,7 +238,7 @@ export default {
             if (response.status === 401) {
               // localStorage.clear();
               // history.push("/login");
-              store.dispatch(logoutSuccess());
+              // store.dispatch(logoutSuccess());
             }
             return Promise.resolve({
               responseData: json,
@@ -269,7 +269,7 @@ export default {
           if (response.status === 401) {
             // localStorage.clear();
             // history.push("/login");
-            store.dispatch(logoutSuccess());
+            // store.dispatch(logoutSuccess());
           }
           return Promise.resolve({
             responseData: json,
@@ -303,7 +303,7 @@ export default {
           if (response.status === 401) {
             // localStorage.clear();
             // history.push("/login");
-            store.dispatch(logoutSuccess());
+            // store.dispatch(logoutSuccess());
           }
           return Promise.resolve({
             responseData: json,
