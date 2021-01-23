@@ -72,7 +72,7 @@ class RightSidebar extends Component {
         },
       })
       .then((res) => {
-        let url = window.URL.createObjectURL(res.data);
+        // let url = window.URL.createObjectURL(res.data);
         let a = document.createElement("a");
         a.href = res.config.url;
         a.download = songName + ".mp3";
@@ -105,21 +105,21 @@ class RightSidebar extends Component {
       positionIndex,
     } = this.state;
 
-    let transform = null;
+    // const transform = null;
 
     let sliceSongsIndex = this.props.queue;
 
-    if (positionIndex === 0) {
-      transform = "translate3d(137px, 18px, 0px)";
-    } else if (positionIndex === 1) {
-      transform = "translate3d(137px, 83px, 0px)";
-    } else if (positionIndex === 2) {
-      transform = "translate3d(137px, 148px, 0px)";
-    } else if (positionIndex === 3) {
-      transform = "translate3d(137px, 213px, 0px)";
-    } else if (positionIndex === 4) {
-      transform = "translate3d(137px, 213px, 0px)";
-    }
+    // if (positionIndex === 0) {
+    //   transform = "translate3d(137px, 18px, 0px)";
+    // } else if (positionIndex === 1) {
+    //   transform = "translate3d(137px, 83px, 0px)";
+    // } else if (positionIndex === 2) {
+    //   transform = "translate3d(137px, 148px, 0px)";
+    // } else if (positionIndex === 3) {
+    //   transform = "translate3d(137px, 213px, 0px)";
+    // } else if (positionIndex === 4) {
+    //   transform = "translate3d(137px, 213px, 0px)";
+    // }
     return (
       <div
         className={

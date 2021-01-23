@@ -240,7 +240,7 @@ class Audio extends Component {
           },
           () => {
             var target = this.props.queueList.find(
-              (temp) => temp._id == this.state.index
+              (temp) => temp._id === this.state.index
             );
             this.setSongData(target);
             this.props.getActiveIndex(this.state.index, this.props.queueList);

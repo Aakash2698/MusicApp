@@ -161,7 +161,7 @@ class Home extends Component {
   };
 
   render() {
-    const { tabValue, songData, currentIndex } = this.state;
+    const { tabValue, songData } = this.state;
     // let transform = null;
     // if (currentIndex === 0) {
     //   transform = "translate3d(210px, 70px, 0px)";

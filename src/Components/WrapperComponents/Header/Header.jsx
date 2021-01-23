@@ -201,8 +201,6 @@ class Header extends Component {
     const fullWidth = this.props.fullWidth;
     const scrollValue = this.props.scrollTop;
 
-    let header;
-    let headerScroll;
     let headerLong;
     if (fullWidth) {
       if (scrollValue > 120) {
@@ -323,7 +321,7 @@ class Header extends Component {
                                     <div className="custom-card--inline-img">
                                       <img
                                         src={data.songImage}
-                                        alt="song-image"
+                                        alt="song-profile"
                                         className="card-img--radius-sm"
                                         style={{
                                           height: "40px",
