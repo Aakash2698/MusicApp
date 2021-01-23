@@ -33,3 +33,5 @@ export const CLEAR_QUEUE = "CLEAR_QUEUE";
 export const DELETE_QUEUE_SONG = "DELETE_QUEUE_SONG";
 
 export const LOGIN_DATA = "LOGIN_DATA";
+
+export const LOGOUT = "LOGOUT";

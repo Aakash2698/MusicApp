@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Audio from "../Audio/Audio";
 import "./RightSidebar.scss";
-import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
 import { setMusicData, clearQueue, deleteQueueSong } from "../../../Actions";
 import axios from "axios";
-import ArtistDetails from "../../ContentComponents/ArtistDetails/ArtistDetails";
 
 class RightSidebar extends Component {
   constructor(props) {

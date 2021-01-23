@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../Header/Header";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Home from "../../ContentComponents/Home";
 import Artists from "../../ContentComponents/Artists";
@@ -9,7 +8,6 @@ import Music from "../../ContentComponents/Music";
 import "./Content.scss";
 import Footer from "../Footer/Footer";
 import ArtistDetails from "../../ContentComponents/ArtistDetails";
-import FullPageLoader from "../../ReusableComponents/FullPageLoader";
 import Profile from "../../ContentComponents/Profile";
 import { connect } from "react-redux";
 import SearchPage from "../../ContentComponents/SearchPage";

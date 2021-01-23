@@ -1,6 +1,4 @@
-import Axios from "axios";
 import React, { Component } from "react";
-import artistImage from "../../../Assets/image/sliderImage/1.jpg";
 import "./ArtistDetails.scss";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import {
@@ -8,7 +6,6 @@ import {
   setMusicData,
   getChartDetails,
   genresMusic,
-  genres,
   retroClassic,
   hideLoader,
   downloadSong,
@@ -16,9 +13,6 @@ import {
 } from "../../../Actions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
-
-import { exact } from "prop-types";
 import axios from "axios";
 class ArtistDetails extends Component {
   state = {
@@ -171,8 +165,6 @@ class ArtistDetails extends Component {
       artistData = this.props.retroClassics.artists;
       songsData = this.props.retroClassics.songs;
     }
-
-    const { activeMusic } = this.state;
 
     return (
       <div>

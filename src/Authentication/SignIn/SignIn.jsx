@@ -8,8 +8,6 @@ import {
 } from "../../Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import FullPageLoader from "../../Components/ReusableComponents/FullPageLoader";
-import Profile from "../../Components/ContentComponents/Profile";
 import GoogleLogin from "react-google-login";
 
 class SignIn extends Component {

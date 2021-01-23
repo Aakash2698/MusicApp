@@ -8,6 +8,7 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   USER_DATA,
+  LOGOUT,
 } from "../ActionTypes/ActionTypes.jsx";
 
 export const loginUser = (payload) => (dispatch, getState, Api) => {

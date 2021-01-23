@@ -15,7 +15,6 @@ import {
   hideLoader,
 } from "../../../Actions";
 import Carousel from "../../ReusableComponents/Carousel/CustomeCarousel";
-import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import axios from "axios";
 
 class Home extends Component {

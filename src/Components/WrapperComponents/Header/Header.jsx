@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Header.scss";
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import iosSearch from "@iconify-icons/ion/ios-search";
 import translate from "../../../Assets/Logos/translate.svg";
 import profile from "../../../Assets/image/profile.jpg";
@@ -8,14 +8,11 @@ import { Dialog } from "@material-ui/core";
 import { connect } from "react-redux";
 import {
   logoutUser,
-  featureArtists,
-  newReleaseMusic,
   setMusicData,
   getSearchAll,
   getUserDetails,
 } from "../../../Actions/index";
-import { NavLink, Redirect, withRouter } from "react-router-dom";
-import Profile from "../../ContentComponents/Profile";
+import { NavLink, withRouter } from "react-router-dom";
 class Header extends Component {
   state = {
     firstName: "",
@@ -24,7 +21,6 @@ class Header extends Component {
     dropdownActionVisible: false,
     suggestionBox: false,
     searchText: "",
-    redirectSerach: false,
     launguageData: [
       {
         launguageType: "Hindi",
@@ -197,7 +193,6 @@ class Header extends Component {
       dropdownActionVisible,
       suggestionBox,
       searchText,
-      redirectSerach,
     } = this.state;
 
     const filterArtist = this.props.searchArray.albumData;
@@ -244,7 +239,7 @@ class Header extends Component {
               placeholder="Search...."
               id="searchInput"
               className="form-control"
-              value={this.state.searchText}
+              value={searchText}
               onChange={(e) => this.setSearchData(e.target.value)}
             />
             {filterArtist &&

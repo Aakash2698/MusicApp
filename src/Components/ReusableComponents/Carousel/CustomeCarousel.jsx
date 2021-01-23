@@ -4,11 +4,8 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "./Carousel.scss";
 import { NavLink, withRouter } from "react-router-dom";
-import ImagePopover from "../ImagePopover/ImagePopover";
-import Audio from "../../../Components/WrapperComponents/Audio/Audio";
 import { connect } from "react-redux";
 import { setMusicData, showLoader } from "../../../Actions";
-import history from "../../../history";
 
 class Carousel extends Component {
   state = {

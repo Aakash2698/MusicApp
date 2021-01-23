@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { NavLink } from "react-bootstrap";
 import "./HomePage.scss";
 import headerLogo from "../../Assets/Logos/logo.svg";
 import musicSvg from "../../Assets/HomePageLogos/Svg/music.svg";
 import eventSvg from "../../Assets/HomePageLogos/Svg/event.svg";
 import commentSvg from "../../Assets/HomePageLogos/Svg/comment.svg";
 import otherSvg from "../../Assets/HomePageLogos/Svg/other.svg";
-import { Dialog } from "@material-ui/core";
 import one from "../../Assets/image/sliderImage/1.jpg";
 import two from "../../Assets/image/sliderImage/2.jpg";
 import three from "../../Assets/image/sliderImage/3.jpg";
