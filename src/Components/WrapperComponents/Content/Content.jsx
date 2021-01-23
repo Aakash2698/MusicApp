@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../Header/Header";
 import { Route, Switch } from "react-router-dom";
 import Home from "../../ContentComponents/Home";
 import Artists from "../../ContentComponents/Artists";

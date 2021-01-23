@@ -2,7 +2,6 @@ import global from "../global";
 // import { Base64 } from 'js-base64';
 import store from "../configStore";
 // import history from '../history';
-import { logoutSuccess } from "../Actions";
 
 const globalUrl = global.config.apiUrl;
 

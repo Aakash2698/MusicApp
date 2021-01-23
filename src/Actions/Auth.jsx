@@ -1,12 +1,8 @@
 import SetAuthToken from "../Utils/SetAuthToken";
 import jwt_decode from "jwt-decode";
-import history from "../history";
+// import history from "../history";
 
-import {
-  SET_CURRENT_USER,
-  USER_LOADING,
-  GET_ERRORS,
-} from "../ActionTypes/ActionTypes.jsx";
+import { SET_CURRENT_USER, USER_LOADING } from "../ActionTypes/ActionTypes.jsx";
 
 // export const registerUser = (userData, history) => {
 //   return async (dispatch) => {

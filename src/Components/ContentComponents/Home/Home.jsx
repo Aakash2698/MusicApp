@@ -19,13 +19,6 @@ import four from "../../../Assets/image/sliderImage/4.jpg";
 import five from "../../../Assets/image/sliderImage/5.jpg";
 import six from "../../../Assets/image/sliderImage/6.jpg";
 import Carousel from "../../ReusableComponents/Carousel/CustomeCarousel";
-
-import remix from "../../../Assets/image/Genres/aa.jpg";
-import rock from "../../../Assets/image/Genres/bb.jpg";
-import sufi from "../../../Assets/image/Genres/cc.jpg";
-import romantic from "../../../Assets/image/Genres/dd.jpg";
-import sports from "../../../Assets/image/Genres/ee.jpg";
-import old from "../../../Assets/image/Genres/ff.jpg";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 
 class Home extends Component {

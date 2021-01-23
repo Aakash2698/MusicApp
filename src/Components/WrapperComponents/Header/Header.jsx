@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Header.scss";
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import iosSearch from "@iconify-icons/ion/ios-search";
 import translate from "../../../Assets/Logos/translate.svg";
 import profile from "../../../Assets/image/profile.jpg";

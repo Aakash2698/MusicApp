@@ -2,14 +2,8 @@ import React, { Component } from "react";
 import "./Audio.scss";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import ReactAudioPlayer from "react-audio-player";
-import songImage from "../../../Assets/image/sliderImage/1.jpg";
-import { Icon, InlineIcon } from "@iconify/react";
-import mdPlay from "@iconify-icons/ion/md-play";
-import mdSync from "@iconify-icons/ion/md-sync";
+import { Icon } from "@iconify/react";
 import musicalNote from "@iconify-icons/ion/musical-note";
-import music from "../../../Assets/Musics/test.mp3";
-import mdVolumeLow from "@iconify-icons/ion/md-volume-low";
 import ActionPopover from "../../ReusableComponents/ActionPopover/ActionPopover";
 import { connect } from "react-redux";
 class Audio extends Component {
