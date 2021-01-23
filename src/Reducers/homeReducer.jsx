@@ -31,7 +31,7 @@ const initialState = {
   songsTypeData: [],
 };
 
-export default function (state = initialState, action) {
+export default function home(state = initialState, action) {
   switch (action.type) {
     case TOP_CHART_MUSIC:
       return {
