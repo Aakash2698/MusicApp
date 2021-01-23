@@ -37,6 +37,7 @@ export default class HomepageCarousel extends Component {
               return (
                 <div key={index}>
                   <img
+                    alt="avatar"
                     src={data.songImage}
                     className="avatar avatar-xl avatar-circle mx-auto width-initial"
                     key={index}

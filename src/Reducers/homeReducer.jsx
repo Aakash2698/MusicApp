@@ -43,7 +43,7 @@ const initialState = {
   queueData: [],
 };
 
-export default function (state = initialState, action) {
+export default function homeReducer(state = initialState, action) {
   switch (action.type) {
     case TOP_CHART_MUSIC:
       return {
@@ -143,7 +143,7 @@ export default function (state = initialState, action) {
 
     case DELETE_QUEUE_SONG:
       var lists = state.queueSongs.filter((x) => {
-        return x._id != action.payload;
+        return x._id !== action.payload;
       });
       return {
         ...state,

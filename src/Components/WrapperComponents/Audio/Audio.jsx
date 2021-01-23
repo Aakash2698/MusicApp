@@ -82,7 +82,7 @@ class Audio extends Component {
         },
         () => {
           var target = this.state.playSongs.find(
-            (temp) => temp._id == this.state.index
+            (temp) => temp._id === this.state.index
           );
           this.setSongData(target);
           this.props.getActiveIndex(this.state.index, this.state.playSongs);
@@ -96,7 +96,7 @@ class Audio extends Component {
         },
         () => {
           var target = nextProps.currentSongData.find(
-            (temp) => temp._id == this.state.index
+            (temp) => temp._id === this.state.index
           );
           this.setSongData(target);
           this.props.getActiveIndex(this.state.index, this.state.playSongs);
@@ -133,7 +133,7 @@ class Audio extends Component {
               },
               () => {
                 var target = this.props.queueList.find(
-                  (temp) => temp._id == this.state.index
+                  (temp) => temp._id === this.state.index
                 );
                 this.setSongData(target);
                 this.props.getActiveIndex(
@@ -158,7 +158,7 @@ class Audio extends Component {
           },
           () => {
             var target = this.props.queueList.find(
-              (temp) => temp._id == this.state.index
+              (temp) => temp._id === this.state.index
             );
             this.setSongData(target);
             this.props.getActiveIndex(this.state.index, this.props.queueList);
@@ -179,7 +179,7 @@ class Audio extends Component {
           },
           () => {
             var target = this.props.queueList.find(
-              (temp) => temp._id == this.state.index
+              (temp) => temp._id === this.state.index
             );
             this.setSongData(target);
             this.props.getActiveIndex(this.state.index, this.props.queueList);
@@ -260,7 +260,7 @@ class Audio extends Component {
           },
           () => {
             var target = this.props.queueList.find(
-              (temp) => temp._id == this.state.index
+              (temp) => temp._id === this.state.index
             );
             this.setSongData(target);
             this.props.getActiveIndex(this.state.index, this.props.queueList);
@@ -300,7 +300,6 @@ class Audio extends Component {
     console.log("AUDIO");
     console.log(this.props.queueList);
     const {
-      dropdownExpand,
       volumeSlider,
       onPlay,
       songName,
@@ -308,7 +307,6 @@ class Audio extends Component {
       songImage,
       closeAudioControl,
       loopSong,
-      shuffle,
     } = this.state;
     const loop = loopSong;
     const fullWidth = this.props;
@@ -323,7 +321,7 @@ class Audio extends Component {
       <div className={audioClass}>
         <div className="audio">
           <div className="song-image">
-            <img src={songImage} alt="song-image" className="song-img" />
+            <img src={songImage} alt="current-song" className="song-img" />
           </div>
           <div className="song-info pl-3">
             <span className="song-title">{songName}</span>

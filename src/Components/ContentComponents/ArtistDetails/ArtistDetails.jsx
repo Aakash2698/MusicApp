@@ -57,9 +57,7 @@ class ArtistDetails extends Component {
   };
 
   getData = (songData, id) => {
-    {
-      this.props.setMusicData(songData, id);
-    }
+    this.props.setMusicData(songData, id);
   };
 
   handleTabChange = (tabName) => {
@@ -96,7 +94,7 @@ class ArtistDetails extends Component {
         },
       })
       .then((res) => {
-        let url = window.URL.createObjectURL(res.data);
+        // let url = window.URL.createObjectURL(res.data);
         let a = document.createElement("a");
         a.href = res.config.url;
         a.download = this.state.songName + ".mp3";
@@ -184,7 +182,7 @@ class ArtistDetails extends Component {
                         data.genresImage ||
                         data.hitsArtistImage
                       }
-                      alt="artist-image"
+                      alt="artist-profile"
                       className="card-img--radius-lg"
                     />
                   </div>

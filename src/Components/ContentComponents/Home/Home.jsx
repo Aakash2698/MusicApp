@@ -25,44 +25,6 @@ class Home extends Component {
       tabValue: "Recent",
       showPopover: false,
       currentIndex: 0,
-      // topCharts: [
-      //   {
-      //     id: 1,
-      //     songName: "I Love You Mummy",
-      //     artist: "Arebica Luna",
-      //     songImage: one,
-      //   },
-      //   {
-      //     id: 2,
-      //     songName: "Shack your butty",
-      //     artist: "Gerrina Linda",
-      //     songImage: two,
-      //   },
-      //   {
-      //     id: 3,
-      //     songName: "Do it your way(Female)",
-      //     artist: "Zunira Willy & Nutty Nina",
-      //     songImage: three,
-      //   },
-      //   {
-      //     id: 4,
-      //     songName: "Say yes",
-      //     artist: "Johnny Marro",
-      //     songImage: four,
-      //   },
-      //   {
-      //     id: 5,
-      //     songName: "Where is your letter",
-      //     artist: "Jina Moore & Lenisa Gory",
-      //     songImage: five,
-      //   },
-      //   {
-      //     id: 6,
-      //     songName: "Hey not me",
-      //     artist: "Rasomi Pelina",
-      //     songImage: six,
-      //   },
-      // ],
       responsive1: {
         0: {
           items: 1,
@@ -199,29 +161,21 @@ class Home extends Component {
   };
 
   render() {
-    const {
-      tabValue,
-      songData,
-      topCharts,
-      showPopover,
-      currentIndex,
-      topChartsMusic,
-      newReleasesMusic,
-    } = this.state;
-    let transform;
-    if (currentIndex === 0) {
-      transform = "translate3d(210px, 70px, 0px)";
-    } else if (currentIndex === 1) {
-      transform = "translate3d(210px, 125px, 0px)";
-    } else if (currentIndex === 2) {
-      transform = "translate3d(210px, 180px, 0px)";
-    } else if (currentIndex === 3) {
-      transform = "translate3d(210px, 235px, 0px)";
-    } else if (currentIndex === 4) {
-      transform = "translate3d(210px, 280px, 0px)";
-    } else if (currentIndex === 5) {
-      transform = "translate3d(210px, 335px, 0px)";
-    }
+    const { tabValue, songData, currentIndex } = this.state;
+    // let transform = null;
+    // if (currentIndex === 0) {
+    //   transform = "translate3d(210px, 70px, 0px)";
+    // } else if (currentIndex === 1) {
+    //   transform = "translate3d(210px, 125px, 0px)";
+    // } else if (currentIndex === 2) {
+    //   transform = "translate3d(210px, 180px, 0px)";
+    // } else if (currentIndex === 3) {
+    //   transform = "translate3d(210px, 235px, 0px)";
+    // } else if (currentIndex === 4) {
+    //   transform = "translate3d(210px, 280px, 0px)";
+    // } else if (currentIndex === 5) {
+    //   transform = "translate3d(210px, 335px, 0px)";
+    // }
     return (
       <div>
         <div className="section-1">
@@ -292,7 +246,7 @@ class Home extends Component {
                 className="nav-item"
                 onClick={() => this.handleTabChange("Recent")}
               >
-                <a
+                <span
                   className="nav-link link-color"
                   id="recent-tab"
                   data-toggle="tab"
@@ -300,13 +254,13 @@ class Home extends Component {
                   aria-controls="recent"
                 >
                   Recent
-                </a>
+                </span>
               </li>
               <li
                 className="nav-item"
                 onClick={() => this.handleTabChange("Trending")}
               >
-                <a
+                <span
                   className="nav-link link-color"
                   id="trending-tab"
                   data-toggle="tab"
@@ -314,13 +268,13 @@ class Home extends Component {
                   aria-controls="trending"
                 >
                   Trending
-                </a>
+                </span>
               </li>
               <li
                 className="nav-item"
                 onClick={() => this.handleTabChange("International")}
               >
-                <a
+                <span
                   className="nav-link link-color"
                   id="international-tab"
                   data-toggle="tab"
@@ -328,7 +282,7 @@ class Home extends Component {
                   aria-controls="international"
                 >
                   International
-                </a>
+                </span>
               </li>
               <span
                 className={
@@ -361,7 +315,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                   style={{ height: "40px", width: "40px" }}
                                 />
@@ -427,7 +381,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                   style={{ height: "40px", width: "40px" }}
                                 />
@@ -498,7 +452,7 @@ class Home extends Component {
                               <div className="custom-card--inline-img">
                                 <img
                                   src={data.songImage}
-                                  alt="song-image"
+                                  alt="song-profile"
                                   className="card-img--radius-sm"
                                   style={{ height: "40px", width: "40px" }}
                                 />

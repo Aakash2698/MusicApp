@@ -57,10 +57,8 @@ class RightSidebar extends Component {
   };
 
   getData = (songData, index) => {
-    {
-      this.getScrollLocations(index);
-      this.props.setMusicData(songData, index);
-    }
+    this.getScrollLocations(index);
+    this.props.setMusicData(songData, index);
   };
 
   downloadSong = (id, songName) => {
@@ -103,13 +101,11 @@ class RightSidebar extends Component {
   render() {
     const {
       openRightSidebar,
-      topCharts,
-      rightSideAction,
+
       positionIndex,
-      scrollTop,
     } = this.state;
 
-    let transform;
+    let transform = null;
 
     let sliceSongsIndex = this.props.queue;
 

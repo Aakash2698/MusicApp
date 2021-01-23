@@ -180,7 +180,7 @@ class SignUp extends Component {
                   <input
                     className="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
+                    // name="inlineRadioOptions"
                     id="inlineRadio1"
                     name="male"
                     value="Male"
@@ -195,7 +195,7 @@ class SignUp extends Component {
                   <input
                     className="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
+                    // name="inlineRadioOptions"
                     id="inlineRadio2"
                     name="female"
                     value="Female"

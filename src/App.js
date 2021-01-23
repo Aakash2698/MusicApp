@@ -4,7 +4,6 @@ import Header from "./Components/WrapperComponents/Header/Header";
 import Content from "./Components/WrapperComponents/Content/Content";
 import RightSidebar from "./Components/WrapperComponents/RightSidebar/RightSidebar";
 import FullPageLoader from "./Components/ReusableComponents/FullPageLoader/FullPageLoader";
-import global from "./global";
 import { connect } from "react-redux";
 import { showLoader } from "./Actions";
 

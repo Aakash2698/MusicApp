@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import { Provider } from "react-redux";
 // import store from "./Store/Store";
@@ -11,8 +11,6 @@ import store from "./configStore";
 import SetAuthToken from "./Utils/SetAuthToken";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./Actions/index";
-import global from "./global";
-import FullPageLoader from "./Components/ReusableComponents/FullPageLoader";
 
 let auth_token = localStorage.getItem("jwtToken");
 if (auth_token) {

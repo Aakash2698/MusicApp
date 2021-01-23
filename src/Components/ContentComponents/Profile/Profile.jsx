@@ -237,9 +237,7 @@ class Profile extends Component {
 
   render() {
     const {
-      id,
       openDialogBox,
-      profileImage,
       firstName,
       lastName,
       gender,
@@ -455,24 +453,6 @@ class Profile extends Component {
                             )}
                           </Dropzone>
                         </div>
-
-                        {/* <div className="col-md-12">
-                          <DropzoneComponent
-                            config={componentConfig}
-                            eventHandlers={eventHandlers}
-                            djsConfig={djsConfig}
-                          />
-                        </div> */}
-                        {/* <Dropzone
-                          onRef={(ref) => (this.profileImage = ref)}
-                          id="profileImage"
-                          addFile={this.handleFileUpload}
-                          imageUrl={profileImage}
-                          removeFile={this.handleRemoveFile}
-                          isEdit={true}
-                          minCropBoxHeight={200}
-                          minCropBoxWidth={200}
-                        /> */}
                       </div>
                     </div>
                     <div

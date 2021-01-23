@@ -25,7 +25,6 @@ class Carousel extends Component {
     this.props.setMusicData(songData, index);
   };
   render() {
-    const { openPopover } = this.state;
     const navTest = [
       '<span class="la la-angle-left font-width"></span>',
       '<span class="la la-angle-right "></span>',
@@ -78,6 +77,7 @@ class Carousel extends Component {
                           data.genresImage ||
                           data.hitsArtistImage
                         }
+                        alt="all-song"
                         className={this.props.imageSize}
                         key={index}
                       />
@@ -92,6 +92,7 @@ class Carousel extends Component {
                         data.genresImage ||
                         data.hitsArtistImage
                       }
+                      alt="all-song"
                       className={this.props.imageSize}
                       key={index}
                     />
