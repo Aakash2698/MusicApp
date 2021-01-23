@@ -8,6 +8,7 @@ import MyCropper from "../image-cropper.jsx";
 import Modal from "../Modal";
 import "./dropzone.scss";
 // import defaultUserImage from "../../../assets/images/defaultAvatar.png";
+import Resizer from "react-image-file-resizer";
 
 class Dropzone extends Component {
   myDropzone = null;
@@ -19,12 +20,17 @@ class Dropzone extends Component {
     showModal: false,
     preview: "",
     lastImage: "",
+    errorMess: false,
+    fileSizeErrorMessage: false,
+    fileSize: "",
+    fileWidth: "",
+    fileHeight: "",
+    fileType: "",
   };
 
   componentWillMount() {
     this.props.onRef(this);
     let { isEdit, imageUrl } = this.props;
-
     if (isEdit) {
       this.setState({
         isEdit: isEdit,
@@ -38,6 +44,7 @@ class Dropzone extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.preview !== null && typeof nextProps.imageUrl === "string") {
       let { isEdit, imageUrl } = nextProps;
+
       if (isEdit) {
         this.setState({
           isEdit: isEdit,
@@ -47,6 +54,11 @@ class Dropzone extends Component {
         });
       }
     }
+
+    this.setState({
+      errorMess: false,
+      fileSizeErrorMessage: false,
+    });
   }
 
   initCallback = (dropzone) => {
@@ -73,22 +85,51 @@ class Dropzone extends Component {
   };
 
   handleDroppedFile(file) {
-    var reader = new FileReader();
-    let that = this;
-    reader.addEventListener(
-      "load",
-      function () {
-        that.setState({
-          originalFile: reader.result,
-          fileName: file.name,
-          showModal: true,
-        });
+    this.setState(
+      {
+        errorMess: false,
+        fileSizeErrorMessage: false,
       },
-      false
+      () => {
+        var reader = new FileReader();
+        let that = this;
+        reader.addEventListener(
+          "load",
+          function () {
+            if (file.accepted) {
+              that.setState({
+                originalFile: reader.result,
+                fileName: file.name,
+                showModal: true,
+              });
+            } else {
+              that.setState({
+                errorMess: true,
+              });
+              that.removeFileFromDropzone("");
+            }
+          },
+          false
+        );
+
+        if (file && file.size < 5000000) {
+          reader.readAsDataURL(file);
+          this.setState({
+            fileSizeErrorMessage: false,
+            fileSize: file.size,
+            fileWidth: file.width,
+            fileHeight: file.height,
+            fileType: file.type.split("/")[1],
+          });
+        } else {
+          this.removeFileFromDropzone("");
+          this.setState({
+            preview: null,
+            fileSizeErrorMessage: true,
+          });
+        }
+      }
     );
-    if (file) {
-      reader.readAsDataURL(file);
-    }
   }
 
   handleCroppedImage = (cropData) => {
@@ -114,7 +155,27 @@ class Dropzone extends Component {
           this.setState({
             newFile: cropData.preview,
           });
-          this.props.addFile(file, this.props.id);
+
+          if (file.size > this.state.fileSize) {
+            Resizer.imageFileResizer(
+              file,
+              600,
+              300,
+              this.state.fileType,
+              100,
+              0,
+              (uri) => {
+                var file = new File([uri], this.state.fileName, {
+                  type: mimeString,
+                });
+                this.props.addFile(file, this.props.id);
+              },
+              "blob"
+            );
+            // this.props.addFile(image, this.props.id);
+          } else {
+            this.props.addFile(file, this.props.id);
+          }
         }
       );
     }
@@ -156,7 +217,7 @@ class Dropzone extends Component {
     }
   };
   render() {
-    let { originalFile, newFile, showModal } = this.state;
+    let { originalFile, newFile, showModal, fileSizeErrorMessage } = this.state;
 
     var componentConfig = {
       iconFiletypes: [".jpg", ".png"],
@@ -167,12 +228,15 @@ class Dropzone extends Component {
       autoProcesQueue: false,
       maxFiles: 1,
       acceptedFiles: "image/*",
+      addRemoveLinks: true,
+      dictRemoveFile: "Remove",
+      error: false,
     };
+
     var eventHandlers = {
       init: this.initCallback,
       addedfile: (file) => this.handleDroppedFile(file),
     };
-
     return (
       <div className="row">
         {this.state.preview ? (
@@ -219,6 +283,18 @@ class Dropzone extends Component {
               eventHandlers={eventHandlers}
               djsConfig={djsConfig}
             />
+            {this.state.errorMess ? (
+              <span className="text-red">Please select only image file.</span>
+            ) : (
+              ""
+            )}
+            {fileSizeErrorMessage ? (
+              <span className="text-red">
+                Please select image less than 5 MB.
+              </span>
+            ) : (
+              ""
+            )}
           </div>
         )}
         {showModal && (
@@ -229,6 +305,8 @@ class Dropzone extends Component {
                   originalUploadFile={originalFile}
                   handleCroppImage={this.handleCroppedImage}
                   newFile={newFile}
+                  minCropBoxHeight={this.props.minCropBoxHeight}
+                  minCropBoxWidth={this.props.minCropBoxWidth}
                 />
               </div>
             </div>

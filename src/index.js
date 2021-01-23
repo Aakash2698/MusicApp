@@ -23,7 +23,7 @@ if (auth_token) {
   if (decoded.exp < currentTime) {
     console.log("loglogggg");
     store.dispatch(logoutUser());
-    window.location.href = "home";
+    window.location.href = "/home-page";
   }
 }
 

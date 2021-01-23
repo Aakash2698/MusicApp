@@ -4,6 +4,7 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   USER_DATA,
+  LOGIN_DATA,
 } from "../ActionTypes/ActionTypes";
 
 const isEmpty = require("is-empty");
@@ -15,6 +16,7 @@ const initialState = {
   success: false,
   isLoading: false,
   userData: [],
+  loginData: [],
 };
 
 export default function (state = initialState, action) {
@@ -41,9 +43,16 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
     case USER_DATA:
+      console.log(action.payload);
       return {
         ...state,
         userData: action.payload,
+      };
+
+    case LOGIN_DATA:
+      return {
+        ...state,
+        loginData: action.payload,
       };
     default:
       return state;

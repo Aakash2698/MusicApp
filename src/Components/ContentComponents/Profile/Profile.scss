@@ -50,3 +50,31 @@
     position: absolute;
   }
 }
+
+.dropzone {
+  min-height: 150px;
+  border: 2px solid #adb5bd !important ;
+  background-color: transparent !important;
+  /* background: white; */
+  padding: initial !important;
+}
+.dropzone-image {
+  max-height: 200px !important;
+  width: 100%;
+  // margin-top: 20px;
+  // margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.loader-show {
+  display: flex !important;
+  text-align: center !important;
+  width: 110px !important;
+  height: 36px !important;
+  align-items: center !important;
+}
+
+.Toastify__toast-container--top-right {
+  top: 4.5em !important;
+}

@@ -12,11 +12,13 @@ import {
   newReleaseMusic,
   setMusicData,
   getSearchAll,
+  getUserDetails,
 } from "../../../Actions/index";
 import { NavLink, Redirect, withRouter } from "react-router-dom";
 import Profile from "../../ContentComponents/Profile";
 class Header extends Component {
   state = {
+    firstName: "",
     openProfile: false,
     openDialogBox: false,
     dropdownActionVisible: false,
@@ -93,10 +95,18 @@ class Header extends Component {
       },
     ],
   };
+  componentDidMount() {
+    let id = localStorage.getItem("id");
+    this.loginData(id);
+  }
 
   logoutUser = () => {
     this.props.logoutUser();
     this.props.history.push("/home-page");
+  };
+
+  loginData = (id) => {
+    this.props.getUserDetails(id);
   };
 
   handleClickOpen = () => {
@@ -119,6 +129,19 @@ class Header extends Component {
   hidePopover = () => {
     this.handleOpenProfile();
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState(
+        {
+          firstName: nextProps.userData.firstName,
+        },
+        () => {
+          console.log(this.state.firstName);
+        }
+      );
+    }
+  }
   componentWillMount() {
     document.addEventListener("mousedown", this.popupActionClick, false);
   }
@@ -167,7 +190,6 @@ class Header extends Component {
     this.props.history.push(`/${this.state.searchText}`);
   };
   render() {
-    console.log(this.props.userData);
     const {
       openProfile,
       openDialogBox,
@@ -356,7 +378,7 @@ class Header extends Component {
                 <div className="avatar avatar-sm avatar-circle">
                   <img src={profile} alt="profile" />
                 </div>
-                <span className="pl-2">{this.propsuserName}</span>
+                <span className="pl-2">{this.state.firstName}</span>
               </span>
               {dropdownActionVisible && (
                 <div
@@ -371,7 +393,7 @@ class Header extends Component {
                     willChange: "transform",
                     top: "0px",
                     left: "0px",
-                    transform: "translate3d(-44px, 18px, 0px)",
+                    transform: "translate3d(-52px, 21px, 0px)",
                   }}
                 >
                   <NavLink to={"/profile"} onClick={() => this.hidePopover()}>
@@ -473,9 +495,14 @@ class Header extends Component {
 
 const MapStateToProps = (state) => ({
   searchArray: state.home.searchData,
-  userName: state.auth.userData.firstName,
+  userData: state.auth.loginData,
 });
 
 export default withRouter(
-  connect(MapStateToProps, { logoutUser, setMusicData, getSearchAll })(Header)
+  connect(MapStateToProps, {
+    logoutUser,
+    setMusicData,
+    getSearchAll,
+    getUserDetails,
+  })(Header)
 );

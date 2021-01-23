@@ -13,7 +13,7 @@ import {
 export const loginUser = (payload) => (dispatch, getState, Api) => {
   return Api.post("login", payload, "header").then((res) => {
     if (res.response.status === 201) {
-      const token = res.responseData.token;
+      let token = res.responseData.token;
       localStorage.setItem("jwtToken", token);
       SetAuthToken(token);
       const decoded = jwt_decode(token);
@@ -25,6 +25,7 @@ export const loginUser = (payload) => (dispatch, getState, Api) => {
 
 export const googleLogin = (payload) => (dispatch, getState, Api) => {
   return Api.post("google-login", payload, "header").then((res) => {
+    console.log(res);
     if (res.response.status === 200) {
       const token = res.responseData.token;
       localStorage.setItem("jwtToken", token);
@@ -60,13 +61,14 @@ export const setUserLoading = () => {
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("id");
   SetAuthToken(false);
   dispatch(setCurrentUser({}));
 };
 
 export const logoutSuccess = () => {
   // global.check_Auth(history);
-  localStorage.clear();
+  // localStorage.clear();
   history.push("/login");
   // logoutFirebase();
   return {
@@ -95,5 +97,11 @@ export const setUserData = (payload) => (dispatch) => {
   return dispatch({
     type: USER_DATA,
     payload: payload,
+  });
+};
+
+export const changePassword = (id, payload) => (dispatch, getState, Api) => {
+  return Api.put(`change-password/${id}`, payload).then((response) => {
+    return response;
   });
 };

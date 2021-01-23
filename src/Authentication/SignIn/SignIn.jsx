@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Dialog } from "@material-ui/core";
-import { loginUser, setUserData, googleLogin } from "../../Actions";
+import {
+  loginUser,
+  setUserData,
+  googleLogin,
+  getUserDetails,
+} from "../../Actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import FullPageLoader from "../../Components/ReusableComponents/FullPageLoader";
@@ -52,7 +57,9 @@ class SignIn extends Component {
     this.props.loginUser(userData).then((res) => {
       console.log(res, "SIMPLE LOGIN");
       if (res.responseData.res === 200) {
-        this.props.setUserData(res.responseData.userData);
+        console.log(res);
+        this.props.getUserDetails(res.responseData.userData._id);
+        this.setInLocalStorage(res.responseData);
         this.props.history.push("/home");
       } else {
         this.setState({
@@ -64,6 +71,11 @@ class SignIn extends Component {
     });
     this.hideLoader();
   };
+
+  setInLocalStorage = (apiData) => {
+    let id = apiData.userData._id;
+    localStorage.setItem("id", id);
+  };
   handleCloseSignIn = () => {
     this.props.handleCloseSignIn();
     this.setState({
@@ -73,6 +85,7 @@ class SignIn extends Component {
       password: "",
     });
   };
+
   responseGoogle = (response) => {
     const Token = response.tokenId;
     this.setState({
@@ -82,8 +95,9 @@ class SignIn extends Component {
       idToken: Token,
     };
     this.props.googleLogin(payload).then((res) => {
-      console.log("asasas", res);
       if (res.response.status === 200) {
+        this.setInLocalStorage(res.responseData);
+        this.props.getUserDetails(res.responseData.userData._id);
         this.props.setUserData(res.responseData.user);
         this.props.history.push("/home");
       } else {
@@ -215,4 +229,5 @@ export default connect(mapStateToProps, {
   loginUser,
   setUserData,
   googleLogin,
+  getUserDetails,
 })(SignIn);
