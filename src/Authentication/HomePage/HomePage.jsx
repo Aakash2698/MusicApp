@@ -5,12 +5,12 @@ import musicSvg from "../../Assets/HomePageLogos/Svg/music.svg";
 import eventSvg from "../../Assets/HomePageLogos/Svg/event.svg";
 import commentSvg from "../../Assets/HomePageLogos/Svg/comment.svg";
 import otherSvg from "../../Assets/HomePageLogos/Svg/other.svg";
-import one from "../../Assets/image/sliderImage/1.jpg";
-import two from "../../Assets/image/sliderImage/2.jpg";
-import three from "../../Assets/image/sliderImage/3.jpg";
-import four from "../../Assets/image/sliderImage/4.jpg";
-import five from "../../Assets/image/sliderImage/5.jpg";
-import six from "../../Assets/image/sliderImage/6.jpg";
+import arjit from "../../Assets/image/sliderImage/arjit.jpg";
+import armaan from "../../Assets/image/sliderImage/arjit.jpg";
+import darshan from "../../Assets/image/sliderImage/darshan.jpg";
+import jubin from "../../Assets/image/sliderImage/jubin.jpg";
+import neha from "../../Assets/image/sliderImage/neha.jpg";
+import tony from "../../Assets/image/sliderImage/tony.jpg";
 import HomepageCarousel from "../../Components/ReusableComponents/HomepageCarousel/HomepageCarousel";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
@@ -21,33 +21,33 @@ class HomePage extends Component {
     trendingArtist: [
       {
         id: 1,
-        artist: "Arebica Luna",
-        path: one,
+        artist: "Arjit Singh",
+        profileImage: arjit,
       },
       {
         id: 2,
-        artist: "Gerrina Linda",
-        path: two,
+        artist: "Darshan Raval",
+        profileImage: darshan,
       },
       {
         id: 3,
-        artist: "Zunira Willy",
-        path: three,
+        artist: "Neha Kakkar",
+        profileImage: neha,
       },
       {
         id: 4,
-        artist: "Johnny Marro",
-        path: four,
+        artist: "Armaan Malik",
+        profileImage: armaan,
       },
       {
         id: 5,
-        artist: "Jina Moore",
-        path: five,
+        artist: "Tony Kakkar",
+        profileImage: tony,
       },
       {
         id: 6,
-        artist: "Rasomi Pelina",
-        path: six,
+        artist: "Jubin Natiyal",
+        profileImage: jubin,
       },
     ],
     openSignIn: false,
