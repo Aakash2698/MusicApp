@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./Audio.scss";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { Icon } from "@iconify/react";
-import musicalNote from "@iconify-icons/ion/musical-note";
+// import { Icon } from "@iconify/react";
+// import musicalNote from "@iconify-icons/ion/musical-note";
 import { connect } from "react-redux";
 import { getActiveIndex, downloadSong } from "../../../Actions";
 import axios from "axios";
@@ -413,7 +413,12 @@ class Audio extends Component {
             className="btn btn-icon-only"
             onClick={() => this.props.handleOpenQueue()}
           >
-            <Icon className="music-icon" icon={musicalNote} />
+            <span
+              className="iconify music-icon"
+              data-icon="ion-music-note"
+              data-inline="false"
+            ></span>
+            {/* <Icon className="music-icon" icon={musicalNote} /> */}
           </button>
         </div>
       </div>
