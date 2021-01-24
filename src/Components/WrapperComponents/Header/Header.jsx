@@ -98,7 +98,7 @@ class Header extends Component {
 
   logoutUser = () => {
     this.props.logoutUser();
-    this.props.history.push("/home-page");
+    this.props.history.push("/");
   };
 
   loginData = (id) => {
