@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Header.scss";
-import { Icon } from "@iconify/react";
-import iosSearch from "@iconify-icons/ion/ios-search";
+// import { Icon } from "@iconify/react";
+// import iosSearch from "@iconify-icons/ion/ios-search";
 import translate from "../../../Assets/Logos/translate.svg";
 import profile from "../../../Assets/image/profile.jpg";
 import { Dialog } from "@material-ui/core";
@@ -230,7 +230,12 @@ class Header extends Component {
           </button>
           <form action="#" id="searchForm" onSubmit={this.submitForm}>
             <button type="button" className="btn">
-              <Icon icon={iosSearch} />
+              <span
+                className="iconify"
+                data-icon="ion-ios-search-strong"
+                data-inline="false"
+              ></span>
+              {/* <Icon icon={iosSearch} /> */}
             </button>
             <input
               type="text"
