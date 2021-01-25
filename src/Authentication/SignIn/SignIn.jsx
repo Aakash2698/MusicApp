@@ -44,9 +44,9 @@ class SignIn extends Component {
   handleFormSubmit = (event) => {
     this.showLoader();
     event.preventDefault();
-    window.setTimeout(() => {
-      this.loginUser();
-    }, 500);
+    // window.setTimeout(() => {
+    this.loginUser();
+    // }, 500);
   };
 
   loginUser = () => {
@@ -93,6 +93,7 @@ class SignIn extends Component {
       idToken: Token,
     };
     this.props.googleLogin(payload).then((res) => {
+      console.log(res);
       if (res.response.status === 200) {
         this.setInLocalStorage(res.responseData);
         this.props.getUserDetails(res.responseData.userData._id);
@@ -102,7 +103,7 @@ class SignIn extends Component {
         this.setState({
           loading: false,
           showLoginValidation: true,
-          errors: res.responseData.Error,
+          // errors: res.responseData.Error,
         });
       }
     });

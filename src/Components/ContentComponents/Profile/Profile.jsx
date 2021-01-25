@@ -124,12 +124,12 @@ class Profile extends Component {
       password: password,
       confirmPassword: confirmPassword,
     };
-    window.setTimeout(() => {
-      this.props.changePassword(profileId, payload).then((res) => {
-        this.showToaster(res.response.status, res.responseData.message);
-      });
-      this.hideLoader();
-    }, 500);
+    // window.setTimeout(() => {
+    this.props.changePassword(profileId, payload).then((res) => {
+      this.showToaster(res.response.status, res.responseData.message);
+    });
+    this.hideLoader();
+    // }, 500);
   };
 
   handleSubmit = (e) => {
@@ -157,29 +157,29 @@ class Profile extends Component {
       });
       const strCopy = this.state.dbImage.split("ds/");
       payload.filename = strCopy[1];
-      window.setTimeout(() => {
-        this.props.updateProfileDetails(profileId, payload).then((res) => {
-          this.showToaster(res.response.status, res.responseData.message);
-        });
-        this.hideLoader();
-      }, 2000);
+      // window.setTimeout(() => {
+      this.props.updateProfileDetails(profileId, payload).then((res) => {
+        this.showToaster(res.response.status, res.responseData.message);
+      });
+      this.hideLoader();
+      // }, 2000);
     } else {
-      window.setTimeout(() => {
-        const formData = new FormData();
-        formData.append("myImage", this.state.profileImage);
-        this.props
-          .uploadFileToServer(formData)
-          .then((res) => {
-            payload.filename = res.responseData.data.filename;
-            this.props.updateProfileDetails(profileId, payload).then((res) => {
-              this.showToaster(res.response.status, res.responseData.message);
-            });
-          })
-          .catch((err) => {
-            console.log(err);
+      // window.setTimeout(() => {
+      const formData = new FormData();
+      formData.append("myImage", this.state.profileImage);
+      this.props
+        .uploadFileToServer(formData)
+        .then((res) => {
+          payload.filename = res.responseData.data.filename;
+          this.props.updateProfileDetails(profileId, payload).then((res) => {
+            this.showToaster(res.response.status, res.responseData.message);
           });
-        this.hideLoader();
-      }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      this.hideLoader();
+      // }, 2000);
     }
   };
 

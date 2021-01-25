@@ -51,9 +51,7 @@ class RightSidebar extends Component {
 
   clearQueueData = () => {
     this.props.clearQueue();
-    window.setTimeout(() => {
-      this.handleOpenQueue();
-    }, 500);
+    this.handleOpenQueue();
   };
 
   getData = (songData, index) => {
@@ -62,7 +60,7 @@ class RightSidebar extends Component {
   };
 
   downloadSong = (id, songName) => {
-    const url = "http://localhost:4000/songs/download/" + id;
+    const url = "https://music-player-app26.herokuapp.com/songs/download/" + id;
     axios
       .get(url, {
         responseType: "blob",

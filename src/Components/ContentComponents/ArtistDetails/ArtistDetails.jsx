@@ -84,7 +84,9 @@ class ArtistDetails extends Component {
   }
 
   downloadSong = () => {
-    const url = "http://localhost:4000/songs/download/" + this.state.songId;
+    const url =
+      "https://music-player-app26.herokuapp.com/songs/download/" +
+      this.state.songId;
     axios
       .get(url, {
         responseType: "blob",

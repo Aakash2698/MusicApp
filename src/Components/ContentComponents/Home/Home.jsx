@@ -139,7 +139,7 @@ class Home extends Component {
     this.props.setMusicData(songData, index);
   };
   downloadSong = (id, filename) => {
-    const url = "http://localhost:4000/songs/download/" + id;
+    const url = "https://music-player-app26.herokuapp.com/songs/download/" + id;
 
     axios
       .get(url, {

@@ -277,7 +277,9 @@ class Audio extends Component {
   };
 
   downloadSong = () => {
-    const url = "http://localhost:4000/songs/download/" + this.state.songUrl;
+    const url =
+      "https://music-player-app26.herokuapp.com/songs/download/" +
+      this.state.songUrl;
     axios
       .get(url, {
         responseType: "blob",
