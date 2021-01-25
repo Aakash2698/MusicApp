@@ -540,6 +540,13 @@ label {
   background-color: #753fdc !important;
   border-color: #753fdc !important;
 }
+
+@media (max-width: 375px) {
+  .MuiDialog-paper {
+    margin: 0 !important;
+  }
+}
+
 .MuiDialog-paperWidthSm {
   max-width: 24rem !important;
   max-height: 36rem !important;

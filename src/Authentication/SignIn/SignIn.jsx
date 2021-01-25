@@ -194,13 +194,13 @@ class SignIn extends Component {
                             src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                           />
                         </div>
-                        <p
+                        <div
                           onClick={renderProps.onClick}
                           disabled={renderProps.disabled}
                           className="btn-text"
                         >
                           <b className="sign-text">Sign in with google</b>
-                        </p>
+                        </div>
                       </div>
                     )}
                     buttonText="SignIn Via Google"
