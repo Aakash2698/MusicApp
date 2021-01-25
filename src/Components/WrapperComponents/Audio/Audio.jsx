@@ -360,7 +360,7 @@ class Audio extends Component {
                 RHAP_UI.LOOP,
                 RHAP_UI.MAIN_CONTROLS,
                 <button
-                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on"
+                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on media-shuffle"
                   onClick={() => this.shuffleStart()}
                 >
                   <span

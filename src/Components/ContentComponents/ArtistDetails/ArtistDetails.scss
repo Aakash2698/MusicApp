@@ -270,7 +270,6 @@ ul.a-list li div.card_layout_data {
   .s_download-icon {
     display: none;
   }
-
   .a_l .s_title {
     width: 50% !important;
   }
@@ -310,6 +309,14 @@ ul.a-list li div.card_layout_data {
       position: relative;
       float: left;
       height: inherit;
+    }
+  }
+
+  @media (max-width: 850px) {
+    &:hover {
+      .a_l .s_download-icon {
+        display: none;
+      }
     }
   }
 }
