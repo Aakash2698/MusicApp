@@ -31,7 +31,14 @@
   background-color: #343a40 !important;
   border-color: #6c757d !important;
   color: #adb5bd !important;
+  width: 50%;
 }
+@media (max-width: 750px) {
+  .bg-main {
+    width: 100%;
+  }
+}
+
 .action-flex {
   display: flex;
 }
@@ -77,4 +84,31 @@
 
 .Toastify__toast-container--top-right {
   top: 4.5em !important;
+}
+
+.image-dropzone {
+  width: 250px;
+}
+@media (max-width: 352px) {
+  .image-dropzone {
+    width: 150px;
+  }
+}
+.action-root {
+  padding: "20px 20px 40px 20px";
+  display: flex;
+}
+.save-change-action {
+  padding: 0 20px 0 0;
+}
+
+@media (max-width: 455px) {
+  .action-root {
+    padding: "20px 20px 40px 20px";
+    display: initial;
+  }
+  .save-change-action,
+  .profile-second {
+    padding: 20px 20px 0 20px;
+  }
 }

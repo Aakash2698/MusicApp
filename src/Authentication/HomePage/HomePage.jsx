@@ -257,7 +257,7 @@ class HomePage extends Component {
             </div>
             <footer className="bg-img" id="homepage-footer">
               <div className="footer-content">
-                <span className="email color">info@listenapp.com</span>
+                <span className="email color"></span>
               </div>
             </footer>
           </div>

@@ -16,6 +16,7 @@ import { NavLink, withRouter } from "react-router-dom";
 class Header extends Component {
   state = {
     firstName: "",
+    profileImage: "",
     openProfile: false,
     openDialogBox: false,
     dropdownActionVisible: false,
@@ -131,6 +132,7 @@ class Header extends Component {
       this.setState(
         {
           firstName: nextProps.userData.firstName,
+          profileImage: nextProps.userData.profileImage,
         },
         () => {
           console.log(this.state.firstName);
@@ -357,7 +359,7 @@ class Header extends Component {
           </form>
 
           <ul className="header-options d-flex align-items-center">
-            <li style={{ listStyle: "none", display: "flex" }}>
+            {/* <li style={{ listStyle: "none", display: "flex" }}>
               <span
                 className="header-launguage"
                 onClick={() => this.handleClickOpen()}
@@ -365,7 +367,7 @@ class Header extends Component {
                 Language
               </span>
               <img src={translate} alt="translate" className="launguage-img" />
-            </li>
+            </li> */}
 
             <li className="dropdown fade-in" ref={(node) => (this.node = node)}>
               <span
@@ -374,7 +376,7 @@ class Header extends Component {
                 style={{ cursor: "pointer" }}
               >
                 <div className="avatar avatar-sm avatar-circle">
-                  <img src={profile} alt="profile" />
+                  <img src={this.state.profileImage} alt="profile" />
                 </div>
                 <span className="pl-2">{this.state.firstName}</span>
               </span>
@@ -404,22 +406,23 @@ class Header extends Component {
                       <span>Profile</span>
                     </span>
                   </NavLink>
+
                   {/* <span className="dropdown-item">
-                            <span
-                              className="iconify dropdown-icon"
-                              data-icon="ion-md-radio-button-off"
-                              data-inline="false"
-                            ></span>
-                            <span>Your Plan</span>
-                          </span>
-                          <span className="dropdown-item">
-                            <span
-                              className="iconify dropdown-icon"
-                              data-icon="ion-md-settings"
-                              data-inline="false"
-                            ></span>
-                            <span>Settings</span>
-                          </span> */}
+                    <span
+                      className="iconify dropdown-icon"
+                      data-icon="ion-md-radio-button-off"
+                      data-inline="false"
+                    ></span>
+                    <span>Your Plan</span>
+                  </span> */}
+                  {/* <span className="dropdown-item">
+                    <span
+                      className="iconify dropdown-icon"
+                      data-icon="ion-md-settings"
+                      data-inline="false"
+                    ></span>
+                    <span>Change Password</span>
+                  </span> */}
                   <div className="dropdown-divider"> </div>
                   <div className="px-4 py-2">
                     <span

@@ -6,7 +6,7 @@ export default class Footer extends Component {
     return (
       <footer id="footer" className="bg-img">
         <div className="footer-content">
-          <span className="email">info@listenapp.com</span>
+          <span className="email"></span>
         </div>
       </footer>
     );

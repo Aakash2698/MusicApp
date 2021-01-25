@@ -269,9 +269,9 @@ class Profile extends Component {
                     data-toggle="validator"
                     onSubmit={this.handleSubmit}
                   >
-                    <div className="col-8 form-group">
+                    <div className="col-12 form-group">
                       <label
-                        htmlFor="firstName"
+                        htmlFor="firstName "
                         className="form-label profile-title"
                       >
                         First Name
@@ -279,30 +279,14 @@ class Profile extends Component {
                       <input
                         type="text"
                         className="form-control bg-main"
-                        style={{ width: "76%" }}
                         name="firstName"
                         placeholder="First Name"
                         value={firstName}
                         onChange={(e) => this.handleChange(e)}
                         maxLength="255"
                       />
-                      {/* <label
-                        htmlFor="Name"
-                        className="form-label"
-                        style={{ color: "#adb5bd", paddingLeft: "5px" }}
-                      >
-                        {this.props.profileData.firstName}
-                      </label> */}
                     </div>
-                    <div className="col-4 right-button">
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-air"
-                        onClick={this.handleClickOpen}
-                      >
-                        Change Password
-                      </button>
-                    </div>
+
                     <div className="col-12 form-group">
                       <label
                         htmlFor="lastName"
@@ -313,7 +297,6 @@ class Profile extends Component {
                       <input
                         type="text"
                         className="form-control bg-main"
-                        style={{ width: "50%" }}
                         name="lastName"
                         placeholder="Last Name"
                         value={lastName}
@@ -398,7 +381,6 @@ class Profile extends Component {
                       </label>
                       <input
                         type="text"
-                        style={{ width: "50%" }}
                         className="form-control bg-main"
                         name="email"
                         placeholder="Email"
@@ -418,62 +400,68 @@ class Profile extends Component {
                       <label className="form-label profile-title">
                         Profile Pic
                       </label>
-                      <div style={{ width: "50%" }}>
-                        <div style={{ width: "250px" }}>
+                      <div>
+                        <div className="image-dropzone">
                           <Dropzone
                             onDrop={(acceptedFiles) =>
                               this.onDrop(acceptedFiles)
                             }
                           >
                             {({ getRootProps, getInputProps }) => (
-                              <section>
-                                <div
-                                  {...getRootProps({ className: "dropzone" })}
-                                >
-                                  <input
-                                    {...getInputProps()}
-                                    name="studentImage"
+                              <div {...getRootProps({ className: "dropzone" })}>
+                                <input
+                                  {...getInputProps()}
+                                  name="studentImage"
+                                />
+                                <div className="dropzone-image">
+                                  <img
+                                    alt="profile"
+                                    src={
+                                      this.state.image.preview === undefined
+                                        ? defaultImage
+                                        : this.state.image.preview
+                                    }
                                   />
-                                  <div className="dropzone-image">
-                                    <img
-                                      alt="profile"
-                                      src={
-                                        this.state.image.preview === undefined
-                                          ? defaultImage
-                                          : this.state.image.preview
-                                      }
-                                    />
-                                  </div>
-                                  {/* <p style={{ color: "#adb5bd" }}>
+                                </div>
+                                {/* <p style={{ color: "#adb5bd" }}>
                                     Drag 'n' drop some files here, or click to
                                     select files
                                   </p> */}
-                                </div>
-                              </section>
+                              </div>
                             )}
                           </Dropzone>
                         </div>
                       </div>
                     </div>
-                    <div
-                      className="col-12"
-                      style={{ padding: "20px 20px 40px 20px" }}
-                    >
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-air"
-                        disabled={loading}
-                        // className={
-                        //   loading
-                        //     ? "btn btn-primary btn-air loader-show"
-                        //     : "btn btn-primary btn-air"
-                        // }
-                      >
-                        Save Changes
-                        {loading && (
-                          <i className="fas fa-circle-notch fa-spin custom-loader"></i>
-                        )}
-                      </button>
+
+                    <div className="col-12 action-root">
+                      <div className="save-change-action">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-air"
+                          disabled={loading}
+                          // className={
+                          //   loading
+                          //     ? "btn btn-primary btn-air loader-show"
+                          //     : "btn btn-primary btn-air"
+                          // }
+                        >
+                          Save Changes
+                          {loading && (
+                            <i className="fas fa-circle-notch fa-spin custom-loader"></i>
+                          )}
+                        </button>
+                      </div>
+
+                      <div className="profile-second">
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-air"
+                          onClick={this.handleClickOpen}
+                        >
+                          Change Password
+                        </button>
+                      </div>
                     </div>
                   </form>
 
