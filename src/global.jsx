@@ -1,10 +1,10 @@
 import React from "react";
 import moment from "moment";
-
 const LoaderContext = React.createContext();
+
 export default {
   config: {
-    apiUrl: "http://localhost:4000/",
+    apiUrl: "https://music-player-app26.herokuapp.com/",
     // baseUrl: "http://localhost:3001/",
     apiKey: "AIzaSyA2JN9arUrX7EIMhW4WxzLoRHNFDXFtuHo",
   },
@@ -47,6 +47,7 @@ export default {
 
     return newString;
   },
+
   LoaderContext: LoaderContext,
   timeZoneList: () => {
     let timezoneList = [];
