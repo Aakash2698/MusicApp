@@ -22,6 +22,12 @@ class Home extends Component {
     super(props);
 
     this.state = {
+      topChartsData: [],
+      genresData: [],
+      newReleasesData: [],
+      retroClassicData: [],
+      radioData: [],
+      featureArtistData: [],
       tabValue: "Recent",
       showPopover: false,
       currentIndex: 0,
@@ -115,6 +121,16 @@ class Home extends Component {
         songData: nextProps.songsType.songs,
       });
     }
+    if (this.props !== nextProps) {
+      this.setState({
+        topChartsData: nextProps.topCharts,
+        genresData: nextProps.genresData,
+        newReleasesData: nextProps.newReleases,
+        retroClassicData: nextProps.retroClassic,
+        radioData: nextProps.radio,
+        featureArtistData: nextProps.featureArtist,
+      });
+    }
   }
 
   topChartMusic = () => {
@@ -138,6 +154,7 @@ class Home extends Component {
   getData = (songData, index) => {
     this.props.setMusicData(songData, index);
   };
+
   downloadSong = (id, filename) => {
     const url = "https://music-player-app26.herokuapp.com/songs/download/" + id;
 
@@ -197,7 +214,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.topCharts}
+            imagePath={this.state.topChartsData}
             margin={30}
             imageSize="image-radius"
             responsive={this.state.responsive1}
@@ -538,7 +555,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.newReleases}
+            imagePath={this.state.newReleasesData}
             margin={30}
             imageSize="image-radius"
             autoplay={true}
@@ -565,7 +582,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.featureArtist}
+            imagePath={this.state.featureArtistData}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -618,7 +635,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.retroClassic}
+            imagePath={this.state.retroClassicData}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -645,7 +662,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.radio}
+            imagePath={this.state.radioData}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -671,7 +688,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.props.genresData}
+            imagePath={this.state.genresData}
             imageSize="image-radius image-size-180"
             margin={30}
             autoplay={true}

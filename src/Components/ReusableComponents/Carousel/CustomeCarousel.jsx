@@ -6,6 +6,8 @@ import "./Carousel.scss";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setMusicData, showLoader } from "../../../Actions";
+import defaultSong from "../../../Assets/defaultssong.jpg";
+import ReactImageAppear from "react-image-appear";
 
 class Carousel extends Component {
   state = {
