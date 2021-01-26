@@ -14,6 +14,7 @@ import {
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
+
 class ArtistDetails extends Component {
   state = {
     tabValue: "topSongs",

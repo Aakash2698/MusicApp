@@ -423,5 +423,15 @@ hr {
 }
 
 .active-color {
-  color: #753fdc !important;
+  background-color: #753fdc !important;
+  color: white !important;
+}
+
+@media (max-width: 440px) {
+  .line-tabs {
+    flex-direction: column !important;
+  }
+  .line-tabs.nav-tabs .nav-item {
+    text-align: center;
+  }
 }
