@@ -423,8 +423,7 @@ hr {
 }
 
 .active-color {
-  background-color: #753fdc !important;
-  color: white !important;
+  color: #753fdc;
 }
 
 @media (max-width: 440px) {
@@ -433,5 +432,9 @@ hr {
   }
   .line-tabs.nav-tabs .nav-item {
     text-align: center;
+  }
+  .active-color {
+    background-color: #753fdc !important;
+    color: white !important;
   }
 }

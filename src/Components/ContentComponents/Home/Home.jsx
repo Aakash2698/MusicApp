@@ -539,7 +539,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.newReleases}
+            imagePath={this.props.newReleases}
             margin={30}
             imageSize="image-radius"
             autoplay={true}
