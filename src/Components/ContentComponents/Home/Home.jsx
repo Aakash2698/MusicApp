@@ -22,12 +22,6 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      topChartsData: [],
-      genresData: [],
-      newReleasesData: [],
-      retroClassicData: [],
-      radioData: [],
-      featureArtistData: [],
       tabValue: "Recent",
       showPopover: false,
       currentIndex: 0,
@@ -121,16 +115,6 @@ class Home extends Component {
         songData: nextProps.songsType.songs,
       });
     }
-    if (this.props !== nextProps) {
-      this.setState({
-        topChartsData: nextProps.topCharts,
-        genresData: nextProps.genresData,
-        newReleasesData: nextProps.newReleases,
-        retroClassicData: nextProps.retroClassic,
-        radioData: nextProps.radio,
-        featureArtistData: nextProps.featureArtist,
-      });
-    }
   }
 
   topChartMusic = () => {
@@ -214,7 +198,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.topChartsData}
+            imagePath={this.props.topCharts}
             margin={30}
             imageSize="image-radius"
             responsive={this.state.responsive1}
@@ -555,7 +539,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.newReleasesData}
+            imagePath={this.state.newReleases}
             margin={30}
             imageSize="image-radius"
             autoplay={true}
@@ -582,7 +566,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.featureArtistData}
+            imagePath={this.props.featureArtist}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -635,7 +619,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.retroClassicData}
+            imagePath={this.props.retroClassic}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -662,7 +646,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.radioData}
+            imagePath={this.props.radio}
             imageSize="image-radius image-size-181"
             margin={30}
             autoplay={true}
@@ -688,7 +672,7 @@ class Home extends Component {
         </div>
         <div className="image-slide">
           <Carousel
-            imagePath={this.state.genresData}
+            imagePath={this.props.genresData}
             imageSize="image-radius image-size-180"
             margin={30}
             autoplay={true}
