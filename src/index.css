@@ -50,6 +50,14 @@ a {
   -o-transition: 0.4s all ease-in;
   transition: 0.4s all ease-in;
 }
+
+@media (max-width: 768px) {
+  .mobile-sidebar {
+    width: 17.5rem !important;
+    z-index: 2000 !important;
+  }
+}
+
 .parent .right {
   margin-left: 17.5rem;
   padding: 0 2rem;

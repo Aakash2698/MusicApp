@@ -560,7 +560,7 @@ class Home extends Component {
             responsive={this.state.responsive2}
           />
         </div>
-        <div className="section-4">
+        {/* <div className="section-4">
           <div className="top-header">
             <div className="d-flex flex-wrap align-items-end">
               <div className="flex-grow-1">
@@ -576,8 +576,8 @@ class Home extends Component {
             </div>
             <hr />
           </div>
-        </div>
-        <div className="image-slide">
+        </div> */}
+        {/* <div className="image-slide">
           <Carousel
             imagePath={this.props.genresData}
             imageSize="image-radius image-size-321"
@@ -586,7 +586,7 @@ class Home extends Component {
             responsive={this.state.responsive3}
             showPlaylist={true}
           />
-        </div>
+        </div> */}
         <div className="section-5">
           <div className="top-header">
             <div className="d-flex flex-wrap align-items-end">

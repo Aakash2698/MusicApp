@@ -12,7 +12,14 @@ class App extends Component {
   state = {
     fullWidth: false,
     scrollTop: 0,
+    mobileSidebar: false,
     // isLoading: true,
+  };
+  openMobileSidebar = () => {
+    console.log("helo");
+    this.setState({
+      mobileSidebar: !this.state.mobileSidebar,
+    });
   };
 
   onScroll = () => {
@@ -43,19 +50,24 @@ class App extends Component {
   //   }
   // };
   render() {
-    const { fullWidth, scrollTop } = this.state;
+    const { fullWidth, scrollTop, mobileSidebar } = this.state;
     return (
       <>
         <div className="parent" ref={this.myRef} onScroll={this.onScroll}>
           {this.props.isLoader && <FullPageLoader />}
-          <div className="left">
-            <Sidebar handleWidthChange={this.handleWidthChange} />
+          <div className={mobileSidebar ? " mobile-sidebar left" : "left"}>
+            <Sidebar
+              handleWidthChange={this.handleWidthChange}
+              openMobileSidebar={this.openMobileSidebar}
+              mobileSidebar={mobileSidebar}
+            />
           </div>
           <div className={fullWidth ? "right full-width" : "right"}>
             <Header
               fullWidth={fullWidth}
               scrollTop={scrollTop}
               history={this.props.history}
+              openMobileSidebar={this.openMobileSidebar}
             />
             <Content fullWidth={fullWidth} />
           </div>

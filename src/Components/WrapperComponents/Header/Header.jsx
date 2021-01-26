@@ -187,6 +187,11 @@ class Header extends Component {
   submitForm = () => {
     this.props.history.push(`/${this.state.searchText}`);
   };
+
+  openMobileSidebar = () => {
+    this.props.openMobileSidebar();
+  };
+
   render() {
     const {
       openProfile,
@@ -224,7 +229,7 @@ class Header extends Component {
           <button
             type="button"
             className="btn toggle-menu mr-3 btn-top"
-            onClick={() => this.props.setSideBar()}
+            onClick={this.openMobileSidebar}
           >
             <span></span>
             <span></span>
@@ -384,17 +389,17 @@ class Header extends Component {
                 <div
                   className={
                     !openProfile
-                      ? "dropdown-menu dropdown-menu-right dropdown-hide"
-                      : "dropdown-menu dropdown-menu-right"
+                      ? "dropdown-menu dropdown-menu-right dropdown-hide dropdown-box "
+                      : "dropdown-menu dropdown-menu-right dropdown-box"
                   }
                   x-placement="top-end"
-                  style={{
-                    position: "absolute",
-                    willChange: "transform",
-                    top: "0px",
-                    left: "0px",
-                    transform: "translate3d(-52px, 21px, 0px)",
-                  }}
+                  // style={{
+                  //   position: "absolute",
+                  //   willChange: "transform",
+                  //   top: "0px",
+                  //   left: "0px",
+                  //   transform: "translate3d(-52px, 21px, 0px)",
+                  // }}
                 >
                   <NavLink to={"/profile"} onClick={() => this.hidePopover()}>
                     <span className="dropdown-item">
