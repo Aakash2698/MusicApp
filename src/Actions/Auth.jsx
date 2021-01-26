@@ -85,7 +85,7 @@ export const showLoader = () => (dispatch) => {
     dispatch({
       type: HIDE_LOADER,
     });
-  }, 500);
+  }, 1000);
 };
 
 export const hideLoader = () => (dispatch) => {

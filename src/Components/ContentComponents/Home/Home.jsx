@@ -247,7 +247,11 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Recent")}
               >
                 <span
-                  className="nav-link link-color"
+                  className={
+                    tabValue === "Recent"
+                      ? "nav-link link-color active-color"
+                      : "nav-link link-color"
+                  }
                   id="recent-tab"
                   data-toggle="tab"
                   role="tab"
@@ -261,7 +265,11 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("Trending")}
               >
                 <span
-                  className="nav-link link-color"
+                  className={
+                    tabValue === "Trending"
+                      ? "nav-link link-color active-color"
+                      : "nav-link link-color"
+                  }
                   id="trending-tab"
                   data-toggle="tab"
                   role="tab"
@@ -275,7 +283,11 @@ class Home extends Component {
                 onClick={() => this.handleTabChange("International")}
               >
                 <span
-                  className="nav-link link-color"
+                  className={
+                    tabValue === "International"
+                      ? "nav-link link-color active-color"
+                      : "nav-link link-color"
+                  }
                   id="international-tab"
                   data-toggle="tab"
                   role="tab"

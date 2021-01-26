@@ -96,7 +96,7 @@ class ArtistDetails extends Component {
         },
       })
       .then((res) => {
-        // let url = window.URL.createObjectURL(res.data);
+        let url = window.URL.createObjectURL(res.data);
         let a = document.createElement("a");
         a.href = res.config.url;
         a.download = this.state.songName + ".mp3";
