@@ -589,6 +589,7 @@ a:hover {
   -o-transition: 0.6s all ease-in;
   transition: 0.6s all ease-in;
   background-color: #343a40;
+  overflow-y: scroll !important;
 }
 .open-search {
   visibility: visible !important;
@@ -608,3 +609,21 @@ a:hover {
 // ::-webkit-scrollbar {
 //   display: none;
 // }
+
+.dropdown-box {
+  position: absolute !important;
+  top: 0px !important;
+  left: 0px !important;
+  transform: translate3d(-52px, 21px, 0px);
+  will-change: transform;
+}
+
+@media (max-width: 577px) {
+  .dropdown-box {
+    position: absolute !important;
+    top: 0px !important;
+    left: 0px !important;
+    transform: translate3d(-107px, 21px, 0px);
+    will-change: transform;
+  }
+}
