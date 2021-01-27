@@ -13,6 +13,8 @@ import {
   getUserDetails,
 } from "../../../Actions/index";
 import { NavLink, withRouter } from "react-router-dom";
+import defaultProfile from "../../../Assets/default.jpg";
+
 class Header extends Component {
   state = {
     firstName: "",
@@ -22,6 +24,7 @@ class Header extends Component {
     dropdownActionVisible: false,
     suggestionBox: false,
     searchText: "",
+    defaultDisplay: false,
     launguageData: [
       {
         launguageType: "Hindi",
@@ -133,6 +136,7 @@ class Header extends Component {
         {
           firstName: nextProps.userData.firstName,
           profileImage: nextProps.userData.profileImage,
+          defaultDisplay: true,
         },
         () => {
           console.log(this.state.firstName);
@@ -200,7 +204,9 @@ class Header extends Component {
       dropdownActionVisible,
       suggestionBox,
       searchText,
+      defaultDisplay,
     } = this.state;
+    console.log(this.state.profileImage);
 
     const filterArtist = this.props.searchArray.albumData;
     const filterTrack = this.props.searchArray.songData;
@@ -381,7 +387,12 @@ class Header extends Component {
                 style={{ cursor: "pointer" }}
               >
                 <div className="avatar avatar-sm avatar-circle">
-                  <img src={this.state.profileImage} alt="profile" />
+                  <img
+                    src={
+                      defaultDisplay ? this.state.profileImage : defaultProfile
+                    }
+                    alt="profile"
+                  />
                 </div>
                 <span className="pl-2">{this.state.firstName}</span>
               </span>

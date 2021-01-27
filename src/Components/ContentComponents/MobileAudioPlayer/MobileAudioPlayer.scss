@@ -1,0 +1,32 @@
+.mobile-player-main {
+  .mobile-player-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 11px 22px;
+    opacity: 1;
+    transform: translateY(0);
+    background: #f6f6f6;
+    transition: all 0.15s ease-in-out;
+
+    .header-layout {
+      display: block;
+      padding: 0;
+      list-style: none;
+      margin: 0 0 0 -22px;
+      font-size: 0;
+
+      .layout-item {
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        padding-left: 22px;
+        font-size: 15px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
