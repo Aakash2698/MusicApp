@@ -10,7 +10,6 @@ import store from "./configStore";
 import SetAuthToken from "./Utils/SetAuthToken";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./Actions/index";
-import * as serviceWorker from "./serviceWorker";
 
 let auth_token = localStorage.getItem("jwtToken");
 if (auth_token) {
@@ -36,4 +35,3 @@ ReactDOM.render(
 
   document.getElementById("root")
 );
-serviceWorker.register();
