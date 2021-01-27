@@ -9,8 +9,8 @@ import { Provider } from "react-redux";
 import store from "./configStore";
 import SetAuthToken from "./Utils/SetAuthToken";
 import jwt_decode from "jwt-decode";
-import * as serviceWorker from "./serviceWorker";
 import { setCurrentUser, logoutUser } from "./Actions/index";
+import * as serviceWorker from "./serviceWorker";
 
 let auth_token = localStorage.getItem("jwtToken");
 if (auth_token) {
@@ -36,9 +36,4 @@ ReactDOM.render(
 
   document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// serviceWorker.register();
 serviceWorker.register();
