@@ -57,7 +57,7 @@ class SignIn extends Component {
       if (res.responseData.res === 200) {
         this.props.getUserDetails(res.responseData.userData._id);
         this.setInLocalStorage(res.responseData);
-        // this.props.history.push("/home");
+        this.props.history.push("/home");
       } else {
         this.setState({
           loading: false,
@@ -96,7 +96,7 @@ class SignIn extends Component {
         this.setInLocalStorage(res.responseData);
         this.props.getUserDetails(res.responseData.userData._id);
         this.props.setUserData(res.responseData.user);
-        // this.props.history.push("/home");
+        this.props.history.push("/home");
       } else {
         this.setState({
           loading: false,
