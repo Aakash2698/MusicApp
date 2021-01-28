@@ -82,7 +82,6 @@ class RightSidebar extends Component {
   };
 
   queueDelete = (id) => {
-    console.log(id);
     this.props.deleteQueueSong(id);
   };
 

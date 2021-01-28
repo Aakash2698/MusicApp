@@ -16,7 +16,6 @@ class App extends Component {
     // isLoading: true,
   };
   openMobileSidebar = () => {
-    console.log("helo");
     this.setState({
       mobileSidebar: !this.state.mobileSidebar,
     });

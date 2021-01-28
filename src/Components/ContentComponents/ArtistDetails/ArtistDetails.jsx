@@ -119,8 +119,6 @@ class ArtistDetails extends Component {
   };
 
   addQueue = () => {
-    console.log(this.props.queueList.length, "ZZzzzzzzzzzzz");
-
     if (this.props.queueList.length === 0) {
       this.getData(this.state.allSongs, this.state.songId);
     }

@@ -86,7 +86,6 @@ class Profile extends Component {
   };
 
   handleFileUpload = (file, id) => {
-    console.log("handleFileUpload");
     this.setState({
       [id]: file,
       isDisabled: false,
@@ -94,7 +93,6 @@ class Profile extends Component {
   };
 
   handleRemoveFile = (id) => {
-    console.log("handleRemoveFile");
     this.setState({
       [id]: "",
     });
@@ -176,7 +174,7 @@ class Profile extends Component {
           });
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
       this.hideLoader();
       // }, 2000);
@@ -184,7 +182,6 @@ class Profile extends Component {
   };
 
   showToaster = (status, message) => {
-    console.log(status, message);
     if (status === 200) {
       toast.success(message, {
         position: "top-right",

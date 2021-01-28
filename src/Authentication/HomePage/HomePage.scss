@@ -23,8 +23,8 @@
   position: relative !important;
 }
 .bg-landing {
-  background-image: url(../../Assets/HomePageLogos/home-header.jpg);
-  // background-image: url(../../Assets/homeh.jpeg);
+  // background-image: url(../../Assets/HomePageLogos/home-header.jpg);
+  background-image: url(../../Assets/banner2.jpg);
 }
 .home-banner {
   background-size: cover;
@@ -112,6 +112,7 @@ header {
   margin-left: auto !important;
 }
 .sign-in {
+  font-weight: bolder;
   background-color: transparent;
   text-decoration: none;
   transition: 0.4s all ease-in;
@@ -222,6 +223,7 @@ header {
   padding: 2rem 2rem 8rem;
   text-align: center;
   background-image: url(../../Assets/HomePageLogos/home-footer.jpg);
+
   position: relative;
 }
 

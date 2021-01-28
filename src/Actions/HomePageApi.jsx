@@ -224,7 +224,6 @@ export const downloadSong = (id) => (dispatch, getState, Api) => {
 };
 
 export const uploadFileToServer = (formData) => (dispatch, getState, Api) => {
-  console.log("upload", formData);
   return Api.postForm("upload", formData).then((response) => {
     return response;
   });
@@ -247,8 +246,6 @@ export const updateProfileDetails = (id, payload) => (
   getState,
   Api
 ) => {
-  console.log("hshhsshh");
-  console.log(id);
   return Api.put(`update/${id}`, payload).then((response) => {
     return response;
   });

@@ -132,16 +132,11 @@ class Header extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
-      this.setState(
-        {
-          firstName: nextProps.userData.firstName,
-          profileImage: nextProps.userData.profileImage,
-          defaultDisplay: true,
-        },
-        () => {
-          console.log(this.state.firstName);
-        }
-      );
+      this.setState({
+        firstName: nextProps.userData.firstName,
+        profileImage: nextProps.userData.profileImage,
+        defaultDisplay: true,
+      });
     }
   }
   componentWillMount() {
@@ -206,7 +201,6 @@ class Header extends Component {
       searchText,
       defaultDisplay,
     } = this.state;
-    console.log(this.state.profileImage);
 
     const filterArtist = this.props.searchArray.albumData;
     const filterTrack = this.props.searchArray.songData;

@@ -13,7 +13,9 @@ import {
 
 export const loginUser = (payload) => (dispatch, getState, Api) => {
   return Api.post("login", payload, "header").then((res) => {
-    if (res.response.status === 201) {
+    console.log(res);
+    if (res.responseData.res === 200) {
+      console.log("DONNNEEE");
       let token = res.responseData.token;
       localStorage.setItem("jwtToken", token);
       SetAuthToken(token);

@@ -110,6 +110,7 @@ class HomePage extends Component {
                         className="btn btn-pill btn-air btn-sm btn-danger"
                         type="button"
                         onClick={() => this.handleOpenSignUp()}
+                        style={{ fontWeight: "bolder" }}
                       >
                         Sign up
                       </button>

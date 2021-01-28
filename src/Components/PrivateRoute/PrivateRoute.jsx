@@ -12,7 +12,6 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
         <Component {...props} />
       ) : (
         <Route exact path="/" component={HomePage} />
-        // <Redirect to="/home-page" />
       )
     }
   />

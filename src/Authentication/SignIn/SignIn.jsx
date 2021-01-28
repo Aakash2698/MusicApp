@@ -53,12 +53,11 @@ class SignIn extends Component {
     const { email, password } = this.state;
     const userData = { email: email, password: password };
     this.props.loginUser(userData).then((res) => {
-      console.log(res, "SIMPLE LOGIN");
+      console.log(res);
       if (res.responseData.res === 200) {
-        console.log(res);
         this.props.getUserDetails(res.responseData.userData._id);
         this.setInLocalStorage(res.responseData);
-        this.props.history.push("/home");
+        // this.props.history.push("/home");
       } else {
         this.setState({
           loading: false,
@@ -93,12 +92,11 @@ class SignIn extends Component {
       idToken: Token,
     };
     this.props.googleLogin(payload).then((res) => {
-      console.log(res);
       if (res.response.status === 200) {
         this.setInLocalStorage(res.responseData);
         this.props.getUserDetails(res.responseData.userData._id);
         this.props.setUserData(res.responseData.user);
-        this.props.history.push("/home");
+        // this.props.history.push("/home");
       } else {
         this.setState({
           loading: false,

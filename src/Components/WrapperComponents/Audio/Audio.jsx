@@ -55,7 +55,6 @@ class Audio extends Component {
     });
   };
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (this.props.currentIndex !== nextProps.currentIndex) {
       this.getSongsData(nextProps);
     }
@@ -165,7 +164,6 @@ class Audio extends Component {
           }
         );
       } else {
-        console.log("ABABABBABABABBAA");
         let nextIndex;
         const songIndex = this.props.queueList.findIndex((element, index) => {
           if (element._id === this.state.index) {
@@ -299,8 +297,6 @@ class Audio extends Component {
   };
 
   render() {
-    console.log("AUDIO");
-    console.log(this.props.queueList);
     const {
       volumeSlider,
       onPlay,

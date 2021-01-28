@@ -23,7 +23,7 @@ export default class HomepageCarousel extends Component {
   };
   render() {
     const imagePath = this.props.trendingArtist;
-    console.log(imagePath);
+
     return (
       <div className="container-fluid pd-0">
         <OwlCarousel
@@ -35,7 +35,6 @@ export default class HomepageCarousel extends Component {
         >
           {imagePath &&
             imagePath.map((data, index) => {
-              console.log(data.path);
               return (
                 <div key={index}>
                   <img

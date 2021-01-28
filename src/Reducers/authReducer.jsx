@@ -43,7 +43,6 @@ export default function AuthReducer(state = initialState, action) {
         isLoading: false,
       };
     case USER_DATA:
-      console.log(action.payload);
       return {
         ...state,
         userData: action.payload,
