@@ -203,6 +203,7 @@ class RightSidebar extends Component {
           </ul>
         </div>
         <Audio
+          openMobilePlayer={this.props.openMobilePlayer}
           handleOpenQueue={this.handleOpenQueue}
           fullWidth={this.props.fullWidth}
           handleCloseQueue={this.handleCloseQueue}

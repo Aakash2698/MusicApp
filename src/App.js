@@ -6,6 +6,7 @@ import RightSidebar from "./Components/WrapperComponents/RightSidebar/RightSideb
 import FullPageLoader from "./Components/ReusableComponents/FullPageLoader/FullPageLoader";
 import { connect } from "react-redux";
 import { showLoader } from "./Actions";
+import MobileAudioPlayer from "./Components/WrapperComponents/MobileAudioPlayer/MobileAudioPlayer";
 
 class App extends Component {
   myRef = React.createRef();
@@ -13,6 +14,7 @@ class App extends Component {
     fullWidth: false,
     scrollTop: 0,
     mobileSidebar: false,
+    openMobilePlayer: false,
     // isLoading: true,
   };
   openMobileSidebar = () => {
@@ -48,29 +50,50 @@ class App extends Component {
   //     });
   //   }
   // };
+  openMobilePlayer = () => {
+    console.log("TRUE");
+    this.setState({
+      openMobilePlayer: !this.state.openMobilePlayer,
+    });
+  };
+
   render() {
-    const { fullWidth, scrollTop, mobileSidebar } = this.state;
+    const {
+      fullWidth,
+      scrollTop,
+      mobileSidebar,
+      openMobilePlayer,
+    } = this.state;
     return (
       <>
         <div className="parent" ref={this.myRef} onScroll={this.onScroll}>
-          {this.props.isLoader && <FullPageLoader />}
-          <div className={mobileSidebar ? " mobile-sidebar left" : "left"}>
-            <Sidebar
-              handleWidthChange={this.handleWidthChange}
-              openMobileSidebar={this.openMobileSidebar}
-              mobileSidebar={mobileSidebar}
-            />
-          </div>
-          <div className={fullWidth ? "right full-width" : "right"}>
-            <Header
-              fullWidth={fullWidth}
-              scrollTop={scrollTop}
-              history={this.props.history}
-              openMobileSidebar={this.openMobileSidebar}
-            />
-            <Content fullWidth={fullWidth} />
-          </div>
-          <RightSidebar fullWidth={fullWidth} />
+          {!openMobilePlayer ? (
+            <>
+              {this.props.isLoader && <FullPageLoader />}
+              <div className={mobileSidebar ? " mobile-sidebar left" : "left"}>
+                <Sidebar
+                  handleWidthChange={this.handleWidthChange}
+                  openMobileSidebar={this.openMobileSidebar}
+                  mobileSidebar={mobileSidebar}
+                />
+              </div>
+              <div className={fullWidth ? "right full-width" : "right"}>
+                <Header
+                  fullWidth={fullWidth}
+                  scrollTop={scrollTop}
+                  history={this.props.history}
+                  openMobileSidebar={this.openMobileSidebar}
+                />
+                <Content fullWidth={fullWidth} />
+              </div>
+              <RightSidebar
+                fullWidth={fullWidth}
+                openMobilePlayer={this.openMobilePlayer}
+              />
+            </>
+          ) : (
+            <MobileAudioPlayer openMobilePlayer={this.openMobilePlayer} />
+          )}
         </div>
       </>
     );

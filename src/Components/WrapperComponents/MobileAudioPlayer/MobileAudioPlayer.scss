@@ -1,0 +1,112 @@
+.mobile-player-main {
+  position: fixed;
+  background-color: #222629;
+  width: 100%;
+  height: 100%;
+
+  .mobile-player-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 11px 22px;
+    opacity: 1;
+    transform: translateY(0);
+    background: #222629;
+    transition: all 0.15s ease-in-out;
+
+    .header-layout {
+      display: block;
+      padding: 0;
+      list-style: none;
+      margin: 0 0 0 -22px;
+      font-size: 0;
+
+      .layout-item {
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        padding-left: 22px;
+        font-size: 15px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .mobile-player-details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    padding: 66px 0 55px;
+    background: #222629;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+
+    .mobile-player-songs {
+      position: relative;
+      margin-bottom: 11px;
+      // max-width: 84vh;
+
+      .song-temp {
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+
+        .layout-img {
+          min-width: 100%;
+          border-radius: 2rem;
+          opacity: 1;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+
+      .song-details {
+        padding-right: 22px;
+        padding-top: 50px;
+        padding-left: 22px;
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 1874px;
+
+        .song-section {
+          margin-left: 0;
+          display: block;
+          padding: 0;
+          list-style: none;
+          margin: 0 0 0 -22px;
+          font-size: 0;
+
+          .song-item-details {
+            vertical-align: middle;
+            padding-left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            display: inline-block;
+            text-align: center;
+
+            .song-des-name {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+
+    // .mobile-player-queue {
+    //   margin-bottom: 44px;
+    //   transform: none;
+    //   opacity: 1;
+    //   transition: all 0.3s ease-in-out;
+    // }
+  }
+}
