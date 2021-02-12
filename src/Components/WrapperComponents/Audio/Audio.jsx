@@ -32,7 +32,7 @@ class Audio extends React.Component {
       openMobilePlayer: false,
       width: parseInt(JSON.stringify(window.innerWidth)),
       songAction: false,
-      playLoader: null,
+      playLoader: false,
     };
   }
 
@@ -61,7 +61,7 @@ class Audio extends React.Component {
     document.removeEventListener("mousedown", this.popupActionClick, false);
   }
   popupActionClick = (e) => {
-    if (this.node.contains(e.target)) {
+    if (this.node && this.node.contains(e.target)) {
       this.setState({
         closeAudioControl: true,
       });
@@ -86,6 +86,7 @@ class Audio extends React.Component {
       songArtist: "",
       songImage: defaultImage,
       songUrl: "",
+      songAction: false,
     });
   };
 
@@ -129,7 +130,7 @@ class Audio extends React.Component {
       songImage: target.songImage,
       songUrl: target._id,
       songAction: true,
-      playLoader: this.player.current.audio.current.load(),
+      playLoader: true,
     });
   };
 
@@ -314,6 +315,7 @@ class Audio extends React.Component {
         a.click();
       });
   };
+
   songAction = () => {
     this.setState(
       {
@@ -329,6 +331,12 @@ class Audio extends React.Component {
     );
   };
 
+  hideLoader = () => {
+    this.setState({
+      playLoader: false,
+    });
+  };
+
   render() {
     const {
       volumeSlider,
@@ -340,8 +348,6 @@ class Audio extends React.Component {
       loopSong,
       width,
     } = this.state;
-    console.log(width);
-
     const loop = loopSong;
     const fullWidth = this.props;
     let audioClass;
@@ -351,25 +357,104 @@ class Audio extends React.Component {
       audioClass = "audioPlayer";
     }
 
-    console.log(this.player, "refernece");
-    console.log(this.state.playLoader, "ssssss");
+    return this.props.openPlayer ? (
+      <div
+        className="mobile-audio"
+        onChange={width > 446 ? this.props.openMobilePlayer() : undefined}
+      >
+        <div className="mobile-player-root"></div>
+        <div className="mobile-audio-controls">
+          <div className="audio-controls--left d-flex mr-auto">
+            <AudioPlayer
+              onCanPlayThrough={this.hideLoader}
+              ref={this.player}
+              loop={loop}
+              src={onPlay}
+              onClickNext={this.nextSong}
+              onClickPrevious={this.previousSong}
+              onPlay={this.playSongs}
+              onPause={this.pauseSongs}
+              showSkipControls={true}
+              showJumpControls={false}
+              customProgressBarSection={[RHAP_UI.PROGRESS_BAR]}
+              customControlsSection={[
+                RHAP_UI.LOOP,
+                <button
+                  className="btn btn-icon-only"
+                  onClick={() => this.previousSong()}
+                >
+                  <span className="audio-player-icon">
+                    <i
+                      className="fas fa-step-backward"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                  </span>
+                </button>,
 
-    // if (this.player) {
-    //   console.log(this.player);
-    //   // this.setState(
-    //   //   {
-    //   //     loadDuration: this.player.current.audio.current.duration,
-    //   //   },
-    //   //   () => {
-    //   //     console.log(this.state.loadDuration);
-    //   //   }
-    //   // );
-    // }
-    return (
+                <button
+                  className="btn btn-icon-only "
+                  onClick={this.songAction}
+                >
+                  <span className="audio-player-icon">
+                    {this.state.playLoader ? (
+                      <i
+                        className="fas fa-circle-notch fa-spin"
+                        style={{ color: "#753fdc", fontSize: "2.3rem" }}
+                      ></i>
+                    ) : (
+                      <i
+                        style={{ color: "#753fdc", fontSize: "2.3rem" }}
+                        className={
+                          !this.state.songAction
+                            ? "fas fa-play"
+                            : "fas fa-pause"
+                        }
+                      ></i>
+                    )}
+                  </span>
+                </button>,
+
+                <button
+                  className="btn btn-icon-only "
+                  onClick={() => this.nextSong()}
+                >
+                  <span className="audio-player-icon">
+                    <i
+                      className="fas fa-step-forward"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                  </span>
+                </button>,
+
+                <button
+                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on"
+                  onClick={() => this.shuffleStart()}
+                >
+                  <span className="audio-player-icon ">
+                    <i
+                      className={
+                        this.state.shuffle
+                          ? "fas fa-random set-active"
+                          : "fas fa-random"
+                      }
+                      style={{ fontSize: "1.4rem" }}
+                    ></i>
+                  </span>
+                </button>,
+
+                RHAP_UI.CURRENT_TIME,
+                <div className="or-arrow"> / </div>,
+                RHAP_UI.DURATION,
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+    ) : (
       <div className={audioClass}>
         <div
           className="audio"
-          // onClick={width <= 576 ? this.props.openMobilePlayer : null}
+          onClick={width <= 446 ? this.props.openMobilePlayer : null}
         >
           <div className="song-image">
             <img src={songImage} alt="current-song" className="song-img" />
@@ -382,6 +467,7 @@ class Audio extends React.Component {
         <div className="audio-controls">
           <div className="audio-controls--left d-flex mr-auto">
             <AudioPlayer
+              onCanPlayThrough={this.hideLoader}
               ref={this.player}
               loop={loop}
               src={onPlay}
@@ -411,7 +497,7 @@ class Audio extends React.Component {
                 RHAP_UI.LOOP,
                 // RHAP_UI.MAIN_CONTROLS,
                 <button
-                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on media-shuffle"
+                  className="btn btn-icon-only previous-btn"
                   onClick={() => this.previousSong()}
                 >
                   <span className="audio-player-icon">
@@ -423,25 +509,30 @@ class Audio extends React.Component {
                 </button>,
 
                 <button
-                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on media-shuffle"
+                  className="btn btn-icon-only play-btn"
                   onClick={this.songAction}
                 >
                   <span className="audio-player-icon">
-                    {/* <i
-                      className="fas fa-circle-notch fa-spin"
-                      style={{ color: "#753fdc", fontSize: "2.3rem" }}
-                    ></i> */}
-                    <i
-                      style={{ color: "#753fdc", fontSize: "2.3rem" }}
-                      className={
-                        !this.state.songAction ? "fas fa-play" : "fas fa-pause"
-                      }
-                    ></i>
+                    {this.state.playLoader ? (
+                      <i
+                        className="fas fa-circle-notch fa-spin"
+                        style={{ color: "#753fdc", fontSize: "2.3rem" }}
+                      ></i>
+                    ) : (
+                      <i
+                        style={{ color: "#753fdc", fontSize: "2.3rem" }}
+                        className={
+                          !this.state.songAction
+                            ? "fas fa-play"
+                            : "fas fa-pause"
+                        }
+                      ></i>
+                    )}
                   </span>
                 </button>,
 
                 <button
-                  className="btn btn-icon-only amplitude-shuffle amplitude-shuffle-on media-shuffle"
+                  className="btn btn-icon-only next-btn"
                   onClick={() => this.nextSong()}
                 >
                   <span className="audio-player-icon">

@@ -207,6 +207,7 @@ class RightSidebar extends Component {
           handleOpenQueue={this.handleOpenQueue}
           fullWidth={this.props.fullWidth}
           handleCloseQueue={this.handleCloseQueue}
+          openPlayer={this.props.openPlayer}
         />
       </div>
     );
